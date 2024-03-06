@@ -1,9 +1,9 @@
 import { Flex, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import { ConnectKitButton } from "connectkit";
-import { Button } from "./components/button";
-import { Card } from "./components/card";
-import { InputNumber } from "./components/inputNumber";
+import { Button } from "./components/Button";
+import { Card } from "./components/Card";
+import { InputNumber } from "./components/InputNumber";
 import "./index.css";
 
 function App() {
