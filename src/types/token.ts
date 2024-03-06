@@ -15,7 +15,7 @@ export type Token = {
     };
     color: string;
     validator?: string; // TODO: make required
-    address?: string; // TODO: make required
+    address: Address; // TODO: make required
     network?: string; // TODO: make required
     tenderswap?: Address; // TODO: make required
     faucet?: Address; // Testnet only
@@ -23,7 +23,7 @@ export type Token = {
         value: string;
         denomination: string;
     };
-    chainId?: number;
+    chainId: number;
     erc2612: boolean;
     adapter: Address;
     tvl?: bigint | string;

@@ -1,9 +1,15 @@
-import { Address, erc20Abi } from 'viem';
-import { useReadContract } from 'wagmi';
+import { Address, Hash, erc20Abi, parseEther } from 'viem';
+import { useConfig, useReadContract, Config } from 'wagmi';
+import { simulateContract } from 'viem/actions';
+import type { GetPublicClientReturnType } from '@wagmi/core'
+import { getPublicClient, writeContract, waitForTransactionReceipt, getWalletClient } from '@wagmi/core'
+import { ERC2612Permit, signERC2612Permit } from '@/utils/erc2612';
+import { useMutation } from '@tanstack/react-query';
+import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from '@/constants';
 
 type UseERC20Balance = (
     token: Address,
-    account: Address,
+    account: Address | undefined,
     chainId?: number,
 ) => { balance: bigint; isLoading: boolean; isError: boolean, refetch: any };
 
@@ -12,15 +18,12 @@ export const useERC20Balance: UseERC20Balance = (
     account,
     chainId = 1
 ) => {
-    const { data: balance, isLoading, isError, refetch } = useReadContract({
+    const { data: balance, isLoading, isError, refetch } = useReadContract(account && {
         abi: erc20Abi,
         args: [account],
         address: token,
         functionName: 'balanceOf',
-        chainId,
-        query: {
-            enabled: !!account,
-        }
+        chainId
     });
     return { balance: balance ?? 0n, isLoading, isError, refetch };
 };
@@ -70,3 +73,43 @@ export const useERC20TotalSupply: UseERC20TotalSupply = (
 
     return { totalSupply: totalSupply ?? 0n, isLoading, isError };
 }
+
+export const useERC20Approve = (asset: TokenSlugEnums,
+    token: Address,
+    spender: Address,
+    amount: bigint,
+    chainId: number,) => {
+    const wagmiConfig = useConfig()
+    const hasPermit = TOKEN_ADDRESSES[token] ? TOKENS[TOKEN_ADDRESSES[token]].erc2612 : true
+    return useMutation({
+        mutationFn: async () => {
+            return hasPermit ? await erc20Permit(token, spender, amount, wagmiConfig, chainId) : await erc20Approve(token, spender, amount, wagmiConfig, chainId)
+        },
+        onSuccess: (data: Hash | ERC2612Permit | undefined) => {
+            return data;
+        }
+    })
+}
+
+const erc20Approve = async (asset: Address, spender: Address, amount: bigint, wagmiConfig: Config, chainId: number) => {
+    const publicClient = getPublicClient(wagmiConfig, { chainId });
+    if (!publicClient) return;
+    const { request: approve } = await simulateContract(publicClient, {
+        address: asset,
+        abi: erc20Abi,
+        functionName: 'approve',
+        args: [spender, amount],
+    });
+    const hash = await writeContract(wagmiConfig, approve);
+    await waitForTransactionReceipt(wagmiConfig, { hash, chainId })
+    return hash
+}
+
+const erc20Permit = async (asset: Address, spender: Address, amount: bigint, wagmiConfig: Config, chainId: number) => {
+    const publicClient = getPublicClient(wagmiConfig, { chainId });
+    const signer = await getWalletClient(wagmiConfig)
+    const permit = await signERC2612Permit(publicClient, asset, signer, spender, amount,)
+    return permit;
+}
+
+

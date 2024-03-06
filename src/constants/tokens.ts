@@ -11,6 +11,7 @@ import Matic from '../../public/tokens/matic.svg';
 import TGrt from '../../public/tokens/tgrt.svg';
 import TLpt from '../../public/tokens/tlpt.svg';
 import TMatic from '../../public/tokens/tmatic.svg';
+import { Address } from 'viem';
 
 export const maticToken: Token = {
     name: TokenNameEnums.MATIC,
@@ -92,3 +93,9 @@ export const TOKENS_WALLET_IMAGE = {
     [TokenSlugEnums.LIVEPEER]: '/tokens/tlpt.png',
     [TokenSlugEnums.GRAPH]: '/tokens/tgrt.png',
 } as const;
+
+export const TENDERIZERS: Record<TokenSlugEnums, Address> = {
+    [TokenSlugEnums.MATIC]: '0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b',
+    [TokenSlugEnums.LIVEPEER]: '0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b',
+    [TokenSlugEnums.GRAPH]: '0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b',
+}

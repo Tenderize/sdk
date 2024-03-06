@@ -1,9 +1,9 @@
 import { Flex } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { Tabs } from "./components/Tabs";
-import { Card } from "./components/card";
-import "./index.css";
-import { Stake } from "./ui/Stake";
+import { Tabs } from "@/components/Tabs";
+import { Card } from "@/components/Card";
+import "@/index.css";
+import { Stake, Swap, Unstake } from "@/ui/";
 
 const TABS_DATA = [
   {
@@ -13,12 +13,12 @@ const TABS_DATA = [
   },
   {
     name: "Unstake",
-    content: () => <Stake />, // TODO: replace with Unstake component
+    content: () => <Unstake />,
     value: "unstake",
   },
   {
     name: "Swap",
-    content: () => <Stake />, // TODO: replace with Swap component
+    content: () => <Swap />,
     value: "swap",
   },
 ];

@@ -25,7 +25,7 @@ export const Tabs: FC<Props> = (props) => {
 
       <Box px="4" pt="3" pb="2">
         {tabsData.map((tab) => (
-          <TabsRadix.Content value={tab.value}>
+          <TabsRadix.Content value={tab.value} key={tab.value}>
             <Box px="4" pt="3" pb="2" className="min-h-[200px]">
               {tab.content()}
             </Box>
