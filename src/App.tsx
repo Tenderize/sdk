@@ -1,34 +1,38 @@
-import { Flex, Theme } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { ConnectKitButton } from "connectkit";
-import { Button } from "./components/Button";
-import { Card } from "./components/Card";
-import { InputNumber } from "./components/InputNumber";
+import { Tabs } from "./components/Tabs";
+import { Card } from "./components/card";
+import { ThemeProvider } from "./contexts";
 import "./index.css";
+import { Stake } from "./ui/Stake";
+
+const TABS_DATA = [
+  {
+    name: "Stake",
+    content: () => <Stake />,
+    value: "stake",
+  },
+  {
+    name: "Unstake",
+    content: () => <Stake />, // TODO: replace with Unstake component
+    value: "unstake",
+  },
+  {
+    name: "Swap",
+    content: () => <Stake />, // TODO: replace with Swap component
+    value: "swap",
+  },
+];
 
 function App() {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
-      <Card size={"1"}>
-        <Flex direction="column" gap="2">
-          <InputNumber
-            variant="soft"
-            handleChange={(value: string) => {
-              console.log(value);
-            }}
-          />
-          <ConnectKitButton />
-          <Button variant="outline">Demo button</Button>
-        </Flex>
-      </Card>
-    </div>
+    <ThemeProvider>
+      <Flex align="center" justify="center" height={"auto"}>
+        <Card size={"1"} className="w-[40%]">
+          <Tabs tabsData={TABS_DATA} />
+        </Card>
+      </Flex>
+    </ThemeProvider>
   );
 }
 
