@@ -1,11 +1,8 @@
 import TenderizerAbi from '@/abis/Tenderizer';
 import { TokenSlugEnums } from '@/constants/enums';
 import { getChainId } from '@/utils';
-
-import { utils } from 'ethers';
-import { Address, WalletClient, parseEther, erc20Abi } from 'viem';
+import { Address } from 'viem';
 import { useReadContract } from 'wagmi';
-const { Interface } = utils;
 
 
 export type UsePreviewDeposit = (
