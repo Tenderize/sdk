@@ -8,35 +8,27 @@ import "./index.css";
 
 function App() {
   return (
-    <Theme
-      accentColor="blue"
-      grayColor="olive"
-      panelBackground="solid"
-      scaling="100%"
-      radius="large"
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100vh",
-        }}
-      >
-        <Card size={"1"}>
-          <Flex direction="column" gap="2">
-            <InputNumber
-              variant="soft"
-              handleChange={(value: string) => {
-                console.log(value);
-              }}
-            />
-            <ConnectKitButton />
-            <Button variant="outline">Demo button</Button>
-          </Flex>
-        </Card>
-      </div>
-    </Theme>
+      <Card size={"1"}>
+        <Flex direction="column" gap="2">
+          <InputNumber
+            variant="soft"
+            handleChange={(value: string) => {
+              console.log(value);
+            }}
+          />
+          <ConnectKitButton />
+          <Button variant="outline">Demo button</Button>
+        </Flex>
+      </Card>
+    </div>
   );
 }
 
