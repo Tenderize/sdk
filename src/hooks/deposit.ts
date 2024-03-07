@@ -1,12 +1,10 @@
 import TenderizerAbi from '@/abis/Tenderizer';
-import { TokenSlugEnums } from '@/constants/enums';
-import { TOKENS } from '@/constants/tokens';
 import { ERC2612Permit } from '@/utils/erc2612';
 import { useMutation } from '@tanstack/react-query';
 import { Interface } from 'ethers/lib/utils';
 import { Address, Hex, parseEther } from 'viem';
-import { Config, useConfig, useReadContract, useWalletClient } from 'wagmi';
-import { getPublicClient, getWalletClient, writeContract, waitForTransactionReceipt } from '@wagmi/core'
+import { Config, useConfig, useReadContract } from 'wagmi';
+import { getPublicClient, readContract, getWalletClient, writeContract, waitForTransactionReceipt } from '@wagmi/core'
 import { simulateContract } from 'viem/actions';
 
 export type UsePreviewDeposit = (
@@ -36,18 +34,21 @@ export const usePreviewDeposit = (
 };
 
 export const useDeposit = (
-    asset: TokenSlugEnums,
     tenderizer: Address,
     amount: bigint,
     chainId: number,
     permit?: ERC2612Permit
 ) => {
-    const signer = useWalletClient()
-    const token = TOKENS[asset]
     const wagmiConfig = useConfig()
     return useMutation({
         mutationFn: async () => {
-            return permit ? depositWithPermit(token.address, tenderizer, amount, permit, chainId, wagmiConfig) : depositWithApprove(tenderizer, amount, chainId, wagmiConfig)
+            const asset = await readContract(wagmiConfig, {
+                address: tenderizer,
+                abi: TenderizerAbi,
+                functionName: 'asset',
+                chainId
+            })
+            return permit ? depositWithPermit(asset, tenderizer, amount, permit, chainId, wagmiConfig) : depositWithApprove(tenderizer, amount, chainId, wagmiConfig)
         }
     })
 }
