@@ -1,0 +1,17 @@
+{
+  "name": "@tenderize/monorepo",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "glob": "^10.3.10",
+    "vite-plugin-dts": "^3.7.3",
+    "vite-plugin-lib-inject-css": "^2.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
