@@ -1,6 +1,6 @@
 export * from './Button'
 export * from './Card'
-export * from './InputNumber'
+export * from './OutputField'
 export * from './MaxBalanceButton'
 export * from './Tabs'
 export * from './Unstake'

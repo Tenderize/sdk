@@ -1,4 +1,4 @@
-import { InputNumber } from "@lib/components/InputNumber";
+import { OutputField } from "@lib/components/OutputField";
 import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
 import { useERC20Balance } from "@lib/hooks";
 import type { Token } from "@lib/types";
@@ -31,7 +31,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
 
   return (
     <Flex direction="column" gap="2">
-      <InputNumber
+      <OutputField
         value={inputValue}
         variant="soft"
         max={formatEther(balance ?? 0n)}

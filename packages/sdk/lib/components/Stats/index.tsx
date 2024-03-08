@@ -18,8 +18,6 @@ export const TenderizerStats: FC = () => {
 }
 
 export const TenderizerStatsView: FC<{ tokenSymbol: string, stats: TenderizerStats, isLoading?: boolean, error?: Error | null }> = ({ tokenSymbol, stats, isLoading, error }) => {
-
-
     return (
         <Grid columns="2" gap="2" width="auto">
             <Box>
