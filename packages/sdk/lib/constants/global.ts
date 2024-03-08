@@ -1,3 +1,5 @@
+import { arbitrum, mainnet } from "viem/chains";
+
 export const MAX_INT =
     '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 
@@ -17,5 +19,10 @@ export const ERC2612_DATA_PERMIT = [
     { name: 'nonce', type: 'uint256' },
     { name: 'deadline', type: 'uint256' },
 ];
+
+export const SUBGRAPHS: Record<number, string> = {
+    [mainnet.id]: '',
+    [arbitrum.id]: ''
+}
 
 export default {}
