@@ -1,10 +1,10 @@
 import { Button } from "@lib/components/Button";
-import { InputNumber } from "@lib/components/InputNumber";
+import { OutputField } from "@lib/components/OutputField";
 import { MaxBalanceButton } from "@lib/components/MaxBalanceButton";
 import { TokenSelector } from "@lib/components/TokenSelector";
-import { usePreviewDeposit, useSelectedToken } from "@lib/hooks";
+import { usePreviewDeposit, useSelectedToken, useERC20Approve, useDeposit } from "@lib/hooks";
 import { Flex } from "@radix-ui/themes";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import { formatEther } from "viem";
 
 export const Stake: FC = () => {
@@ -17,6 +17,9 @@ export const Stake: FC = () => {
   );
   isLoading;
   isError;
+
+  const { mutate: approve, data: approval } = useERC20Approve(token.address, tenderizer, amount, token.chainId);
+  const { mutate: deposit } = useDeposit(tenderizer, amount, token.chainId);
   return (
     <Flex direction="column" gap="2">
       <TokenSelector />
@@ -26,8 +29,10 @@ export const Stake: FC = () => {
           setAmount(value);
         }}
       />
-      <InputNumber value={formatEther(previewDeposit ?? 0n)} disabled />
-      <Button variant="solid">Stake</Button>
+      <OutputField value={formatEther(previewDeposit ?? 0n)} disabled />
+      {!approval ? <Button onClick={() => approve()} variant="solid">Approve {token.currency}</Button>
+        : <Button onClick={() => deposit()} variant="solid">Stake {token.currency}</Button>
+      }
     </Flex>
   );
 };

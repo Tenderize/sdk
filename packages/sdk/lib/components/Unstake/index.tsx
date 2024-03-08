@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import { Flex } from "@radix-ui/themes";
 import MaxBalanceButton from "@lib/components/MaxBalanceButton";
 import { Button } from "@lib/components/Button";
