@@ -1,6 +1,6 @@
 import { TokenSlugEnums } from "@lib/constants";
 import { TOKENS } from "@lib/constants";
-import { Address } from "viem";
+import { type Address } from "viem";
 
 export const getChainId = (asset: TokenSlugEnums): number =>
     TOKENS[asset]?.chainId ?? 0;

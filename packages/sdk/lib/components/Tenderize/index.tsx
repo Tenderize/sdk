@@ -1,6 +1,6 @@
 import { Stake, Swap, Unstake } from "@lib/components";
 import { Tabs } from "@lib/components";
-import { FC } from "react";
+import { type FC } from "react";
 
 const TABS_DATA = [
     {

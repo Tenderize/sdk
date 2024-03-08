@@ -1,5 +1,5 @@
 import { Theme } from "@radix-ui/themes";
-import { ComponentProps, FC, ReactNode } from "react";
+import type { ComponentProps, FC, ReactNode } from "react";
 
 export type ThemeProviderProps = ComponentProps<typeof Theme>;
 

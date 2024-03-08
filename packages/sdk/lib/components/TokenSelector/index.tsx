@@ -1,18 +1,18 @@
 import { TOKENS } from "@lib/constants";
 import { useTokenStore } from "@lib/hooks";
-import { Token } from "@lib/types";
+import { type Token } from "@lib/types";
 import {
   Button,
   DropdownMenu as DropdownMenuRadix,
   Text,
 } from "@radix-ui/themes";
-import React, { FC, useState } from "react";
+import React, { type FC, useState } from "react";
 
 type DropdownMenuRadixProps = React.ComponentProps<
   typeof DropdownMenuRadix.Root &
-    typeof DropdownMenuRadix.Content &
-    typeof DropdownMenuRadix.Item &
-    typeof DropdownMenuRadix.Trigger
+  typeof DropdownMenuRadix.Content &
+  typeof DropdownMenuRadix.Item &
+  typeof DropdownMenuRadix.Trigger
 >;
 
 interface SelectedItem {

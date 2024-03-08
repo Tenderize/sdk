@@ -2,13 +2,23 @@ import { useSelectedToken } from "@lib/hooks";
 import { useTenderizerStats } from "@lib/hooks/stats";
 import { formatAmount, formatFloatstring } from "@lib/utils/floats";
 import type { FC } from "react";
-import type { Address } from "viem";
 import { Flex, Box } from '@radix-ui/themes'
+
+type TenderizerStats = {
+    tvl: string,
+    apy: string
+}
 
 export const TenderizerStats: FC = () => {
     const { token, tenderizer } = useSelectedToken()
 
     const { stats, isLoading, error } = useTenderizerStats(tenderizer, token.chainId ?? 1)
+
+    return <TenderizerStatsView tokenSymbol={token.currency} stats={stats} isLoading={isLoading} error={error} />
+}
+
+export const TenderizerStatsView: FC<{ tokenSymbol: string, stats: TenderizerStats, isLoading?: boolean, error?: Error | null }> = ({ tokenSymbol, stats, isLoading, error }) => {
+
 
     return (
         <Flex>
@@ -36,7 +46,7 @@ export const TenderizerStats: FC = () => {
 
                     <div className="grid grid-cols-4 text-sm font-semibold font-mono text-primary-normal dark:text-light-white-80 px-4">
                         <div className="col-span-1 text-left">
-                            {token.tokenSymbol}
+                            {tokenSymbol}
                         </div>
                         <div className="col-span-3 text-right">
                             {formatAmount(stats.tvl)}{' '}

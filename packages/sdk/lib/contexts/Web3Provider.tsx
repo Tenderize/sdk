@@ -1,4 +1,4 @@
-import { http, createConfig, WagmiProvider, Config } from 'wagmi'
+import { http, createConfig, WagmiProvider, type Config } from 'wagmi'
 import { mainnet, arbitrum } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";

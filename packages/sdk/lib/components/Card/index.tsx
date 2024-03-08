@@ -1,5 +1,5 @@
 import { Card as CardRadix } from "@radix-ui/themes";
-import { CSSProperties, ComponentProps, FC, ReactNode } from "react";
+import type { CSSProperties, ComponentProps, FC, ReactNode } from "react";
 
 type CardRadixProps = ComponentProps<typeof CardRadix>;
 

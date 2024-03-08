@@ -1,13 +1,14 @@
 import { Button as ButtonRadix } from "@radix-ui/themes";
-import { ComponentProps, FC, ReactNode } from "react";
+import type { ComponentProps, FC, ReactNode } from "react";
 
 type ButtonRadixProps = ComponentProps<typeof ButtonRadix>;
-interface Props extends ButtonRadixProps {
+
+export type ButtonProps = {
   children: ReactNode;
   isLoading?: boolean;
-}
+} & ButtonRadixProps;
 
-export const Button: FC<Props> = (props) => {
+export const Button: FC<ButtonProps> = (props) => {
   const { children, isLoading, ...rest } = props;
   return (
     <ButtonRadix className="cursor-pointer" {...rest}>
