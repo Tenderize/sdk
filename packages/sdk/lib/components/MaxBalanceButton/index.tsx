@@ -1,21 +1,26 @@
-import { Flex, Text } from "@radix-ui/themes";
-import React, { useState } from "react";
 import { InputNumber } from "@lib/components/InputNumber";
-import { type Address, formatEther, parseEther } from "viem";
+import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
 import { useERC20Balance } from "@lib/hooks";
 import type { Token } from "@lib/types";
+import { Flex, Text } from "@radix-ui/themes";
+import React, { useState } from "react";
+import { formatEther, parseEther, type Address } from "viem";
 import { useAccount } from "wagmi";
-import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
 
 interface Props {
-  tokenAddress: Address,
+  tokenAddress: Address;
   handleInputChange: (value: bigint) => void;
 }
 
-export const MaxBalanceButton: React.FC<Props> = ({ tokenAddress, handleInputChange }) => {
+export const MaxBalanceButton: React.FC<Props> = ({
+  tokenAddress,
+  handleInputChange,
+}) => {
   const [inputValue, setInputValue] = useState<string>("0");
   const { address: userAddress } = useAccount();
-  const { chainId } = TOKENS[TOKEN_ADDRESSES[tokenAddress] as TokenSlugEnums] as Token;
+  const { chainId } = TOKENS[
+    TOKEN_ADDRESSES[tokenAddress] as TokenSlugEnums
+  ] as Token;
 
   const { balance } = useERC20Balance(tokenAddress, userAddress, chainId);
 
@@ -29,6 +34,7 @@ export const MaxBalanceButton: React.FC<Props> = ({ tokenAddress, handleInputCha
       <InputNumber
         value={inputValue}
         variant="soft"
+        max={formatEther(balance ?? 0n)}
         handleChange={(value: string) => {
           setInputValue(value);
           handleInputChange(parseEther(value));
