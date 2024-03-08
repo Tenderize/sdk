@@ -16,8 +16,8 @@ export const Unstake: FC = () => {
       <MaxBalanceButton
         tokenAddress={tenderizer}
         handleInputChange={(value: bigint) => {
-          setAmount(value)
-          console.log(value);
+          if (value && value != amount)
+            setAmount(value)
         }}
       />
       <ConnectKitButton /> {/* Todo: use wagmi config to change buttons */}

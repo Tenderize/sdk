@@ -17,8 +17,8 @@ export const Stake: FC = () => {
       <MaxBalanceButton
         tokenAddress={token.address}
         handleInputChange={(value: bigint) => {
-          setAmount(value)
-          console.log(value);
+          if (value && value != amount)
+            setAmount(value)
         }}
       />
       <InputNumber value={formatEther(previewDeposit ?? 0n)} disabled />

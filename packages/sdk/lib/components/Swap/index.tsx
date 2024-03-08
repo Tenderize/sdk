@@ -17,8 +17,8 @@ export const Swap: FC = () => {
       <MaxBalanceButton
         tokenAddress={tenderizer}
         handleInputChange={(value: bigint) => {
-          setAmount(value)
-          console.log(value);
+          if (value && value != amount)
+            setAmount(value)
         }}
       />
       <InputNumber value={formatEther(quote.out ?? 0n)} disabled />
