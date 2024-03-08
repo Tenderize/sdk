@@ -8,3 +8,8 @@ export { Stake } from './Stake'
 export { Swap } from './Swap'
 export { Tenderize } from './Tenderize'
 export default './Tenderize'
+
+// Third-party components
+
+// ConnectKit
+export { ConnectKitButton } from "connectkit";

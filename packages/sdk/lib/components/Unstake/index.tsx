@@ -1,7 +1,5 @@
 import { FC, useState } from "react";
 import { Flex } from "@radix-ui/themes";
-import { ConnectKitButton } from "connectkit";
-
 import MaxBalanceButton from "@lib/components/MaxBalanceButton";
 import { Button } from "@lib/components/Button";
 import { useSelectedToken } from "@lib/hooks";
@@ -20,7 +18,6 @@ export const Unstake: FC = () => {
             setAmount(value)
         }}
       />
-      <ConnectKitButton /> {/* Todo: use wagmi config to change buttons */}
       <Button variant="solid">Unstake</Button>
     </Flex>
   );

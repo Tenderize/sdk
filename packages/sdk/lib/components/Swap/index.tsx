@@ -1,5 +1,4 @@
 import { Flex } from "@radix-ui/themes";
-import { ConnectKitButton } from "connectkit";
 import MaxBalanceButton from "@lib/components/MaxBalanceButton";
 import { Button } from "@lib/components/Button";
 import { InputNumber } from "@lib/components/InputNumber";
@@ -22,7 +21,6 @@ export const Swap: FC = () => {
         }}
       />
       <InputNumber value={formatEther(quote.out ?? 0n)} disabled />
-      <ConnectKitButton /> {/* Todo: use wagmi config to change buttons */}
       <Button variant="solid">Swap</Button>
     </Flex>
   );
