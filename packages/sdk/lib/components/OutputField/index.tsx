@@ -1,9 +1,9 @@
 import { TextField } from "@radix-ui/themes";
 import {
-  ChangeEvent,
-  ComponentProps,
-  FC,
-  ReactNode,
+  type ChangeEvent,
+  type ComponentProps,
+  type FC,
+  type ReactNode,
   useCallback,
   useEffect,
   useRef,
@@ -22,12 +22,11 @@ interface Props extends TextFieldRadixProps {
   max?: string;
 }
 
-export const InputNumber: FC<Props> = ({
+export const OutputField: FC<Props> = ({
   placeholder = "Enter amount",
   icon,
   value,
   handleChange,
-  disabled,
   max,
   ...rest
 }) => {
@@ -73,7 +72,7 @@ export const InputNumber: FC<Props> = ({
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}
-        disabled={disabled}
+        disabled={true}
         {...rest}
       />
     </TextField.Root>
