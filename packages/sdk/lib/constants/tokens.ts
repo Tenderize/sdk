@@ -1,9 +1,9 @@
 import Grt from "@lib/assets/tokens/grt.png";
 import Lpt from "@lib/assets/tokens/lpt.png";
 import Matic from "@lib/assets/tokens/matic.png";
-import TGrt from "@lib/assets/tokens/tgrt.svg";
-import TLpt from "@lib/assets/tokens/tlpt.svg";
-import TMatic from "@lib/assets/tokens/tmatic.svg";
+import TGrt from "@lib/assets/tokens/tgrt.png";
+import TLpt from "@lib/assets/tokens/tlpt.png";
+import TMatic from "@lib/assets/tokens/tmatic.png";
 import {
   TokenNameEnums,
   TokenSlugEnums,

@@ -22,7 +22,7 @@ type SelectedItem = {
   name: string;
 };
 interface TokenSelectorProps extends DropdownMenuRadixProps {
-  defaultValue: TokenSlugEnums;
+  defaultValue?: TokenSlugEnums;
 }
 
 export const TokenSelector: FC<TokenSelectorProps> = (props) => {
@@ -48,8 +48,8 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     }
   }, [findDefaultItem]);
 
-  const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>();
   const { setSelectedToken } = useTokenStore();
+  const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>();
 
   const tokensData = Object.values(TOKENS).map((token: Token) => {
     return {
@@ -66,7 +66,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   return (
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
-        <Button variant="surface" size={"3"}>
+        <Button variant="soft" size={"3"} style={{ padding: 0 }}>
           <Flex gap="2" align="center" justify={"between"}>
             {!!Icon && <Icon />}
             <Text>{name || "Select Token"}</Text>
