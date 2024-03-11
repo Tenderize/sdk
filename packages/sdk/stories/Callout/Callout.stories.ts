@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { OutputField } from "../../lib/components";
+import { Callout } from "../../lib/components";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Example/OutputField",
-  component: OutputField,
+  title: "Example/Callout",
+  component: Callout,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -14,7 +14,7 @@ const meta = {
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {},
-} satisfies Meta<typeof OutputField>;
+} satisfies Meta<typeof Callout>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -23,24 +23,7 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
   args: {
-    value: "22422.34",
-  },
-};
-export const Classic: Story = {
-  args: {
-    value: "22422.34",
-    variant: "classic",
-  },
-};
-export const Soft: Story = {
-  args: {
-    value: "22422.34",
-    variant: "soft",
-  },
-};
-export const Surface: Story = {
-  args: {
-    value: "22422.34",
+    children: "This is a default callout.",
     variant: "surface",
   },
 };

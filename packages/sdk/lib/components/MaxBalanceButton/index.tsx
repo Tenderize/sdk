@@ -1,26 +1,29 @@
 import { OutputField } from "@lib/components/OutputField";
-import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
-import { useERC20Balance } from "@lib/hooks";
-import type { Token } from "@lib/types";
+import { TokenSlugEnums } from "@lib/constants";
+import { useERC20Balance, useSelectedToken } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
+import { getChainId } from "@wagmi/core";
 import React, { useState } from "react";
 import { formatEther, parseEther, type Address } from "viem";
-import { useAccount } from "wagmi";
+import { useAccount, useConfig } from "wagmi";
+import { TokenSelector } from "..";
 
 interface Props {
   tokenAddress: Address;
   handleInputChange: (value: bigint) => void;
+  method?: "stake" | "unstake";
 }
 
 export const MaxBalanceButton: React.FC<Props> = ({
   tokenAddress,
   handleInputChange,
+  method,
 }) => {
   const [inputValue, setInputValue] = useState<string>("0");
   const { address: userAddress } = useAccount();
-  const { chainId } = TOKENS[
-    TOKEN_ADDRESSES[tokenAddress] as TokenSlugEnums
-  ] as Token;
+  const wagmiConfig = useConfig();
+  const chainId = getChainId(wagmiConfig);
+  const { token } = useSelectedToken();
 
   const { balance } = useERC20Balance(tokenAddress, userAddress, chainId);
 
@@ -34,14 +37,25 @@ export const MaxBalanceButton: React.FC<Props> = ({
       <OutputField
         value={inputValue}
         variant="soft"
+        style={{ width: "100%", fontSize: 30 }}
         max={formatEther(balance ?? 0n)}
         handleChange={(value: string) => {
           setInputValue(value);
           handleInputChange(parseEther(value));
         }}
+        icon={
+          <TokenSelector
+            method={method}
+            defaultValue={
+              TokenSlugEnums[
+                token.slug.toUpperCase() as keyof typeof TokenSlugEnums
+              ]
+            }
+          />
+        }
       />
       <Text
-        className="cursor-pointer text-right"
+        className="cursor-pointer text-left"
         size={"1"}
         onClick={handleMaxButtonClick}
       >

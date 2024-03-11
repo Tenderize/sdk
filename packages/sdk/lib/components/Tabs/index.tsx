@@ -1,4 +1,4 @@
-import { Box, Tabs as TabsRadix } from "@radix-ui/themes";
+import { Tabs as TabsRadix } from "@radix-ui/themes";
 import type { ComponentProps, FC } from "react";
 
 type TextFieldRadixProps = ComponentProps<typeof TabsRadix.Root>;
@@ -23,15 +23,11 @@ export const Tabs: FC<Props> = (props) => {
         ))}
       </TabsRadix.List>
 
-      <Box px="4" pt="3" pb="2">
-        {tabsData.map((tab) => (
-          <TabsRadix.Content value={tab.value} key={tab.value}>
-            <Box px="4" pt="3" pb="2" className="min-h-[200px]">
-              {tab.content()}
-            </Box>
-          </TabsRadix.Content>
-        ))}
-      </Box>
+      {tabsData.map((tab) => (
+        <TabsRadix.Content value={tab.value} key={tab.value}>
+          {tab.content()}
+        </TabsRadix.Content>
+      ))}
     </TabsRadix.Root>
   );
 };

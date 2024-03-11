@@ -1,13 +1,14 @@
 import { TextField } from "@radix-ui/themes";
 import {
-  type ChangeEvent,
-  type ComponentProps,
-  type FC,
-  type ReactNode,
   useCallback,
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
+  type ChangeEvent,
+  type ComponentProps,
+  type FC,
+  type ReactNode,
 } from "react";
 import { parseEther } from "viem";
 
@@ -20,6 +21,7 @@ interface Props extends TextFieldRadixProps {
   value?: string;
   handleChange?: (event: string) => void;
   max?: string;
+  style?: CSSProperties;
 }
 
 export const OutputField: FC<Props> = ({
@@ -28,6 +30,7 @@ export const OutputField: FC<Props> = ({
   value,
   handleChange,
   max,
+  style,
   ...rest
 }) => {
   const [inputValue, setInputValue] = useState<string>(value || "");
@@ -66,15 +69,16 @@ export const OutputField: FC<Props> = ({
   };
 
   return (
-    <TextField.Root {...rest}>
-      {icon && <TextField.Slot>{icon}</TextField.Slot>}
+    <TextField.Root {...rest} style={{ ...style }}>
       <TextField.Input
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}
-        disabled={true}
+        size={"3"}
+        style={{ ...style }}
         {...rest}
       />
+      {icon && <TextField.Slot>{icon}</TextField.Slot>}
     </TextField.Root>
   );
 };
