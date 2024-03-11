@@ -21,9 +21,9 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
     >
       <Box
         style={{
-          left: "47%",
+          left: "50%",
           right: "50%",
-          top: "43%",
+          top: "46%",
           transform: "translate(-50%, -50%)",
           width: "max-content",
           borderRadius: "10px",
