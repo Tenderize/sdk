@@ -9,8 +9,6 @@ import { CalloutLayout } from "../CalloutLayout";
 export const Unstake: FC = () => {
   const [amount, setAmount] = useState<bigint>(0n);
   const { token, tenderizer } = useSelectedToken();
-  console.log("token", token);
-  console.log("tenderizer", tenderizer);
   return (
     <CalloutLayout
       callOutFirstChildren={
@@ -19,6 +17,7 @@ export const Unstake: FC = () => {
           <MaxBalanceButton
             method="unstake"
             tokenAddress={tenderizer}
+            tokenSlug={token.slug}
             handleInputChange={(value: bigint) => {
               setAmount(value);
             }}

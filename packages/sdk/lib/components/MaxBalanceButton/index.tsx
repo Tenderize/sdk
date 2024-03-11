@@ -1,28 +1,29 @@
 import { OutputField } from "@lib/components/OutputField";
-import { TokenSlugEnums } from "@lib/constants";
+import { TOKENS, TokenSlugEnums } from "@lib/constants";
 import { useERC20Balance, useSelectedToken } from "@lib/hooks";
+import type { Token } from "@lib/types";
 import { Flex, Text } from "@radix-ui/themes";
-import { getChainId } from "@wagmi/core";
 import React, { useState } from "react";
 import { formatEther, parseEther, type Address } from "viem";
-import { useAccount, useConfig } from "wagmi";
+import { useAccount } from "wagmi";
 import { TokenSelector } from "..";
 
 interface Props {
   tokenAddress: Address;
   handleInputChange: (value: bigint) => void;
   method?: "stake" | "unstake";
+  tokenSlug: TokenSlugEnums;
 }
 
 export const MaxBalanceButton: React.FC<Props> = ({
   tokenAddress,
   handleInputChange,
+  tokenSlug,
   method,
 }) => {
   const [inputValue, setInputValue] = useState<string>("0");
   const { address: userAddress } = useAccount();
-  const wagmiConfig = useConfig();
-  const chainId = getChainId(wagmiConfig);
+  const { chainId } = TOKENS[tokenSlug] as Token;
   const { token } = useSelectedToken();
 
   const { balance } = useERC20Balance(tokenAddress, userAddress, chainId);

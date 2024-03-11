@@ -38,6 +38,7 @@ export const Stake: FC = () => {
           <MaxBalanceButton
             tokenAddress={token.address}
             method="stake"
+            tokenSlug={token.slug}
             handleInputChange={(value: bigint) => {
               setAmount(value);
             }}
