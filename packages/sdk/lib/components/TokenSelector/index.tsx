@@ -23,10 +23,11 @@ type SelectedItem = {
 };
 interface TokenSelectorProps extends DropdownMenuRadixProps {
   defaultValue?: TokenSlugEnums;
+  method?: "stake" | "unstake";
 }
 
 export const TokenSelector: FC<TokenSelectorProps> = (props) => {
-  const { defaultValue } = props;
+  const { defaultValue, method } = props;
 
   const findDefaultItem = Object.values(TOKENS).find(
     (token) => token.slug === defaultValue
@@ -39,14 +40,21 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
           <img
             width={25}
             height={25}
-            src={findDefaultItem.img.token}
+            src={
+              method === "unstake"
+                ? findDefaultItem.img.tToken
+                : findDefaultItem.img.token
+            }
             alt={findDefaultItem.name}
           />
         ),
-        name: findDefaultItem.currency,
+        name:
+          method === "unstake"
+            ? `t${findDefaultItem.currency}`
+            : findDefaultItem.currency,
       });
     }
-  }, [findDefaultItem]);
+  }, [findDefaultItem, method]);
 
   const { setSelectedToken } = useTokenStore();
   const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>();
@@ -54,9 +62,14 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const tokensData = Object.values(TOKENS).map((token: Token) => {
     return {
       Icon: () => (
-        <img width={25} height={25} src={token.img.token} alt={token.name} />
+        <img
+          width={25}
+          height={25}
+          src={method === "unstake" ? token.img.tToken : token.img.token}
+          alt={token.name}
+        />
       ),
-      name: token.currency,
+      name: method === "unstake" ? `t${token.currency}` : token.currency,
       slug: token.slug,
     };
   });

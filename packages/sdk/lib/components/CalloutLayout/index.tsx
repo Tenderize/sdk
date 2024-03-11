@@ -25,6 +25,9 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
           right: "50%",
           top: "43%",
           transform: "translate(-50%, -50%)",
+          width: "max-content",
+          borderRadius: "10px",
+          border: "8px solid #fff",
         }}
         position={"absolute"}
       >

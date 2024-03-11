@@ -11,11 +11,13 @@ import { TokenSelector } from "..";
 interface Props {
   tokenAddress: Address;
   handleInputChange: (value: bigint) => void;
+  method?: "stake" | "unstake";
 }
 
 export const MaxBalanceButton: React.FC<Props> = ({
   tokenAddress,
   handleInputChange,
+  method,
 }) => {
   const [inputValue, setInputValue] = useState<string>("0");
   const { address: userAddress } = useAccount();
@@ -43,6 +45,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
         }}
         icon={
           <TokenSelector
+            method={method}
             defaultValue={
               TokenSlugEnums[
                 token.slug.toUpperCase() as keyof typeof TokenSlugEnums
