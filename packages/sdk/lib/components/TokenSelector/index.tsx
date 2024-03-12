@@ -1,6 +1,7 @@
-import { TOKENS, TokenSlugEnums } from "@lib/constants";
-import { setSelectedToken } from "@lib/contexts";
-import { type Token } from "@lib/types";
+import { useAvailableTokens } from "@lib/config/store";
+import { ActionEnums, TOKENS, TokenSlugEnums } from "@lib/constants";
+import { setSelectedToken, useSelectedToken } from "@lib/contexts";
+import type { Token } from "@lib/types";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
   Box,
@@ -9,7 +10,7 @@ import {
   Flex,
   Text,
 } from "@radix-ui/themes";
-import React, { useEffect, useState, type FC } from "react";
+import React, { useEffect, type FC } from "react";
 
 type DropdownMenuRadixProps = React.ComponentProps<
   typeof DropdownMenuRadix.Root &
@@ -17,71 +18,52 @@ type DropdownMenuRadixProps = React.ComponentProps<
   typeof DropdownMenuRadix.Item &
   typeof DropdownMenuRadix.Trigger
 >;
-type SelectedItem = {
-  Icon: FC;
-  name: string;
-};
+
 interface TokenSelectorProps extends DropdownMenuRadixProps {
+  action?: ActionEnums;
   defaultValue?: TokenSlugEnums;
-  method?: "stake" | "unstake";
+
 }
 
 export const TokenSelector: FC<TokenSelectorProps> = (props) => {
-  const { defaultValue, method } = props;
+  const { action = ActionEnums.STAKE, defaultValue } = props
 
-  const findDefaultItem = Object.values(TOKENS).find(
-    (token) => token.slug === defaultValue
+  const selectedToken = useSelectedToken()
+
+  const tokens = useAvailableTokens()
+
+  const isWrappedToken = (action: ActionEnums) => {
+    return action !== ActionEnums.STAKE
+  }
+
+  useEffect(() => { if (defaultValue) setSelectedToken(defaultValue) }, [defaultValue]);
+
+  const Icon: FC<{ action: ActionEnums, selectedToken: Token }> = ({ action, selectedToken }) => (
+    <img
+      width={isWrappedToken(action) ? 30 : 25}
+      height={isWrappedToken(action) ? 30 : 25}
+      src={isWrappedToken(action) ? selectedToken.img.tToken : selectedToken.img.token}
+      alt={selectedToken.name}
+    />
   );
 
-  useEffect(() => {
-    if (findDefaultItem) {
-      setSelectedItem({
-        Icon: () => (
-          <img
-            width={25}
-            height={25}
-            src={
-              method === "unstake"
-                ? findDefaultItem.img.tToken
-                : findDefaultItem.img.token
-            }
-            alt={findDefaultItem.name}
-          />
-        ),
-        name:
-          method === "unstake"
-            ? `t${findDefaultItem.currency}`
-            : findDefaultItem.currency,
-      });
-    }
-  }, [findDefaultItem, method]);
-
-  const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>();
-
-  const tokensData = Object.values(TOKENS).map((token: Token) => {
+  const tokensData = tokens.map(t => {
     return {
-      Icon: () => (
-        <img
-          width={25}
-          height={25}
-          src={method === "unstake" ? token.img.tToken : token.img.token}
-          alt={token.name}
-        />
-      ),
-      name: method === "unstake" ? `t${token.currency}` : token.currency,
-      slug: token.slug,
+      Icon: () => <Icon action={action} selectedToken={TOKENS[t as TokenSlugEnums]} />,
+      name: isWrappedToken(action) ? `t${selectedToken.currency}` : selectedToken.currency,
+      slug: t as TokenSlugEnums,
     };
   });
 
-  const { Icon, name } = selectedItem || {};
+  const selectedTokenData = tokensData.find(data => data.slug === selectedToken.slug)
 
   return (
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
         <Button variant="soft" size={"3"} style={{ padding: 0 }}>
           <Flex gap="2" align="center" justify={"between"}>
-            {!!Icon && <Icon />}
-            <Text>{name || "Select Token"}</Text>
+            {!!selectedTokenData?.Icon && <selectedTokenData.Icon />}
+            <Text>{selectedTokenData?.name || "Select Token"}</Text>
             <ChevronDownIcon />
           </Flex>
         </Button>
@@ -91,10 +73,9 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
           {tokensData.map((item, index) => (
             <DropdownMenuRadix.Item
               style={{
-                ...(selectedItem?.name === item.name && { opacity: 0.5 }),
+                ...(selectedToken?.slug === item.slug && { opacity: 0.5 }),
               }}
               onSelect={() => {
-                setSelectedItem(item);
                 setSelectedToken(item.slug);
               }}
               key={index}
@@ -104,7 +85,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
                   {item.Icon && <item.Icon />}
                   <Flex gap="1" align={"center"}>
                     <Text>{item.name}</Text>
-                    {selectedItem?.name === item.name && <CheckIcon />}
+                    {selectedToken?.name === item.name && <CheckIcon />}
                   </Flex>
                 </Flex>
               </Box>

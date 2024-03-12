@@ -1,5 +1,5 @@
 import { OutputField } from "@lib/components/OutputField";
-import { TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
+import { ActionEnums } from "@lib/constants";
 import { useERC20Balance } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import React, { useState } from "react";
@@ -10,11 +10,13 @@ import { useSelectedToken } from "@lib/contexts";
 import { useChainId } from "@lib/config/store";
 
 interface Props {
+  action?: ActionEnums;
   tokenAddress: Address;
   handleInputChange: (value: bigint) => void;
 }
 
 export const MaxBalanceButton: React.FC<Props> = ({
+  action,
   tokenAddress,
   handleInputChange,
 }) => {
@@ -43,6 +45,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
         }}
         icon={
           <TokenSelector
+            action={action || ActionEnums.STAKE}
             defaultValue={
               token.slug
             }

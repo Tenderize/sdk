@@ -26,11 +26,14 @@ export const useTenderizer = (token: TokenSlugEnums) => {
 
 export const useChain = (token: TokenSlugEnums) => {
     return useTenderizeConfigStore((state) => state.chains[token] ?? mainnet);
-
 }
 
 export const useChainId = (token: TokenSlugEnums) => {
     return useTenderizeConfigStore((state) => state.chains[token]?.id ?? 0);
+}
+
+export const useAvailableTokens = () => {
+    return useTenderizeConfigStore(state => Object.keys(state.chains))
 }
 
 export const { setConfig } = useTenderizeConfigStore();
