@@ -34,24 +34,6 @@ export const MaxBalanceButton: React.FC<Props> = ({
 
   return (
     <Flex direction="column" gap="2">
-      <OutputField
-        value={inputValue}
-        variant="soft"
-        style={{ width: "100%", fontSize: 30 }}
-        max={formatEther(balance ?? 0n)}
-        handleChange={(value: string) => {
-          setInputValue(value);
-          handleInputChange(parseEther(value));
-        }}
-        icon={
-          <TokenSelector
-            action={action || ActionEnums.STAKE}
-            defaultValue={
-              token.slug
-            }
-          />
-        }
-      />
       <Text
         className="cursor-pointer text-left"
         size={"1"}
