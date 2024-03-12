@@ -1,23 +1,28 @@
 import { Button } from "@lib/components/Button";
 import MaxBalanceButton from "@lib/components/MaxBalanceButton";
+import { useChainId, useTenderizer } from "@lib/config/store";
+import { ActionEnums } from "@lib/constants";
+import { useSelectedToken } from "@lib/contexts";
+import { useERC20Balance } from "@lib/hooks";
+import { useUnlocks } from "@lib/hooks/unlocks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { OutputField } from "..";
-import { CalloutLayout } from "../CalloutLayout";
-import { useTenderizer, useChainId } from "@lib/config/store";
-import { useSelectedToken } from "@lib/contexts";
-import { useUnlocks } from "@lib/hooks/unlocks";
+import { formatEther, type Address } from "viem";
 import { useAccount } from "wagmi";
-import type { Address } from "viem";
+import { InputField, OutputField, TokenSelector } from "..";
+import { CalloutLayout } from "../CalloutLayout";
 
 export const Unstake: FC = () => {
-  const [amount, setAmount] = useState<bigint>(0n);
+  const [amount, setAmount] = useState<string>("0");
   const token = useSelectedToken();
-  const tenderizer = useTenderizer(token.slug)
-  const chainId = useChainId(token.slug)
-  const { address: user } = useAccount()
+  const tenderizer = useTenderizer(token.slug);
+  const chainId = useChainId(token.slug);
+  const { address: user } = useAccount();
 
-  const unlocks = useUnlocks(tenderizer, user ?? "" as Address, chainId)
+  const { address: userAddress } = useAccount();
+  const { balance } = useERC20Balance(tenderizer, userAddress, token.chainId);
+
+  const unlocks = useUnlocks(tenderizer, user ?? ("" as Address), chainId);
   unlocks;
 
   return (
@@ -25,9 +30,20 @@ export const Unstake: FC = () => {
       callOutFirstChildren={
         <Flex gap="2" content="between" direction="column" p="2">
           <Text size="2">You Unstake</Text>
+          <InputField
+            variant="soft"
+            className=""
+            max={formatEther(balance)}
+            style={{ width: "100%", fontSize: 30 }}
+            handleChange={(value: string) => {
+              setAmount(value || "0");
+            }}
+            value={amount}
+            icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
+          />
           <MaxBalanceButton
-            tokenAddress={tenderizer}
-            handleInputChange={(value: bigint) => {
+            max={formatEther(balance)}
+            handleInputChange={(value: string) => {
               setAmount(value);
             }}
           />
@@ -60,7 +76,7 @@ export const Unstake: FC = () => {
           <Button
             style={{ width: "100%" }}
             size="3"
-            onClick={() => { }}
+            onClick={() => {}}
             variant="solid"
           >
             Unstake {token.currency}

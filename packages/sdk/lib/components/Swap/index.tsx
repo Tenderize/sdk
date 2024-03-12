@@ -1,26 +1,32 @@
 import { Button } from "@lib/components/Button";
 import MaxBalanceButton from "@lib/components/MaxBalanceButton";
 import { OutputField } from "@lib/components/OutputField";
-import { type FC, useState } from "react";
-import { useQuote } from "@lib/hooks";
+import { useChainId, useTenderizer } from "@lib/config/store";
 import { useSelectedToken } from "@lib/contexts";
-import { formatEther } from "viem";
-import { useTenderizer, useChainId } from "@lib/config/store";
+import { useQuote } from "@lib/hooks";
 import { Flex } from "@radix-ui/themes";
+import { useState, type FC } from "react";
+import { formatEther, parseEther } from "viem";
 
 export const Swap: FC = () => {
-  const [amount, setAmount] = useState<bigint>(0n);
+  const [amount, setAmount] = useState<string>("0");
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
-  const { quote, isLoading, isError } = useQuote(token.slug, tenderizer, amount, chainId);
-  isLoading; isError;
+  const { quote, isLoading, isError } = useQuote(
+    token.slug,
+    tenderizer,
+    parseEther(amount),
+    chainId
+  );
+  isLoading;
+  isError;
   return (
     <Flex direction="column" gap="2">
       <MaxBalanceButton
-        tokenAddress={tenderizer}
-        handleInputChange={(value: bigint) => {
-          if (value && value != amount) setAmount(value);
+        max={"0"} // Todo , will change to balance
+        handleInputChange={(value: string) => {
+          setAmount(value);
         }}
       />
       <OutputField value={formatEther(quote.out ?? 0n)} disabled />

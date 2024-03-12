@@ -1,35 +1,17 @@
-import { OutputField } from "@lib/components/OutputField";
-import { ActionEnums } from "@lib/constants";
-import { useERC20Balance } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
-import React, { useState } from "react";
-import { formatEther, parseEther, type Address } from "viem";
-import { useAccount } from "wagmi";
-import { TokenSelector } from "..";
-import { useSelectedToken } from "@lib/contexts";
-import { useChainId } from "@lib/config/store";
+import React from "react";
 
 interface Props {
-  action?: ActionEnums;
-  tokenAddress: Address;
-  handleInputChange: (value: bigint) => void;
+  max: string;
+  handleInputChange: (value: string) => void;
 }
 
 export const MaxBalanceButton: React.FC<Props> = ({
-  action,
-  tokenAddress,
   handleInputChange,
+  max,
 }) => {
-  const [inputValue, setInputValue] = useState<string>("0");
-  const { address: userAddress } = useAccount();
-  const token = useSelectedToken();
-  const chainId = useChainId(token.slug);
-
-  const { balance } = useERC20Balance(tokenAddress, userAddress, chainId);
-
   const handleMaxButtonClick = () => {
-    handleInputChange(balance);
-    setInputValue(formatEther(balance));
+    handleInputChange(max);
   };
 
   return (
@@ -39,7 +21,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
         size={"1"}
         onClick={handleMaxButtonClick}
       >
-        Max: {formatEther(balance)}
+        Max: {max}
       </Text>
     </Flex>
   );

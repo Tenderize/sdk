@@ -1,6 +1,8 @@
 export * from "./Button";
 export * from "./Callout";
+export * from "./CalloutLayout";
 export * from "./Card";
+export * from "./InputField";
 export * from "./MaxBalanceButton";
 export * from "./OutputField";
 export * from "./Stake";
@@ -10,9 +12,7 @@ export * from "./Tabs";
 export * from "./Tenderize";
 export * from "./TokenSelector";
 export * from "./Unstake";
-export * from "./CalloutLayout";
 export default "./Tenderize";
-
 
 // Third-party components
 

@@ -16,5 +16,3 @@ export type UseSelectedToken = () => Token;
 
 export const useSelectedToken: UseSelectedToken = () =>
   useSelectedTokenStore((state) => TOKENS[state.selectedToken]);
-
-export const { setSelectedToken } = useSelectedTokenStore();

@@ -1,26 +1,30 @@
 import { Button } from "@lib/components/Button";
+import { CalloutLayout } from "@lib/components/CalloutLayout";
 import { MaxBalanceButton } from "@lib/components/MaxBalanceButton";
 import { OutputField } from "@lib/components/OutputField";
+import { useChainId, useTenderizer } from "@lib/config/store";
+import { useSelectedToken } from "@lib/contexts";
 import {
   useDeposit,
   useERC20Approve,
-  usePreviewDeposit
+  useERC20Balance,
+  usePreviewDeposit,
 } from "@lib/hooks";
-import { useSelectedToken } from "@lib/contexts";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther } from "viem";
-import { CalloutLayout } from "@lib/components/CalloutLayout";
-import { useTenderizer, useChainId } from "@lib/config/store";
+import { formatEther, parseEther } from "viem";
+import { useAccount } from "wagmi";
+import { InputField, TokenSelector } from "..";
 
 export const Stake: FC = () => {
-  const [amount, setAmount] = useState<bigint>(0n);
+  const [amount, setAmount] = useState<string>("0");
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
-  const chainId = useChainId(token.slug)
+  const chainId = useChainId(token.slug);
+  const parseAmount = parseEther(amount);
   const { previewDeposit, isLoading, isError } = usePreviewDeposit(
     tenderizer,
-    amount,
+    parseAmount,
     chainId
   );
   isLoading;
@@ -29,18 +33,39 @@ export const Stake: FC = () => {
   const { mutate: approve, data: approval } = useERC20Approve(
     token.address,
     tenderizer,
-    amount,
+    parseAmount,
     chainId
   );
-  const { mutate: deposit } = useDeposit(tenderizer, amount, token.chainId);
+  const { mutate: deposit } = useDeposit(
+    tenderizer,
+    parseAmount,
+    token.chainId
+  );
+  const { address: userAddress } = useAccount();
+  const { balance } = useERC20Balance(
+    token.address,
+    userAddress,
+    token.chainId
+  );
   return (
     <CalloutLayout
       callOutFirstChildren={
         <Flex gap="2" content="between" direction="column" p="2">
           <Text size="2">You pay</Text>
+          <InputField
+            variant="soft"
+            className=""
+            max={formatEther(balance)}
+            style={{ width: "100%", fontSize: 30 }}
+            handleChange={(value: string) => {
+              setAmount(value || "0");
+            }}
+            value={amount}
+            icon={<TokenSelector />}
+          />
           <MaxBalanceButton
-            tokenAddress={token.address}
-            handleInputChange={(value: bigint) => {
+            max={formatEther(balance)}
+            handleInputChange={(value: string) => {
               setAmount(value);
             }}
           />

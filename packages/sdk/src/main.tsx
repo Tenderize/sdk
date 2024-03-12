@@ -2,12 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 
-import { TenderizeProvider, TokenSlugEnums, createTenderizeConfig, type TenderizersConfig, type TenderizeChains } from "@tenderize/sdk";
+import { TokenSlugEnums } from "@lib/constants";
+import { TenderizeProvider } from "@lib/contexts";
 
-import { ThemeProvider } from "@tenderize/sdk";
-import { mainnet, arbitrum } from "wagmi/chains";
+import { ThemeProvider } from "@lib/contexts";
+import {
+  createTenderizeConfig,
+  type TenderizeChains,
+  type TenderizersConfig,
+} from "@lib/main.ts";
 import { http } from "wagmi";
-
+import { arbitrum, mainnet } from "wagmi/chains";
 
 const TENDERIZERS: TenderizersConfig = {
   [TokenSlugEnums.MATIC]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
@@ -15,8 +20,14 @@ const TENDERIZERS: TenderizersConfig = {
   [TokenSlugEnums.GRAPH]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
 };
 
-const mainnetChain = { ...mainnet, id: process.env.LOCALHOST ? 13371 : mainnet.id }
-const arbitrumChain = { ...arbitrum, id: process.env.LOCALHOST ? 133742161 : arbitrum.id }
+const mainnetChain = {
+  ...mainnet,
+  id: process.env.LOCALHOST ? 13371 : mainnet.id,
+};
+const arbitrumChain = {
+  ...arbitrum,
+  id: process.env.LOCALHOST ? 133742161 : arbitrum.id,
+};
 
 const CHAINS: TenderizeChains = {
   [TokenSlugEnums.MATIC]: mainnetChain,
@@ -30,7 +41,7 @@ const config = createTenderizeConfig({
   transports: {
     [mainnetChain.id]: http("http://localhost:8546"),
     [arbitrumChain.id]: http("http://localhost:8545"),
-  }
+  },
   // apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
 });
 
