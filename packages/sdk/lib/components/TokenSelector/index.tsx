@@ -32,14 +32,16 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const findDefaultItem = Object.values(TOKENS).find(
     (token) => token.slug === defaultValue
   );
+  const width = method === "unstake" ? 30 : 25;
+  const height = method === "unstake" ? 30 : 25;
 
   useEffect(() => {
     if (findDefaultItem) {
       setSelectedItem({
         Icon: () => (
           <img
-            width={25}
-            height={25}
+            width={width}
+            height={height}
             src={
               method === "unstake"
                 ? findDefaultItem.img.tToken
@@ -54,7 +56,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
             : findDefaultItem.currency,
       });
     }
-  }, [findDefaultItem, method]);
+  }, [findDefaultItem, height, method, width]);
 
   const { setSelectedToken } = useTokenStore();
   const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>();
@@ -63,8 +65,8 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     return {
       Icon: () => (
         <img
-          width={25}
-          height={25}
+          width={width}
+          height={height}
           src={method === "unstake" ? token.img.tToken : token.img.token}
           alt={token.name}
         />
@@ -79,7 +81,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   return (
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
-        <Button variant="soft" size={"3"} style={{ padding: 0 }}>
+        <Button variant="ghost" size={"3"} style={{ padding: 0 }}>
           <Flex gap="2" align="center" justify={"between"}>
             {!!Icon && <Icon />}
             <Text>{name || "Select Token"}</Text>

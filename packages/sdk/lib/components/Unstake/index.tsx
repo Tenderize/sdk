@@ -34,13 +34,13 @@ export const Unstake: FC = () => {
             value={amount.toString()}
             icon={
               <Flex align="center" gap="1">
-                <Text size="2">{`${token.currency}`}</Text>
                 <img
                   width={25}
                   height={25}
                   src={token.img?.token}
                   alt={token.name}
                 />
+                <Text size="3">{`${token.currency}`}</Text>
               </Flex>
             }
           />

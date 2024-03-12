@@ -38,7 +38,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
       <OutputField
         value={inputValue}
         variant="soft"
-        style={{ width: "100%", fontSize: 30 }}
+        style={{ width: "100%", fontSize: 30, paddingRight: 10 }}
         max={formatEther(balance ?? 0n)}
         handleChange={(value: string) => {
           setInputValue(value);
