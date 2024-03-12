@@ -1,0 +1,16 @@
+import { Meta, ColorPalette, ColorItem } from "@storybook/blocks";
+import * as RadixColor from "@radix-ui/colors"; // Use a more descriptive alias
+
+<Meta title="Radix UI Theme Colors" />
+<div style={{ width: "100%" }}>
+  <ColorPalette>
+    {Object.keys(RadixColor).map((colorName) => (
+      <ColorItem
+        key={colorName}
+        title={colorName}
+        subtitle={`${colorName} color palette`}
+        colors={{ ...RadixColor[colorName] }}
+      />
+    ))}
+  </ColorPalette>
+</div>
