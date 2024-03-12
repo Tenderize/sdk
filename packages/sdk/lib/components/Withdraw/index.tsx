@@ -19,7 +19,7 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
         <Heading size="4">Your balance</Heading>
         <Separator orientation="horizontal" size="4" />
         <Grid
-          style={{ gridTemplateColumns: "1.5fr 1fr 1fr" }}
+          style={{ gridTemplateColumns: "1.6fr 1fr 1fr" }}
           columns="3"
           gap="4"
           width="auto"
