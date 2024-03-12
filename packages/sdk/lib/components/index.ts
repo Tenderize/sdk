@@ -12,6 +12,7 @@ export * from "./Tabs";
 export * from "./Tenderize";
 export * from "./TokenSelector";
 export * from "./Unstake";
+export * from "./Withdraw";
 export default "./Tenderize";
 
 // Third-party components

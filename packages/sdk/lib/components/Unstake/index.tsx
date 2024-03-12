@@ -11,6 +11,7 @@ import { formatEther, type Address } from "viem";
 import { useAccount } from "wagmi";
 import { InputField, OutputField, TokenSelector } from "..";
 import { CalloutLayout } from "../CalloutLayout";
+import { Withdraw } from "../Withdraw";
 
 export const Unstake: FC = () => {
   const [amount, setAmount] = useState<string>("0");
@@ -26,63 +27,66 @@ export const Unstake: FC = () => {
   unlocks;
 
   return (
-    <CalloutLayout
-      callOutFirstChildren={
-        <Flex gap="2" content="between" direction="column" p="2">
-          <Text size="2">You Unstake</Text>
-          <InputField
-            variant="soft"
-            className=""
-            max={formatEther(balance)}
-            style={{ width: "100%", fontSize: 30 }}
-            handleChange={(value: string) => {
-              setAmount(value || "0");
-            }}
-            value={amount}
-            icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
-          />
-          <MaxBalanceButton
-            max={formatEther(balance)}
-            handleInputChange={(value: string) => {
-              setAmount(value);
-            }}
-          />
-        </Flex>
-      }
-      callOutSecondChildren={
-        <Flex direction="column" gap="2" p="2" width="100%">
-          <Text size="2">You Recieve</Text>
-          <OutputField
-            variant="soft"
-            className=""
-            style={{ width: "100%", fontSize: 30 }}
-            value={amount.toString()}
-            icon={
-              <Flex align="center" gap="1">
-                <Text size="2">{`${token.currency}`}</Text>
-                <img
-                  width={25}
-                  height={25}
-                  src={token.img?.token}
-                  alt={token.name}
-                />
-              </Flex>
-            }
-          />
-        </Flex>
-      }
-      callOutActionChildren={
-        <Flex gap="2" width="100%">
-          <Button
-            style={{ width: "100%" }}
-            size="3"
-            onClick={() => {}}
-            variant="solid"
-          >
-            Unstake {token.currency}
-          </Button>
-        </Flex>
-      }
-    ></CalloutLayout>
+    <Flex gap="2" content="between" direction="column" p="2">
+      <Withdraw />
+      <CalloutLayout
+        callOutFirstChildren={
+          <Flex gap="2" content="between" direction="column" p="2">
+            <Text size="2">You Unstake</Text>
+            <InputField
+              variant="soft"
+              className=""
+              max={formatEther(balance)}
+              style={{ width: "100%", fontSize: 30 }}
+              handleChange={(value: string) => {
+                setAmount(value || "0");
+              }}
+              value={amount}
+              icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
+            />
+            <MaxBalanceButton
+              max={formatEther(balance)}
+              handleInputChange={(value: string) => {
+                setAmount(value);
+              }}
+            />
+          </Flex>
+        }
+        callOutSecondChildren={
+          <Flex direction="column" gap="2" p="2" width="100%">
+            <Text size="2">You Recieve</Text>
+            <OutputField
+              variant="soft"
+              className=""
+              style={{ width: "100%", fontSize: 30 }}
+              value={amount.toString()}
+              icon={
+                <Flex align="center" gap="2">
+                  <img
+                    width={25}
+                    height={25}
+                    src={token.img?.token}
+                    alt={token.name}
+                  />
+                  <Text size="3">{`${token.currency}`}</Text>
+                </Flex>
+              }
+            />
+          </Flex>
+        }
+        callOutActionChildren={
+          <Flex gap="2" width="100%">
+            <Button
+              style={{ width: "100%" }}
+              size="3"
+              onClick={() => {}}
+              variant="solid"
+            >
+              Unstake {token.currency}
+            </Button>
+          </Flex>
+        }
+      ></CalloutLayout>
+    </Flex>
   );
 };

@@ -80,14 +80,14 @@ export const Stake: FC = () => {
             style={{ width: "100%", fontSize: 30 }}
             value={formatEther(previewDeposit ?? 0n)}
             icon={
-              <Flex align="center" gap="1">
-                <Text size="2">{`t${token.currency}`}</Text>
+              <Flex align="center" gap="2">
                 <img
-                  width={25}
-                  height={25}
+                  width={30}
+                  height={30}
                   src={token.img?.tToken}
                   alt={token.name}
                 />
+                <Text size="3">{`t${token.currency}`}</Text>
               </Flex>
             }
           />
