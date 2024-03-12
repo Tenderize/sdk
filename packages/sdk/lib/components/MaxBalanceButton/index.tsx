@@ -1,30 +1,27 @@
 import { OutputField } from "@lib/components/OutputField";
-import { TOKENS, TokenSlugEnums } from "@lib/constants";
-import { useERC20Balance, useSelectedToken } from "@lib/hooks";
-import type { Token } from "@lib/types";
+import { TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
+import { useERC20Balance } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import React, { useState } from "react";
 import { formatEther, parseEther, type Address } from "viem";
 import { useAccount } from "wagmi";
 import { TokenSelector } from "..";
+import { useSelectedToken } from "@lib/contexts";
+import { useChainId } from "@lib/config/store";
 
 interface Props {
   tokenAddress: Address;
   handleInputChange: (value: bigint) => void;
-  method?: "stake" | "unstake";
-  tokenSlug: TokenSlugEnums;
 }
 
 export const MaxBalanceButton: React.FC<Props> = ({
   tokenAddress,
   handleInputChange,
-  tokenSlug,
-  method,
 }) => {
   const [inputValue, setInputValue] = useState<string>("0");
   const { address: userAddress } = useAccount();
-  const { chainId } = TOKENS[tokenSlug] as Token;
-  const { token } = useSelectedToken();
+  const token = useSelectedToken();
+  const chainId = useChainId(token.slug);
 
   const { balance } = useERC20Balance(tokenAddress, userAddress, chainId);
 
@@ -46,11 +43,8 @@ export const MaxBalanceButton: React.FC<Props> = ({
         }}
         icon={
           <TokenSelector
-            method={method}
             defaultValue={
-              TokenSlugEnums[
-                token.slug.toUpperCase() as keyof typeof TokenSlugEnums
-              ]
+              token.slug
             }
           />
         }

@@ -10,7 +10,9 @@ export * from "./Tabs";
 export * from "./Tenderize";
 export * from "./TokenSelector";
 export * from "./Unstake";
+export * from "./CalloutLayout";
 export default "./Tenderize";
+
 
 // Third-party components
 

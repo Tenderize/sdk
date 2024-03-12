@@ -1,23 +1,32 @@
 import { Button } from "@lib/components/Button";
 import MaxBalanceButton from "@lib/components/MaxBalanceButton";
-import { useSelectedToken } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
 import { OutputField } from "..";
 import { CalloutLayout } from "../CalloutLayout";
+import { useTenderizer, useChainId } from "@lib/config/store";
+import { useSelectedToken } from "@lib/contexts";
+import { useUnlocks } from "@lib/hooks/unlocks";
+import { useAccount } from "wagmi";
+import type { Address } from "viem";
 
 export const Unstake: FC = () => {
   const [amount, setAmount] = useState<bigint>(0n);
-  const { token, tenderizer } = useSelectedToken();
+  const token = useSelectedToken();
+  const tenderizer = useTenderizer(token.slug)
+  const chainId = useChainId(token.slug)
+  const { address: user } = useAccount()
+
+  const unlocks = useUnlocks(tenderizer, user ?? "" as Address, chainId)
+  unlocks;
+
   return (
     <CalloutLayout
       callOutFirstChildren={
         <Flex gap="2" content="between" direction="column" p="2">
           <Text size="2">You Unstake</Text>
           <MaxBalanceButton
-            method="unstake"
             tokenAddress={tenderizer}
-            tokenSlug={token.slug}
             handleInputChange={(value: bigint) => {
               setAmount(value);
             }}
@@ -51,7 +60,7 @@ export const Unstake: FC = () => {
           <Button
             style={{ width: "100%" }}
             size="3"
-            onClick={() => {}}
+            onClick={() => { }}
             variant="solid"
           >
             Unstake {token.currency}

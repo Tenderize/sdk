@@ -4,21 +4,24 @@ import { OutputField } from "@lib/components/OutputField";
 import {
   useDeposit,
   useERC20Approve,
-  usePreviewDeposit,
-  useSelectedToken,
+  usePreviewDeposit
 } from "@lib/hooks";
+import { useSelectedToken } from "@lib/contexts";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
 import { formatEther } from "viem";
-import { CalloutLayout } from "../CalloutLayout";
+import { CalloutLayout } from "@lib/components/CalloutLayout";
+import { useTenderizer, useChainId } from "@lib/config/store";
 
 export const Stake: FC = () => {
   const [amount, setAmount] = useState<bigint>(0n);
-  const { token, tenderizer } = useSelectedToken();
+  const token = useSelectedToken();
+  const tenderizer = useTenderizer(token.slug);
+  const chainId = useChainId(token.slug)
   const { previewDeposit, isLoading, isError } = usePreviewDeposit(
     tenderizer,
     amount,
-    token.chainId
+    chainId
   );
   isLoading;
   isError;
@@ -27,7 +30,7 @@ export const Stake: FC = () => {
     token.address,
     tenderizer,
     amount,
-    token.chainId
+    chainId
   );
   const { mutate: deposit } = useDeposit(tenderizer, amount, token.chainId);
   return (
@@ -37,8 +40,6 @@ export const Stake: FC = () => {
           <Text size="2">You pay</Text>
           <MaxBalanceButton
             tokenAddress={token.address}
-            method="stake"
-            tokenSlug={token.slug}
             handleInputChange={(value: bigint) => {
               setAmount(value);
             }}

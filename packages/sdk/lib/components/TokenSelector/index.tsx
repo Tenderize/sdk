@@ -1,5 +1,5 @@
 import { TOKENS, TokenSlugEnums } from "@lib/constants";
-import { useTokenStore } from "@lib/hooks";
+import { setSelectedToken } from "@lib/contexts";
 import { type Token } from "@lib/types";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
@@ -13,9 +13,9 @@ import React, { useEffect, useState, type FC } from "react";
 
 type DropdownMenuRadixProps = React.ComponentProps<
   typeof DropdownMenuRadix.Root &
-    typeof DropdownMenuRadix.Content &
-    typeof DropdownMenuRadix.Item &
-    typeof DropdownMenuRadix.Trigger
+  typeof DropdownMenuRadix.Content &
+  typeof DropdownMenuRadix.Item &
+  typeof DropdownMenuRadix.Trigger
 >;
 type SelectedItem = {
   Icon: FC;
@@ -56,7 +56,6 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     }
   }, [findDefaultItem, method]);
 
-  const { setSelectedToken } = useTokenStore();
   const [selectedItem, setSelectedItem] = useState<SelectedItem | undefined>();
 
   const tokensData = Object.values(TOKENS).map((token: Token) => {

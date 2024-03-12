@@ -10,7 +10,6 @@ import {
   TokenSymbolEnums,
 } from "@lib/constants";
 import type { Token, TokenAddresses } from "@lib/types";
-import type { Address } from "viem";
 import { arbitrum, mainnet } from "viem/chains";
 
 export const maticToken: Token = {
@@ -93,10 +92,3 @@ export const TOKENS_WALLET_IMAGE = {
   [TokenSlugEnums.LIVEPEER]: "/tokens/tlpt.png",
   [TokenSlugEnums.GRAPH]: "/tokens/tgrt.png",
 } as const;
-
-// TODO: should be provided as config
-export const TENDERIZERS: Record<TokenSlugEnums, Address> = {
-  [TokenSlugEnums.MATIC]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-  [TokenSlugEnums.LIVEPEER]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-  [TokenSlugEnums.GRAPH]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-};
