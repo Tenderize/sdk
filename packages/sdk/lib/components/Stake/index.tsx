@@ -18,7 +18,8 @@ import {
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
 import { formatEther, type Address } from "viem";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId as useCurrentChainId } from "wagmi";
+import { SwitchChainButton } from "@lib/components";
 
 export const Stake: FC = () => {
   const [amount, setAmount] = useState<bigint>(0n);
@@ -26,6 +27,8 @@ export const Stake: FC = () => {
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { address: user } = useAccount()
+  const currentChainId = useCurrentChainId();
+
   const { previewDeposit, isLoading, isError } = usePreviewDeposit(
     tenderizer,
     amount,
@@ -97,7 +100,7 @@ export const Stake: FC = () => {
       }
       callOutActionChildren={
         <Flex gap="2" width="100%">
-          {(!approval && allowance < amount) ? (
+          {currentChainId !== chainId ? <SwitchChainButton requiredChainId={chainId} /> : (!approval && allowance < amount) ? (
             <Button
               disabled={!previewDeposit}
               style={{ width: "100%" }}
@@ -118,6 +121,7 @@ export const Stake: FC = () => {
               Stake {token.currency}
             </Button>
           )}
+          { }
         </Flex>
       }
     ></CalloutLayout>

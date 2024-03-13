@@ -1,5 +1,6 @@
 import { arbitrum, mainnet } from "viem/chains";
-
+import ethLogo from "@lib/assets/chain/ethereum-eth-logo.svg";
+import arbLogo from "@lib/assets/chain/arbitrum-arb-logo.svg";
 export const MAX_INT =
     '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 
@@ -23,6 +24,19 @@ export const ERC2612_DATA_PERMIT = [
 export const SUBGRAPHS: Record<number, string> = {
     [mainnet.id]: 'https://api.studio.thegraph.com/query/45970/tenderize-v2-mainnet/version/latest',
     [arbitrum.id]: 'https://api.studio.thegraph.com/query/45970/tenderize-v2-arbitrum/version/latest'
+}
+
+export const CHAINS: Record<number, any> = {
+    [mainnet.id]: {
+        ...mainnet,
+        iconUrl: ethLogo,
+        explorerUrl: 'https://etherscan.io/',
+    },
+    [arbitrum.id]: {
+        ...arbitrum,
+        iconUrl: arbLogo,
+        explorerUrl: 'https://arbiscan.io/',
+    }
 }
 
 export default {}

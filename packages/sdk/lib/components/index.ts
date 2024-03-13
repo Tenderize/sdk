@@ -13,6 +13,7 @@ export * from "./Tenderize";
 export * from "./TokenSelector";
 export * from "./Unstake";
 export * from "./Withdraw";
+export * from './SwitchChain'
 export default "./Tenderize";
 
 // Third-party components
