@@ -1,5 +1,5 @@
 import { useChainId, useTenderizer } from "@lib/config/store";
-import { TOKENS, TOKEN_ADDRESSES } from "@lib/constants";
+import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useUnlocks, useWithdraw } from "@lib/hooks";
 import { formatAmount } from "@lib/utils/floats";
@@ -11,12 +11,11 @@ import React from "react";
 import { parseEther, type Address, type Hex } from "viem";
 import { useAccount } from "wagmi";
 import { Button, Callout } from "..";
+import { useAdapterTime } from "@lib/hooks/adapter";
 
 interface WithdrawProps {
   style?: CSSProperties;
 }
-
-// Todo: Replace the mock data with the actual data, in useUnlocks hook
 
 export const Withdraw: FC<WithdrawProps> = (props) => {
   const { style } = props;
@@ -24,14 +23,15 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
   const { address: user } = useAccount();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
+  const { time } = useAdapterTime(token.slug)
 
-  const { unlocks } = useUnlocks(tenderizer, user ?? ("" as Address), chainId);
+  const { unlocks } = useUnlocks(token.slug, tenderizer, user ?? ("" as Address), chainId);
 
   const { mutate: withdraw } = useWithdraw(tenderizer, chainId);
-  if (!unlocks) return null;
+  if (!unlocks || unlocks?.length === 0) return null;
   return (
     <Callout variant="surface" style={{ ...style }}>
-      <Heading size="4">Your balance</Heading>
+      <Heading size="4">Pending Unlocks</Heading>
       <Separator orientation="horizontal" size="4" />
       <Grid
         style={{ gridTemplateColumns: "1fr 1fr 1fr" }}
@@ -39,76 +39,77 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
         gap="4"
         width="auto"
       >
-        {unlocks?.map((item, index) => (
-          <React.Fragment key={index}>
-            <Flex align="center">
-              <Badge
-                variant="soft"
-                radius="full"
-                style={{
-                  width: "100%",
-                  padding: "3px 5px 3px 5px",
-                  minWidth: "150px",
-                }}
-              >
-                <Flex align="center" gap="2">
-                  <img
-                    width={30}
-                    height={30}
-                    alt="name"
-                    src={
-                      TOKENS[
-                        TOKEN_ADDRESSES[item.tenderizer.asset.id as Address]
-                      ].img.tToken
-                    }
-                  ></img>
-                  {/* Assuming item.amount is the placeholder */}
-                  <Text size="1">{formatAmount(parseEther(item.amount))}</Text>
-                </Flex>
-              </Badge>
-            </Flex>
-            <Flex align="center" justify="end">
-              <Badge
-                color="orange"
-                variant="soft"
-                radius="full"
-                style={{ width: "100%", padding: "10px", minWidth: "150px" }}
-              >
-                {item.maturity > 0 ? <CountdownTimerIcon /> : <ClockIcon />}
-                {item.maturity > 0
-                  ? `${formatMaturity(item.maturity)} left`
-                  : "Ready to withdraw"}
-              </Badge>
-            </Flex>
-            <Flex align="center" justify="center">
-              {item.maturity > 0 ? (
-                <Button
+        {unlocks?.map((item, index) => {
+          const isMature = item.maturity >= (time || 0);
+          return (
+            <React.Fragment key={index}>
+              <Flex align="center">
+                <Badge
                   variant="soft"
+                  radius="full"
                   style={{
+                    width: "100%",
+                    padding: "3px 5px 3px 5px",
                     minWidth: "150px",
-                    pointerEvents: "none",
-                    height: "100%",
                   }}
                 >
-                  <CountdownTimerIcon />
-                  Unstaking
-                </Button>
-              ) : (
-                <Button
-                  style={{ minWidth: "150px", height: "100%" }}
-                  onClick={() => {
-                    const unlockID = item.id as Hex;
-                    withdraw?.(unlockID);
-                  }}
-                  variant="solid"
+                  <Flex align="center" gap="2">
+                    <img
+                      width={30}
+                      height={30}
+                      alt="name"
+                      src={
+                        token.img?.tToken
+                      }
+                    ></img>
+                    {/* Assuming item.amount is the placeholder */}
+                    <Text size="1">{formatAmount(parseEther(item.amount))}</Text>
+                  </Flex>
+                </Badge>
+              </Flex>
+              <Flex align="center" justify="end">
+                <Badge
+                  color="orange"
+                  variant="soft"
+                  radius="full"
+                  style={{ width: "100%", padding: "10px", minWidth: "150px" }}
                 >
-                  <ClockIcon />
-                  Withdraw
-                </Button>
-              )}
-            </Flex>
-          </React.Fragment>
-        ))}
+                  {isMature ? <CountdownTimerIcon /> : <ClockIcon />}
+                  {isMature
+                    ? `${formatMaturity(token.slug === TokenSlugEnums.MATIC ? (Number(item.maturity) - Number(time)) * 2250 : (Number(item.maturity) - Number(time)) * 13)} left`
+                    : "Ready to withdraw"}
+                </Badge>
+              </Flex>
+              <Flex align="center" justify="center">
+                {isMature ? (
+                  <Button
+                    variant="soft"
+                    style={{
+                      minWidth: "150px",
+                      pointerEvents: "none",
+                      height: "100%",
+                    }}
+                  >
+                    <CountdownTimerIcon />
+                    Unstaking
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ minWidth: "150px", height: "100%" }}
+                    onClick={() => {
+                      const unlockID = item.id as Hex;
+                      withdraw?.(unlockID);
+                    }}
+                    variant="solid"
+                  >
+                    <ClockIcon />
+                    Withdraw
+                  </Button>
+                )}
+              </Flex>
+            </React.Fragment>
+          )
+        })}
       </Grid>
     </Callout>
   );

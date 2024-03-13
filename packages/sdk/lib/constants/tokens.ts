@@ -10,7 +10,6 @@ import {
   TokenSymbolEnums,
 } from "@lib/constants";
 import type { Token, TokenAddresses } from "@lib/types";
-import { arbitrum, mainnet } from "viem/chains";
 
 export const maticToken: Token = {
   name: TokenNameEnums.MATIC,

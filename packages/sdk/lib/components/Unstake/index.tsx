@@ -30,10 +30,6 @@ export const Unstake: FC = () => {
     amount,
     chainId
   );
-  const { address: user } = useAccount();
-
-  const unlocks = useUnlocks(tenderizer, user ?? ("" as Address), chainId);
-  unlocks;
 
   return (
     <Flex gap="2" content="between" direction="column" p="2">

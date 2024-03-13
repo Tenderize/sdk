@@ -12,7 +12,7 @@ import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance, useQuote } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther, parseEther } from "viem";
+import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
 export const Swap: FC = () => {

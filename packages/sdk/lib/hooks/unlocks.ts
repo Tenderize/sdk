@@ -1,6 +1,6 @@
 import { TenderizerAbi } from "@lib/abis";
-import { SUBGRAPHS } from "@lib/constants";
-import type { Balance } from "@lib/types/global";
+import { SUBGRAPHS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
+import type { Unlock } from "@lib/types/global";
 import { graphqlFetch } from "@lib/utils/graphqlFetch";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -12,6 +12,7 @@ import type { Address } from "viem";
 import { simulateContract } from "viem/actions";
 import type { Config } from "wagmi";
 import { useConfig } from "wagmi";
+import { useAdapterTime } from "./adapter";
 
 // Todo: remove mock data, when everything is up and running
 const mockData = [
@@ -63,6 +64,7 @@ const mockData = [
 ];
 
 export const useUnlocks = (
+    asset: TokenSlugEnums,
     tenderizer: Address,
     user: Address,
     chainId: number
@@ -74,23 +76,31 @@ export const useUnlocks = (
     } = useQuery({
         queryKey: ["unlocks", tenderizer, user],
         queryFn: async () => {
-            //Todo: Remove mock data
-            if (mockData.length > 0) {
-                // Return mock data
-                return mockData;
-            }
-            const query = `query Unlocks($tenderizer: String!, $user: String!) {
+            user = user.toLowerCase() as Address
+            try {
+                const query = `query Unlocks($tenderizer: String!, $user: String!) {
                 unlocks(where: { tenderizer: $tenderizer, user: $user }) {
                     id
                     amount
                     timestamp
                     maturity
-                    }`;
-            const data = await graphqlFetch(SUBGRAPHS[chainId], query, {
-                tenderizer,
-                user,
-            });
-            return data.unlocks as Balance[];
+                    }
+                }`;
+                const data = await graphqlFetch(SUBGRAPHS[chainId], query, {
+                    tenderizer,
+                    user,
+                });
+                // TODO: proper typing for unlocks
+                data.unlocks.map((u: any) => {
+                    return {
+                        ...u,
+                        asset,
+                    }
+                })
+                return data.unlocks as Unlock[];
+            } catch (err) {
+                console.log(err)
+            }
         },
     });
     return { unlocks, isLoading, error };
