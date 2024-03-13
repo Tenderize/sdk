@@ -28,10 +28,11 @@ export const OutputField: FC<Props> = ({
   return (
     <TextField.Root {...rest} style={{ ...style, pointerEvents: "none" }}>
       <TextField.Input
+        value={value}
         placeholder={placeholder}
         defaultValue={value}
         size={"3"}
-        style={{ ...style, color: "gray" }}
+        style={{ ...style }}
         {...rest}
       />
       {icon && <TextField.Slot>{icon}</TextField.Slot>}

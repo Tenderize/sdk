@@ -103,7 +103,7 @@ export const Stake: FC = () => {
           <Flex gap="2" width="100%">
             {currentChainId !== chainId ? <SwitchChainButton requiredChainId={chainId} /> : (!approval && allowance < amount) ? (
               <Button
-                className={isMutationPending(status) ? "animate-pulse" : ""}
+                className={isMutationPending(approveStatus) ? "animate-pulse" : ""}
                 disabled={!previewDeposit || isMutationPending(approveStatus)}
                 style={{ width: "100%" }}
                 size="4"
@@ -111,20 +111,23 @@ export const Stake: FC = () => {
                 variant="solid"
               >
                 {isMutationPending(approveStatus) ?
-                  <>Approve {token.currency}</> : <>Approving {token.currency}...</>
+                  <>Approving {token.currency}...</> :
+                  <>Approve {token.currency}</>
                 }
               </Button>
             ) : (
               <Button
-                className={isMutationPending(status) ? "animate-pulse" : ""}
+                className={isMutationPending(depositStatus) ? "animate-pulse" : ""}
                 disabled={!previewDeposit || isMutationPending(depositStatus)}
                 style={{ width: "100%" }}
                 size="4"
                 onClick={() => deposit()}
                 variant="solid"
               >
-                Stake {token.currency}
-              </Button>
+                {isMutationPending(approveStatus) ?
+                  <>Stake {token.currency}...</> :
+                  <>Staking {token.currency}</>
+                }              </Button>
             )}
             { }
           </Flex>

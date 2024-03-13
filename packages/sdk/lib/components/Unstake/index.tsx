@@ -11,11 +11,11 @@ import { useChainId, useTenderizer } from "@lib/config/store";
 import { ActionEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance } from "@lib/hooks";
-import { useUnlocks, useUnstake } from "@lib/hooks/unlocks";
+import { useUnstake } from "@lib/hooks/unlocks";
 import { isMutationPending } from "@lib/utils/global";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther, type Address } from "viem";
+import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
 export const Unstake: FC = () => {
@@ -80,7 +80,7 @@ export const Unstake: FC = () => {
         callOutActionChildren={
           <Flex gap="2" width="100%">
             <Button
-              className={isMutationPending(status) ? "animate-pulse" : ""}
+              className={isMutationPending(unstakeStatus) ? "animate-pulse" : ""}
               disabled={!amount || isMutationPending(unstakeStatus)}
               style={{ width: "100%" }}
               size="4"
@@ -89,7 +89,10 @@ export const Unstake: FC = () => {
               }}
               variant="solid"
             >
-              Unstake {token.currency}
+              {isMutationPending(unstakeStatus) ?
+                <>Unstaking {token.currency}...</> :
+                <>Unstake {token.currency}</>
+              }
             </Button>
           </Flex>
         }

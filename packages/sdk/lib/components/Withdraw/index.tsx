@@ -105,7 +105,10 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
                     variant="solid"
                   >
                     <ClockIcon />
-                    Withdraw
+                    {isMutationPending(withdrawStatus) ?
+                      <>Withdraw {token.currency}...</> :
+                      <>Withdrawing {token.currency}</>
+                    }
                   </Button>
                 )}
               </Flex>
