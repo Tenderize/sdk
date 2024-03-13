@@ -29,7 +29,6 @@ export const maticToken: Token = {
     value: "2-3",
     denomination: "D",
   },
-  chainId: mainnet.id,
   erc2612: false,
 };
 
@@ -49,7 +48,6 @@ export const livepeerToken: Token = {
     value: "6-7",
     denomination: "D",
   },
-  chainId: arbitrum.id,
   erc2612: true,
   adapter: "0x954605F1bEc0FA1045e61E29F772c54BE2d413a8",
 };
@@ -70,7 +68,6 @@ export const graphToken: Token = {
     value: "26-52",
     denomination: "D",
   },
-  chainId: arbitrum.id,
   erc2612: false,
   adapter: "0x1eDbBF4E0469786052E93FC9538237d534D6197f",
 };

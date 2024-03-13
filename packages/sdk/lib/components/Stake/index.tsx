@@ -42,13 +42,13 @@ export const Stake: FC = () => {
   const { mutate: deposit } = useDeposit(
     tenderizer,
     parseAmount,
-    token.chainId
+    chainId
   );
   const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(
     token.address,
     userAddress,
-    token.chainId
+    chainId
   );
   return (
     <CalloutLayout

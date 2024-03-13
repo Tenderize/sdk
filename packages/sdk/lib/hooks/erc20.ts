@@ -15,7 +15,7 @@ type UseERC20Balance = (
 export const useERC20Balance: UseERC20Balance = (
     token,
     account,
-    chainId = 1
+    chainId
 ) => {
     const { data: balance, isLoading, isError, refetch } = useReadContract(account && {
         abi: erc20Abi,

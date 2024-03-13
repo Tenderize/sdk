@@ -11,10 +11,10 @@ import { useChainId, useTenderizer } from "@lib/config/store";
 import { ActionEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance } from "@lib/hooks";
-import { useUnstake } from "@lib/hooks/unlocks";
+import { useUnlocks, useUnstake } from "@lib/hooks/unlocks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther, parseEther } from "viem";
+import { formatEther, parseEther, type Address } from "viem";
 import { useAccount } from "wagmi";
 
 export const Unstake: FC = () => {
@@ -23,12 +23,16 @@ export const Unstake: FC = () => {
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { address: userAddress } = useAccount();
-  const { balance } = useERC20Balance(tenderizer, userAddress, token.chainId);
+  const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
   const { mutate: unstake } = useUnstake(
     tenderizer,
     parseEther(amount),
     chainId
   );
+  const { address: user } = useAccount();
+
+  const unlocks = useUnlocks(tenderizer, user ?? ("" as Address), chainId);
+  unlocks;
 
   return (
     <Flex gap="2" content="between" direction="column" p="2">
@@ -83,9 +87,13 @@ export const Unstake: FC = () => {
             <Button
               style={{ width: "100%" }}
               size="3"
+<<<<<<< Updated upstream
               onClick={() => {
                 unstake?.();
               }}
+=======
+              onClick={() => { }}
+>>>>>>> Stashed changes
               variant="solid"
             >
               Unstake {token.currency}
