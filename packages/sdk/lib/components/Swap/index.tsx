@@ -21,7 +21,7 @@ export const Swap: FC = () => {
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { address: userAddress } = useAccount();
-  const { balance } = useERC20Balance(tenderizer, userAddress, token.chainId);
+  const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
   const { quote } = useQuote(
     token.slug,
     tenderizer,

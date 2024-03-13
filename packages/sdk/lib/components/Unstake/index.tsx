@@ -87,13 +87,9 @@ export const Unstake: FC = () => {
             <Button
               style={{ width: "100%" }}
               size="3"
-<<<<<<< Updated upstream
               onClick={() => {
                 unstake?.();
               }}
-=======
-              onClick={() => { }}
->>>>>>> Stashed changes
               variant="solid"
             >
               Unstake {token.currency}
