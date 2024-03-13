@@ -5,6 +5,7 @@ import {
   MaxBalanceButton,
   OutputField,
   TokenSelector,
+  Withdraw,
 } from "@lib/components";
 import { useChainId, useTenderizer } from "@lib/config/store";
 import { ActionEnums } from "@lib/constants";
@@ -15,7 +16,6 @@ import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
 import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
-import { Withdraw } from "../Withdraw";
 
 export const Unstake: FC = () => {
   const [amount, setAmount] = useState<string>("0");
