@@ -21,8 +21,8 @@ export const ERC2612_DATA_PERMIT = [
 ];
 
 export const SUBGRAPHS: Record<number, string> = {
-    [mainnet.id]: '',
-    [arbitrum.id]: ''
+    [mainnet.id]: 'https://api.studio.thegraph.com/query/45970/tenderize-v2-mainnet/version/latest',
+    [arbitrum.id]: 'https://api.studio.thegraph.com/query/45970/tenderize-v2-arbitrum/version/latest'
 }
 
 export default {}

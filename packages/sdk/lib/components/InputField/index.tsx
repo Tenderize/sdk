@@ -10,35 +10,35 @@ import {
   type FC,
   type ReactNode,
 } from "react";
-import { parseEther } from "viem";
+import { formatEther, parseEther } from "viem";
 
 type TextFieldRadixProps = ComponentProps<
   typeof TextField.Root & typeof TextField.Input
 >;
-interface Props extends TextFieldRadixProps {
+interface Props extends Omit<TextFieldRadixProps, "value" | "max"> {
   placeholder?: string;
   icon?: ReactNode;
-  value?: string;
-  handleChange?: (event: string) => void;
-  max?: string;
+  value?: bigint;
+  handleChange?: (event: bigint) => void;
+  max?: bigint;
   style?: CSSProperties;
 }
 
 export const InputField: FC<Props> = ({
   placeholder = "Enter amount",
   icon,
-  value,
+  value = 0n,
   handleChange,
-  max,
+  max = 0n,
   style,
   ...rest
 }) => {
-  const [inputValue, setInputValue] = useState<string>(value || "");
-  const prevValueRef = useRef<string | undefined>(undefined);
+  const [inputValue, setInputValue] = useState<string>(formatEther(value) || "");
+  const prevValueRef = useRef<bigint | undefined>(undefined);
 
   const handleInputOutsideChange = useCallback(
-    (value: string) => {
-      setInputValue(value);
+    (value: bigint) => {
+      setInputValue(formatEther(value));
       handleChange && handleChange(value);
     },
     [handleChange]
@@ -47,7 +47,7 @@ export const InputField: FC<Props> = ({
   useEffect(() => {
     // Compare the current and previous values
     if (value !== prevValueRef.current) {
-      handleInputOutsideChange(value || "");
+      handleInputOutsideChange(value);
       prevValueRef.current = value;
     }
   }, [value, handleInputOutsideChange]);
@@ -55,22 +55,18 @@ export const InputField: FC<Props> = ({
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     const numericValue = newValue.replace(/[^\d.]/g, "");
-    let finalValue = numericValue;
     const parsedNumericValue = parseEther(numericValue);
-    const maxParsed = parseEther(max || "0");
-    if (max && parsedNumericValue >= maxParsed) {
-      // If input value exceeds the maximum, set it to the maximum allowed value
-      finalValue = max;
-    }
 
-    if (/^\d*\.?\d*$/.test(finalValue)) {
-      handleInputOutsideChange(finalValue);
-    }
+    const finalValue = max && parsedNumericValue >= max ? max : parsedNumericValue;
+
+    handleInputOutsideChange(finalValue);
+
   };
 
   return (
     <TextField.Root {...rest} style={{ ...style }}>
       <TextField.Input
+        max={formatEther(max)}
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}

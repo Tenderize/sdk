@@ -14,19 +14,20 @@ import { useERC20Balance } from "@lib/hooks";
 import { useUnlocks, useUnstake } from "@lib/hooks/unlocks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther, parseEther, type Address } from "viem";
+import { formatEther, type Address } from "viem";
 import { useAccount } from "wagmi";
 
 export const Unstake: FC = () => {
-  const [amount, setAmount] = useState<string>("0");
+  const [amount, setAmount] = useState<bigint>(0n);
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
+
   const { mutate: unstake } = useUnstake(
     tenderizer,
-    parseEther(amount),
+    amount,
     chainId
   );
   const { address: user } = useAccount();
@@ -44,19 +45,15 @@ export const Unstake: FC = () => {
             <InputField
               variant="soft"
               className=""
-              max={formatEther(balance)}
+              max={balance}
               style={{ width: "100%", fontSize: 30 }}
-              handleChange={(value: string) => {
-                setAmount(value || "0");
-              }}
+              handleChange={setAmount}
               value={amount}
               icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
             />
             <MaxBalanceButton
-              max={formatEther(balance)}
-              handleInputChange={(value: string) => {
-                setAmount(value);
-              }}
+              max={balance}
+              handleInputChange={setAmount}
             />
           </Flex>
         }
@@ -67,7 +64,7 @@ export const Unstake: FC = () => {
               variant="soft"
               className=""
               style={{ width: "100%", fontSize: 30 }}
-              value={amount.toString()}
+              value={formatEther(amount)}
               icon={
                 <Flex align="center" gap="2">
                   <img

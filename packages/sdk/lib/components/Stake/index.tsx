@@ -17,19 +17,18 @@ import {
 } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther, parseEther, type Address } from "viem";
+import { formatEther, type Address } from "viem";
 import { useAccount } from "wagmi";
 
 export const Stake: FC = () => {
-  const [amount, setAmount] = useState<string>("0");
+  const [amount, setAmount] = useState<bigint>(0n);
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { address: user } = useAccount()
-  const parseAmount = parseEther(amount);
   const { previewDeposit, isLoading, isError } = usePreviewDeposit(
     tenderizer,
-    parseAmount,
+    amount,
     chainId
   );
   isLoading;
@@ -38,12 +37,12 @@ export const Stake: FC = () => {
   const { mutate: approve, data: approval } = useERC20Approve(
     token.address,
     tenderizer,
-    parseAmount,
+    amount,
     chainId
   );
   const { mutate: deposit } = useDeposit(
     tenderizer,
-    parseAmount,
+    amount,
     chainId
   );
   const { address: userAddress } = useAccount();
@@ -62,19 +61,15 @@ export const Stake: FC = () => {
           <InputField
             variant="soft"
             className=""
-            max={formatEther(balance)}
+            max={balance}
             style={{ width: "100%", fontSize: 30 }}
-            handleChange={(value: string) => {
-              setAmount(value || "0");
-            }}
+            handleChange={setAmount}
             value={amount}
             icon={<TokenSelector />}
           />
           <MaxBalanceButton
-            max={formatEther(balance)}
-            handleInputChange={(value: string) => {
-              setAmount(value);
-            }}
+            max={balance}
+            handleInputChange={setAmount}
           />
         </Flex>
       }
@@ -102,7 +97,7 @@ export const Stake: FC = () => {
       }
       callOutActionChildren={
         <Flex gap="2" width="100%">
-          {(!approval && allowance < parseAmount) ? (
+          {(!approval && allowance < amount) ? (
             <Button
               disabled={!previewDeposit}
               style={{ width: "100%" }}

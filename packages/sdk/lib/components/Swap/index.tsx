@@ -16,7 +16,7 @@ import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 export const Swap: FC = () => {
-  const [amount, setAmount] = useState<string>("0");
+  const [amount, setAmount] = useState<bigint>(0n);
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
@@ -25,7 +25,7 @@ export const Swap: FC = () => {
   const { quote } = useQuote(
     token.slug,
     tenderizer,
-    parseEther(amount),
+    amount,
     chainId
   );
 
@@ -36,19 +36,15 @@ export const Swap: FC = () => {
           <Text size="2">You Swap</Text>
           <InputField
             variant="soft"
-            max={formatEther(balance)}
+            max={balance}
             style={{ width: "100%", fontSize: 30 }}
-            handleChange={(value: string) => {
-              setAmount(value || "0");
-            }}
+            handleChange={setAmount}
             value={amount}
             icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
           />
           <MaxBalanceButton
-            max={formatEther(balance)}
-            handleInputChange={(value: string) => {
-              setAmount(value);
-            }}
+            max={balance}
+            handleInputChange={setAmount}
           />
         </Flex>
       }

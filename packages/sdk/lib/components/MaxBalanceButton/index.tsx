@@ -1,9 +1,10 @@
 import { Flex, Text } from "@radix-ui/themes";
 import React from "react";
+import { formatEther } from "viem";
 
 interface Props {
-  max: string;
-  handleInputChange: (value: string) => void;
+  max: bigint;
+  handleInputChange: (value: bigint) => void;
 }
 
 export const MaxBalanceButton: React.FC<Props> = ({
@@ -22,7 +23,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
         size={"1"}
         onClick={handleMaxButtonClick}
       >
-        Max: {max}
+        Max: {formatEther(max)}
       </Text>
     </Flex>
   );
