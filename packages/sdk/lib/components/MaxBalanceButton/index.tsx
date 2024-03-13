@@ -17,6 +17,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
   return (
     <Flex direction="column" gap="2">
       <Text
+        style={{ width: "max-content" }}
         className="cursor-pointer text-left"
         size={"1"}
         onClick={handleMaxButtonClick}

@@ -2,7 +2,7 @@ import type { Address } from "viem";
 
 export type Balance = {
   id: string;
-  amount: bigint;
+  amount: string;
   maturity: number;
   redeemed: boolean;
   tenderizer: Tenderizer;

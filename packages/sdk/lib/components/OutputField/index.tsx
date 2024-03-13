@@ -29,7 +29,7 @@ export const OutputField: FC<Props> = ({
     <TextField.Root {...rest} style={{ ...style, pointerEvents: "none" }}>
       <TextField.Input
         placeholder={placeholder}
-        value={value}
+        defaultValue={value}
         size={"3"}
         style={{ ...style, color: "gray" }}
         {...rest}

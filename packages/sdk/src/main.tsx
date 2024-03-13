@@ -18,13 +18,12 @@ const TENDERIZERS: TenderizersConfig = {
   [TokenSlugEnums.LIVEPEER]: "0x4b0e5e54df6d5eccc7b2f838982411dc93253daf",
   [TokenSlugEnums.GRAPH]: "0x4003e23be46f3bf2b50c3c7f8b13aaecdc71ea72",
 };
-
-console.log(import.meta.env.PROD)
-console.log(import.meta.env.DEV)
+console.log(import.meta.env.PROD);
+console.log(import.meta.env.DEV);
 
 const mainnetChain = {
   ...mainnet,
-  id: import.meta.env.PROD ? mainnet.id : 13371
+  id: import.meta.env.PROD ? mainnet.id : 13371,
 };
 const arbitrumChain = {
   ...arbitrum,
@@ -47,7 +46,7 @@ const config = createTenderizeConfig({
   apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
 });
 
-console.log(CHAINS)
+console.log(CHAINS);
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
