@@ -30,53 +30,55 @@ export const Swap: FC = () => {
   );
 
   return (
-    <CalloutLayout
-      callOutFirstChildren={
-        <Flex gap="2" content="between" direction="column" p="2">
-          <Text size="2">You Swap</Text>
-          <InputField
-            variant="soft"
-            max={balance}
-            style={{ width: "100%", fontSize: 30 }}
-            handleChange={setAmount}
-            value={amount}
-            icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
-          />
-          <MaxBalanceButton
-            max={balance}
-            handleInputChange={setAmount}
-          />
-        </Flex>
-      }
-      callOutSecondChildren={
-        <Flex direction="column" gap="2" p="2" width="100%">
-          <Text size="2">You Receive</Text>
-          <OutputField
-            variant="soft"
-            className=""
-            style={{ width: "100%", fontSize: 30 }}
-            value={formatEther(quote.out ?? 0n)}
-            icon={
-              <Flex align="center" gap="2">
-                <img
-                  width={25}
-                  height={25}
-                  src={token.img?.token}
-                  alt={token.name}
-                />
-                <Text size="3">{`${token.currency}`}</Text>
-              </Flex>
-            }
-          />
-        </Flex>
-      }
-      callOutActionChildren={
-        <Flex gap="2" width="100%">
-          <Button style={{ width: "100%" }} size="3" variant="solid">
-            Swap {token.currency}
-          </Button>
-        </Flex>
-      }
-    ></CalloutLayout>
+    <Flex gap="2" content="between" direction="column" p="2">
+      <CalloutLayout
+        callOutFirstChildren={
+          <Flex gap="2" content="between" direction="column" p="2">
+            <Text size="2">You Swap</Text>
+            <InputField
+              variant="soft"
+              max={balance}
+              style={{ width: "100%", fontSize: 30 }}
+              handleChange={setAmount}
+              value={amount}
+              icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
+            />
+            <MaxBalanceButton
+              max={balance}
+              handleInputChange={setAmount}
+            />
+          </Flex>
+        }
+        callOutSecondChildren={
+          <Flex direction="column" gap="2" p="2" width="100%">
+            <Text size="2">You Receive</Text>
+            <OutputField
+              variant="soft"
+              className=""
+              style={{ width: "100%", fontSize: 30 }}
+              value={formatEther(quote.out ?? 0n)}
+              icon={
+                <Flex align="center" gap="2">
+                  <img
+                    width={25}
+                    height={25}
+                    src={token.img?.token}
+                    alt={token.name}
+                  />
+                  <Text size="3">{`${token.currency}`}</Text>
+                </Flex>
+              }
+            />
+          </Flex>
+        }
+        callOutActionChildren={
+          <Flex gap="2" width="100%">
+            <Button style={{ width: "100%" }} size="4" variant="solid">
+              Swap {token.currency}
+            </Button>
+          </Flex>
+        }
+      ></CalloutLayout>
+    </Flex>
   );
 };

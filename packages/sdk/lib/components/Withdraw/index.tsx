@@ -3,7 +3,7 @@ import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useUnlocks, useWithdraw } from "@lib/hooks";
 import { formatAmount } from "@lib/utils/floats";
-import { formatMaturity } from "@lib/utils/global";
+import { formatMaturity, isMutationPending } from "@lib/utils/global";
 import { ClockIcon, CountdownTimerIcon } from "@radix-ui/react-icons";
 import { Badge, Flex, Grid, Heading, Separator, Text } from "@radix-ui/themes";
 import type { CSSProperties, FC } from "react";
@@ -27,7 +27,7 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
 
   const { unlocks } = useUnlocks(token.slug, tenderizer, user ?? ("" as Address), chainId);
 
-  const { mutate: withdraw } = useWithdraw(tenderizer, chainId);
+  const { mutate: withdraw, status: withdrawStatus } = useWithdraw(tenderizer, chainId);
   if (!unlocks || unlocks?.length === 0) return null;
   return (
     <Callout variant="surface" style={{ ...style }}>
@@ -95,6 +95,8 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
                   </Button>
                 ) : (
                   <Button
+                    className={isMutationPending(withdrawStatus) ? "animate-pulse" : ""}
+                    disabled={isMutationPending(withdrawStatus)}
                     style={{ minWidth: "150px", height: "100%" }}
                     onClick={() => {
                       const unlockID = item.id as Hex;

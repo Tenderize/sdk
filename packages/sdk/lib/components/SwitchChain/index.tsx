@@ -3,6 +3,7 @@ import { type FC } from 'react';
 import { useChainId, useChains, useSwitchChain } from 'wagmi';
 import { Button } from '@lib/components'
 import { CHAINS } from '@lib/constants';
+import { isMutationPending } from '@lib/utils/global';
 type ChainId = number;
 
 type SwitchChainButtonProps = { requiredChainId: ChainId; children?: React.ReactNode };
@@ -27,7 +28,9 @@ export const SwitchChainButton: FC<SwitchChainButtonProps> = ({
 
   return (
     <Button
-      size="3"
+      className={isMutationPending(status) ? "animate-pulse" : ""}
+      disabled={isMutationPending(status)}
+      size="4"
       style={{ width: "100%" }}
       variant="solid"
       onClick={() => {
@@ -35,7 +38,8 @@ export const SwitchChainButton: FC<SwitchChainButtonProps> = ({
       }}
     >
       <img width={30} src={requiredChainData.iconUrl} alt={requiredChain.name} />
-      {`${status === "pending" ? 'Switching to' : 'Switch to'} ${requiredChain.name
+      {isMutationPending(status) ? `Switching to  ${requiredChain.name
+        }...` : `Switch to  ${requiredChain.name
         }`}
     </Button>
   );

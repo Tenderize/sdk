@@ -12,6 +12,7 @@ import { ActionEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance } from "@lib/hooks";
 import { useUnlocks, useUnstake } from "@lib/hooks/unlocks";
+import { isMutationPending } from "@lib/utils/global";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
 import { formatEther, type Address } from "viem";
@@ -25,7 +26,7 @@ export const Unstake: FC = () => {
   const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
 
-  const { mutate: unstake } = useUnstake(
+  const { mutate: unstake, status: unstakeStatus } = useUnstake(
     tenderizer,
     amount,
     chainId
@@ -39,6 +40,7 @@ export const Unstake: FC = () => {
           <Flex gap="2" content="between" direction="column" p="2" width="100%">
             <Text size="2">You Unstake</Text>
             <InputField
+              disabled={isMutationPending(unstakeStatus)}
               variant="soft"
               className=""
               max={balance}
@@ -78,8 +80,10 @@ export const Unstake: FC = () => {
         callOutActionChildren={
           <Flex gap="2" width="100%">
             <Button
+              className={isMutationPending(status) ? "animate-pulse" : ""}
+              disabled={!amount || isMutationPending(unstakeStatus)}
               style={{ width: "100%" }}
-              size="3"
+              size="4"
               onClick={() => {
                 unstake?.();
               }}

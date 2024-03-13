@@ -29,3 +29,7 @@ export const formatMaturity = (maturity: number) => {
   maturity = Math.floor(maturity);
   return `~ ${maturity} ${maturity === 1 ? "second" : "seconds"}`;
 };
+
+export const isMutationPending = (status: string) => {
+  return status === "pending";
+}
