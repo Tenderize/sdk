@@ -1,36 +1,86 @@
-import { Button } from "@lib/components/Button";
-import MaxBalanceButton from "@lib/components/MaxBalanceButton";
-import { OutputField } from "@lib/components/OutputField";
+import {
+  Button,
+  CalloutLayout,
+  InputField,
+  MaxBalanceButton,
+  OutputField,
+  TokenSelector,
+} from "@lib/components";
 import { useChainId, useTenderizer } from "@lib/config/store";
+import { ActionEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
-import { useQuote } from "@lib/hooks";
-import { Flex } from "@radix-ui/themes";
+import { useERC20Balance, useQuote } from "@lib/hooks";
+import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
 import { formatEther, parseEther } from "viem";
+import { useAccount } from "wagmi";
 
 export const Swap: FC = () => {
   const [amount, setAmount] = useState<string>("0");
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
-  const { quote, isLoading, isError } = useQuote(
+  const { address: userAddress } = useAccount();
+  const { balance } = useERC20Balance(tenderizer, userAddress, token.chainId);
+  const { quote } = useQuote(
     token.slug,
     tenderizer,
     parseEther(amount),
     chainId
   );
-  isLoading;
-  isError;
+
   return (
-    <Flex direction="column" gap="2">
-      <MaxBalanceButton
-        max={"0"} // Todo , will change to balance
-        handleInputChange={(value: string) => {
-          setAmount(value);
-        }}
-      />
-      <OutputField value={formatEther(quote.out ?? 0n)} disabled />
-      <Button variant="solid">Swap</Button>
-    </Flex>
+    <CalloutLayout
+      callOutFirstChildren={
+        <Flex gap="2" content="between" direction="column" p="2">
+          <Text size="2">You Swap</Text>
+          <InputField
+            variant="soft"
+            max={formatEther(balance)}
+            style={{ width: "100%", fontSize: 30 }}
+            handleChange={(value: string) => {
+              setAmount(value || "0");
+            }}
+            value={amount}
+            icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
+          />
+          <MaxBalanceButton
+            max={formatEther(balance)}
+            handleInputChange={(value: string) => {
+              setAmount(value);
+            }}
+          />
+        </Flex>
+      }
+      callOutSecondChildren={
+        <Flex direction="column" gap="2" p="2" width="100%">
+          <Text size="2">You Recieve</Text>
+          <OutputField
+            variant="soft"
+            className=""
+            style={{ width: "100%", fontSize: 30 }}
+            value={formatEther(quote.out ?? 0n)}
+            icon={
+              <Flex align="center" gap="2">
+                <img
+                  width={25}
+                  height={25}
+                  src={token.img?.token}
+                  alt={token.name}
+                />
+                <Text size="3">{`${token.currency}`}</Text>
+              </Flex>
+            }
+          />
+        </Flex>
+      }
+      callOutActionChildren={
+        <Flex gap="2" width="100%">
+          <Button style={{ width: "100%" }} size="3" variant="solid">
+            Swap {token.currency}
+          </Button>
+        </Flex>
+      }
+    ></CalloutLayout>
   );
 };

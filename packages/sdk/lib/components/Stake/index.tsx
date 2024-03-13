@@ -1,7 +1,11 @@
-import { Button } from "@lib/components/Button";
-import { CalloutLayout } from "@lib/components/CalloutLayout";
-import { MaxBalanceButton } from "@lib/components/MaxBalanceButton";
-import { OutputField } from "@lib/components/OutputField";
+import {
+  Button,
+  CalloutLayout,
+  InputField,
+  MaxBalanceButton,
+  OutputField,
+  TokenSelector,
+} from "@lib/components";
 import { useChainId, useTenderizer } from "@lib/config/store";
 import { useSelectedToken } from "@lib/contexts";
 import {
@@ -14,7 +18,6 @@ import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
 import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
-import { InputField, TokenSelector } from "..";
 
 export const Stake: FC = () => {
   const [amount, setAmount] = useState<string>("0");
