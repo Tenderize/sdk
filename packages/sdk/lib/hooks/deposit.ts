@@ -61,13 +61,13 @@ export const useDeposit = (
       });
       return permit
         ? depositWithPermit(
-            asset,
-            tenderizer,
-            amount,
-            permit,
-            chainId,
-            wagmiConfig
-          )
+          asset,
+          tenderizer,
+          amount,
+          permit,
+          chainId,
+          wagmiConfig
+        )
         : depositWithApprove(tenderizer, amount, chainId, wagmiConfig);
     },
   });
@@ -114,6 +114,7 @@ const depositWithPermit = async (
 
     return hash;
   } catch (err) {
+    console.log(err)
     throw err;
   }
 };
@@ -129,11 +130,11 @@ const depositWithApprove = async (
   if (!publicClient) return;
 
   try {
-    const { request: deposit } = await simulateContract(publicClient, {
+    const { request: deposit } = await simulateContract(signer, {
       address: tenderizer,
       abi: TenderizerAbi,
       functionName: "deposit",
-      args: [signer.account.address, parseEther(amount.toString())],
+      args: [signer.account.address, amount],
     });
 
     const hash = await writeContract(wagmiConfig, deposit);
@@ -142,6 +143,7 @@ const depositWithApprove = async (
 
     return hash;
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };

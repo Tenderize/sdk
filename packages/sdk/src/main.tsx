@@ -19,6 +19,8 @@ const TENDERIZERS: TenderizersConfig = {
   [TokenSlugEnums.GRAPH]: "0x4003e23be46f3bf2b50c3c7f8b13aaecdc71ea72",
 };
 
+console.log(import.meta.env.PROD)
+console.log(import.meta.env.DEV)
 
 const mainnetChain = {
   ...mainnet,

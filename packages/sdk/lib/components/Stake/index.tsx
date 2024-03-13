@@ -10,13 +10,14 @@ import { useChainId, useTenderizer } from "@lib/config/store";
 import { useSelectedToken } from "@lib/contexts";
 import {
   useDeposit,
+  useERC20Allowance,
   useERC20Approve,
   useERC20Balance,
   usePreviewDeposit,
 } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther, parseEther } from "viem";
+import { formatEther, parseEther, type Address } from "viem";
 import { useAccount } from "wagmi";
 
 export const Stake: FC = () => {
@@ -24,6 +25,7 @@ export const Stake: FC = () => {
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
+  const { address: user } = useAccount()
   const parseAmount = parseEther(amount);
   const { previewDeposit, isLoading, isError } = usePreviewDeposit(
     tenderizer,
@@ -50,6 +52,8 @@ export const Stake: FC = () => {
     userAddress,
     chainId
   );
+  const { allowance } = useERC20Allowance(token.address, user ?? "" as Address, tenderizer, chainId)
+
   return (
     <CalloutLayout
       callOutFirstChildren={
@@ -98,7 +102,7 @@ export const Stake: FC = () => {
       }
       callOutActionChildren={
         <Flex gap="2" width="100%">
-          {!approval ? (
+          {(!approval && allowance < parseAmount) ? (
             <Button
               disabled={!previewDeposit}
               style={{ width: "100%" }}

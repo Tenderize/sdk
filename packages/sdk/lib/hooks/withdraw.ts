@@ -15,7 +15,11 @@ export const useWithdraw = (tenderizer: Address, chainId: number) => {
   const wagmiConfig = useConfig();
   return useMutation({
     mutationFn: async (unlockID: Hex) => {
-      return await withdraw(unlockID, tenderizer, chainId, wagmiConfig);
+      try {
+        return await withdraw(unlockID, tenderizer, chainId, wagmiConfig);
+      } catch (err) {
+        console.log(err)
+      }
     },
   });
 };
@@ -44,6 +48,7 @@ const withdraw = async (
 
     return hash;
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };
