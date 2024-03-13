@@ -1,17 +1,31 @@
+import { useChainId, useTenderizer } from "@lib/config/store";
 import { TOKENS } from "@lib/constants";
+import { useSelectedToken } from "@lib/contexts";
+import { useUnlocks, useWithdraw } from "@lib/hooks";
 import { ClockIcon, CountdownTimerIcon } from "@radix-ui/react-icons";
 import { Badge, Flex, Grid, Heading, Separator, Text } from "@radix-ui/themes";
 import type { CSSProperties, FC } from "react";
+import type { Address } from "viem";
+import { useAccount } from "wagmi";
 import { Button, Callout } from "..";
 
 interface WithdrawProps {
   style?: CSSProperties;
 }
 
-// Todo: Everything is for static hardcoded data, need to make it dynamic
+// Todo: Everything is for static hardcoded data, need to make it dynamic use unlocks
 
 export const Withdraw: FC<WithdrawProps> = (props) => {
   const { style } = props;
+  const token = useSelectedToken();
+  const { address: user } = useAccount();
+  const tenderizer = useTenderizer(token.slug);
+  const chainId = useChainId(token.slug);
+
+  const { unlocks } = useUnlocks(tenderizer, user ?? ("" as Address), chainId);
+  unlocks; // Todo: use unlocks to make grid table
+
+  const { mutate: withdraw } = useWithdraw(tenderizer, chainId);
 
   return (
     <>
@@ -86,7 +100,15 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
             </Badge>
           </Flex>
           <Flex align="center" justify="end">
-            <Button variant="solid">
+            <Button
+              onClick={() => {
+                // Todo: need to make it dynamic, id will be passed from the map items of unlocks
+                const unlockID =
+                  "0x4003e23be46f3bf2b50c3c7f8b13aaecdc71ea72000000000000000000000003";
+                withdraw?.(unlockID);
+              }}
+              variant="solid"
+            >
               <ClockIcon />
               Withdraw
             </Button>
