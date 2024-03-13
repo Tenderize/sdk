@@ -100,6 +100,7 @@ const erc20Approve = async (asset: Address, spender: Address, amount: bigint, wa
         functionName: 'approve',
         args: [spender, amount],
     });
+
     const hash = await writeContract(wagmiConfig, approve);
     await waitForTransactionReceipt(wagmiConfig, { hash, chainId })
     return hash
