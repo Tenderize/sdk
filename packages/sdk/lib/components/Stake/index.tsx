@@ -57,7 +57,7 @@ export const Stake: FC = () => {
     <CalloutLayout
       callOutFirstChildren={
         <Flex gap="2" content="between" direction="column" p="2">
-          <Text size="2">You pay</Text>
+          <Text size="2">You Stake</Text>
           <InputField
             variant="soft"
             className=""
@@ -75,7 +75,7 @@ export const Stake: FC = () => {
       }
       callOutSecondChildren={
         <Flex direction="column" gap="2" p="2" width="100%">
-          <Text size="2">You Stake</Text>
+          <Text size="2">You Receive</Text>
           <OutputField
             variant="soft"
             className=""

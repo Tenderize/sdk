@@ -59,7 +59,7 @@ export const Unstake: FC = () => {
         }
         callOutSecondChildren={
           <Flex direction="column" gap="2" p="2" width="100%">
-            <Text size="2">You Recieve</Text>
+            <Text size="2">You Receive</Text>
             <OutputField
               variant="soft"
               className=""
