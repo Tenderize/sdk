@@ -1,15 +1,14 @@
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
   return {
-    define: { "process.env": env },
     plugins: [react(), dts({ include: ["lib"] }), libInjectCss()],
     build: {
+      target: 'es2020',
       copyPublicDir: false,
       lib: {
         fileName: "main",

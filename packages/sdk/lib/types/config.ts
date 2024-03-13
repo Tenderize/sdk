@@ -19,7 +19,8 @@ type ConfigWithApiKey = Omit<CreateConfigParameters, 'chains' | 'transports'> & 
 export type TenderizeConfig = {
     tenderizers: TenderizersConfig;
     chains: TenderizeChains;
-} & Config
+    web3: Config
+}
 
 export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
 export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };

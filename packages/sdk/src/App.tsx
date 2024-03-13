@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import { Card, Tenderize } from "@lib/components";
-import { ConnectKitButton } from "@lib/components";
+import { ConnectKitButton } from "connectkit";
 
 function App() {
   return (

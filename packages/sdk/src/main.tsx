@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 
 import { TokenSlugEnums } from "@lib/constants";
-import { TenderizeProvider } from "@lib/contexts";
+import { TenderizeProvider, Web3Provider } from "@lib/contexts";
 
 import { ThemeProvider } from "@lib/contexts";
 import {
@@ -22,11 +22,11 @@ const TENDERIZERS: TenderizersConfig = {
 
 const mainnetChain = {
   ...mainnet,
-  id: process.env.LOCALHOST ? 13371 : mainnet.id,
+  id: import.meta.env.VITE_LOCALHOST ? 13371 : mainnet.id,
 };
 const arbitrumChain = {
   ...arbitrum,
-  id: process.env.LOCALHOST ? 133742161 : arbitrum.id,
+  id: import.meta.env.VITE_LOCALHOST ? 133742161 : arbitrum.id,
 };
 
 const CHAINS: TenderizeChains = {
@@ -49,7 +49,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
       <TenderizeProvider config={config}>
-        <App />
+        <Web3Provider config={config.web3}>
+          <App />
+        </Web3Provider>
       </TenderizeProvider>
     </ThemeProvider>
   </React.StrictMode>

@@ -8,29 +8,29 @@ import { WagmiProvider, type Config } from "wagmi";
 const queryClient = new QueryClient();
 
 export const Web3Provider: FC<{ config: Config; children: ReactNode }> = ({
-  config,
-  children,
+    config,
+    children,
 }) => {
-  return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider>{children} </ConnectKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
-  );
+    return (
+        <WagmiProvider config={config}>
+            <QueryClientProvider client={queryClient}>
+                <ConnectKitProvider>{children} </ConnectKitProvider>
+            </QueryClientProvider>
+        </WagmiProvider>
+    );
 };
 
 export const TenderizeProvider: FC<{
-  config: TenderizeConfig;
-  children: ReactNode;
+    config: TenderizeConfig;
+    children: ReactNode;
 }> = ({ config, children }) => {
-  // This provider wraps the Web3 provider and uses a zustand store to store the config.tenderizers
-  const { setConfig } = useTenderizeConfigStore();
-  useEffect(() => {
-    setConfig(config);
-  }, [config, setConfig]);
+    // This provider wraps the Web3 provider and uses a zustand store to store the config.tenderizers
+    const { setConfig } = useTenderizeConfigStore();
+    useEffect(() => {
+        setConfig(config);
+    }, [config, setConfig]);
 
-  return <Web3Provider config={config}>{children}</Web3Provider>;
+    return <>{children}</>
 };
 
 export default TenderizeProvider;

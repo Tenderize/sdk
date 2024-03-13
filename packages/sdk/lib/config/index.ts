@@ -28,7 +28,8 @@ export const createTenderizeConfig: CreateTenderizeConfig = (config) => {
 
     return {
         tenderizers: config.tenderizers,
-        ...createConfig(
+        chains: config.chains,
+        web3: createConfig(
             getDefaultConfig({
                 // Your dApps chains
                 chains: (config.apiKey ? defaultChains : wagmiChains) as [Chain, ...Chain[]],
