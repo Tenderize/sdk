@@ -26,13 +26,12 @@ export const OutputField: FC<Props> = ({
   ...rest
 }) => {
   return (
-    <TextField.Root {...rest} style={{ ...style }}>
+    <TextField.Root {...rest} style={{ ...style, pointerEvents: "none" }}>
       <TextField.Input
         placeholder={placeholder}
         value={value}
         size={"3"}
-        disabled
-        style={{ ...style }}
+        style={{ ...style, color: "gray" }}
         {...rest}
       />
       {icon && <TextField.Slot>{icon}</TextField.Slot>}
