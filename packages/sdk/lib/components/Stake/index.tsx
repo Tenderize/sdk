@@ -17,13 +17,13 @@ import {
 } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther, type Address } from "viem";
+import { formatEther, type Address, parseEther } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 import { SwitchChainButton } from "@lib/components";
 import { isMutationPending } from "@lib/utils/global";
 
 export const Stake: FC = () => {
-  const [amount, setAmount] = useState<bigint>(0n);
+  const [amount, setAmount] = useState<string>("");
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
@@ -32,7 +32,7 @@ export const Stake: FC = () => {
 
   const { previewDeposit } = usePreviewDeposit(
     tenderizer,
-    amount,
+    parseEther(amount),
     chainId
   );
 
@@ -47,12 +47,12 @@ export const Stake: FC = () => {
   const { mutate: approve, data: approval, status: approveStatus } = useERC20Approve(
     token.address,
     tenderizer,
-    amount,
+    parseEther(amount),
     chainId
   );
   const { mutate: deposit, status: depositStatus } = useDeposit(
     tenderizer,
-    amount,
+    parseEther(amount),
     chainId
   );
 
@@ -65,15 +65,19 @@ export const Stake: FC = () => {
             <InputField
               variant="soft"
               className=""
-              max={balance}
+              max={formatEther(balance)}
               style={{ width: "100%", fontSize: 30 }}
-              handleChange={setAmount}
+              handleChange={(value: string) => {
+                setAmount(value || "0");
+              }}
               value={amount}
               icon={<TokenSelector />}
             />
             <MaxBalanceButton
-              max={balance}
-              handleInputChange={setAmount}
+              max={formatEther(balance)}
+              handleInputChange={(value: string) => {
+                setAmount(value);
+              }}
             />
           </Flex>
         }
@@ -101,7 +105,7 @@ export const Stake: FC = () => {
         }
         callOutActionChildren={
           <Flex gap="2" width="100%">
-            {currentChainId !== chainId ? <SwitchChainButton requiredChainId={chainId} /> : (!approval && allowance < amount) ? (
+            {currentChainId !== chainId ? <SwitchChainButton requiredChainId={chainId} /> : (!approval && allowance < parseEther(amount)) ? (
               <Button
                 className={isMutationPending(approveStatus) ? "animate-pulse" : ""}
                 disabled={!previewDeposit || isMutationPending(approveStatus)}
