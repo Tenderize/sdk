@@ -26,7 +26,14 @@ export const OutputField: FC<Props> = ({
   ...rest
 }) => {
   return (
-    <TextField.Root {...rest} style={{ paddingTop: "10px", paddingBottom: "10px", paddingRight: 10, ...style, pointerEvents: "none" }}>
+    <TextField.Root
+      {...rest}
+      style={{
+        ...style,
+        pointerEvents: "none",
+        padding: "10px 10px 10px 0px",
+      }}
+    >
       <TextField.Input
         value={value}
         placeholder={placeholder}

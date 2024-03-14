@@ -40,10 +40,18 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
 
   if (!unlocks || unlocks?.length === 0) return null;
   return (
-    <Callout variant="surface" style={{ ...style }}>
-      <Heading size="3">Pending Unlocks</Heading>
-      <Separator orientation="horizontal" size="4" />
+    <Callout
+      size="3"
+      className="w-full"
+      variant="surface"
+      style={{ ...style, display: "flex", flexDirection: "column" }}
+    >
+      <Heading className="w-full" size="3">
+        Pending Unlocks
+      </Heading>
+      <Separator className="w-full" orientation="horizontal" size="4" />
       <Grid
+        className="w-full"
         style={{
           gridTemplateColumns: "1fr 1fr 1fr",
           maxHeight: 150,
@@ -59,80 +67,74 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
             isMutationPending(withdrawStatus) && activeUnlockId === item.id;
           return (
             <React.Fragment key={index}>
-              <Flex align="center">
-                <Badge
+              <Badge
+                variant="soft"
+                radius="full"
+                style={{
+                  width: "100%",
+                  padding: "3px 5px 3px 5px",
+                  minWidth: "150px",
+                }}
+              >
+                <Flex align="center" gap="2">
+                  <img
+                    width={30}
+                    height={30}
+                    alt="name"
+                    src={token.img?.tToken}
+                  ></img>
+                  <Text size="1">{formatAmount(parseEther(item.amount))}</Text>
+                </Flex>
+              </Badge>
+
+              <Badge
+                color="orange"
+                variant="soft"
+                radius="full"
+                style={{ width: "100%", padding: "10px", minWidth: "150px" }}
+              >
+                {isMature ? <CountdownTimerIcon /> : <ClockIcon />}
+                {isMature
+                  ? `${formatMaturity(
+                      token.slug === TokenSlugEnums.MATIC
+                        ? (Number(item.maturity) - Number(time)) * 2250
+                        : (Number(item.maturity) - Number(time)) * 13
+                    )} left`
+                  : "Ready to withdraw"}
+              </Badge>
+
+              {isMature ? (
+                <Button
                   variant="soft"
-                  radius="full"
                   style={{
-                    width: "100%",
-                    padding: "3px 5px 3px 5px",
                     minWidth: "150px",
+                    pointerEvents: "none",
+                    height: "100%",
                   }}
                 >
-                  <Flex align="center" gap="2">
-                    <img
-                      width={30}
-                      height={30}
-                      alt="name"
-                      src={token.img?.tToken}
-                    ></img>
-                    <Text size="1">
-                      {formatAmount(parseEther(item.amount))}
-                    </Text>
-                  </Flex>
-                </Badge>
-              </Flex>
-              <Flex align="center" justify="end">
-                <Badge
-                  color="orange"
-                  variant="soft"
-                  radius="full"
-                  style={{ width: "100%", padding: "10px", minWidth: "150px" }}
+                  <CountdownTimerIcon />
+                  Unstaking
+                </Button>
+              ) : (
+                <Button
+                  className={isWithdrawLoading ? "animate-pulse" : ""}
+                  disabled={isWithdrawLoading}
+                  style={{ minWidth: "150px", height: "100%" }}
+                  onClick={() => {
+                    const unlockID = item.id as Hex;
+                    setActiveUnlockId(unlockID);
+                    withdraw?.(unlockID);
+                  }}
+                  variant="solid"
                 >
-                  {isMature ? <CountdownTimerIcon /> : <ClockIcon />}
-                  {isMature
-                    ? `${formatMaturity(
-                        token.slug === TokenSlugEnums.MATIC
-                          ? (Number(item.maturity) - Number(time)) * 2250
-                          : (Number(item.maturity) - Number(time)) * 13
-                      )} left`
-                    : "Ready to withdraw"}
-                </Badge>
-              </Flex>
-              <Flex align="center" justify="center">
-                {isMature ? (
-                  <Button
-                    variant="soft"
-                    style={{
-                      minWidth: "150px",
-                      pointerEvents: "none",
-                      height: "100%",
-                    }}
-                  >
-                    <CountdownTimerIcon />
-                    Unstaking
-                  </Button>
-                ) : (
-                  <Button
-                    className={isWithdrawLoading ? "animate-pulse" : ""}
-                    disabled={isWithdrawLoading}
-                    style={{ minWidth: "150px", height: "100%" }}
-                    onClick={() => {
-                      const unlockID = item.id as Hex;
-                      setActiveUnlockId(unlockID);
-                      withdraw?.(unlockID);
-                    }}
-                    variant="solid"
-                  >
-                    <ClockIcon />
-                    {isWithdrawLoading ? (
-                      <>Withdrawing {token.currency}...</>
-                    ) : (
-                      <>Withdraw {token.currency}</>
-                    )}
-                  </Button>
-                )}
-              </Flex>
+                  <ClockIcon />
+                  {isWithdrawLoading ? (
+                    <>Withdrawing {token.currency}...</>
+                  ) : (
+                    <>Withdraw {token.currency}</>
+                  )}
+                </Button>
+              )}
             </React.Fragment>
           );
         })}
