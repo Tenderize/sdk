@@ -12,8 +12,7 @@
     "lib": [
       "ES2020",
       "DOM",
-      "DOM.Iterable",
-      "WebWorker"
+      "DOM.Iterable"
     ],
     "module": "ESNext",
     "skipLibCheck": true,

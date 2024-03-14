@@ -1,5 +1,5 @@
 import { Flex } from "@radix-ui/themes";
-import { Card, Tenderize } from "@lib/components";
+import { Tenderize } from "@lib/components";
 import { ConnectKitButton } from "connectkit";
 
 function App() {
@@ -13,9 +13,7 @@ function App() {
       height={"auto"}
     >
       <ConnectKitButton />
-      <Card size={"1"} className="w-[40%]">
-        <Tenderize />
-      </Card>
+      <Tenderize />
     </Flex>
   );
 }

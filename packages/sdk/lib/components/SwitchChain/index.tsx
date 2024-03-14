@@ -1,6 +1,5 @@
-import { useChain } from '@lib/config/store';
 import { type FC } from 'react';
-import { useChainId, useChains, useSwitchChain } from 'wagmi';
+import { useChainId, useSwitchChain } from 'wagmi';
 import { Button } from '@lib/components'
 import { CHAINS } from '@lib/constants';
 import { isMutationPending } from '@lib/utils/global';

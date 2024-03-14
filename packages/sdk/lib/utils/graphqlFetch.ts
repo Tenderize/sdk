@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const graphqlFetch = async (url: string, query: string, variables: any) => {
     try {
         const response = await fetch(url, {
