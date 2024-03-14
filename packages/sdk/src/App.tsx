@@ -1,5 +1,5 @@
-import { Flex } from "@radix-ui/themes";
 import { Tenderize } from "@lib/components";
+import { Flex } from "@radix-ui/themes";
 import { ConnectKitButton } from "connectkit";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <Flex
       gap="4"
       direction="column"
-      style={{ height: "100vh" }}
+      style={{ height: "100%" }}
       align="center"
       justify="center"
       height={"auto"}

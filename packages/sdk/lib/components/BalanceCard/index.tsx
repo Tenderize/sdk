@@ -41,25 +41,21 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
       <Flex justify="between" width="100%" align="start">
         <Flex justify="start" gap="2">
           <Avatar size="4" fallback src={token.img.tToken} alt={token.name} />
-          <Flex direction="column">
-            <Heading size="2">{token.name}</Heading>
-            <Heading size="1">{`t${token.currency}`}</Heading>
+          <Flex direction="column" pt={"1"}>
+            <Heading size="3">{token.name}</Heading>
+            <Heading
+              className="text-gray-500 dark:text-gray-400"
+              size="1"
+            >{`t${token.currency}`}</Heading>
           </Flex>
         </Flex>
-        <Flex align="center" gap="2">
+        <Flex align="end" gap="1" direction="column">
           <Heading size="6">{formatAmount(balance)}</Heading>
-          <Text size="1">{`t${token.currency}`}</Text>
+          <Text
+            className="font-medium tracking-wider text-gray-500 dark:text-gray-400 "
+            size="3"
+          >{`$ ${formatAmount(calculatePriceInCurrency)}`}</Text>
         </Flex>
-      </Flex>
-      <Flex
-        justify="between"
-        width="100%"
-        align="center"
-        style={{ color: "gray" }}
-      >
-        <Text size="2">{`Total Balance in USD`}</Text>
-
-        <Text size="3">{`$ ${formatAmount(calculatePriceInCurrency)}`}</Text>
       </Flex>
     </Card>
   );
