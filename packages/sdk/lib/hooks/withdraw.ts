@@ -2,7 +2,6 @@ import { TenderizerAbi } from "@lib/abis";
 import { getUnlockID } from "@lib/utils/global";
 import { useMutation } from "@tanstack/react-query";
 import {
-  getPublicClient,
   getWalletClient,
   waitForTransactionReceipt,
   writeContract,
@@ -18,7 +17,7 @@ export const useWithdraw = (tenderizer: Address, chainId: number) => {
       try {
         return await withdraw(unlockID, tenderizer, chainId, wagmiConfig);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
   });
@@ -47,7 +46,7 @@ const withdraw = async (
 
     return hash;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw error;
   }
 };

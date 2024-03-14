@@ -1,33 +1,43 @@
 import { useChainId, useTenderizer } from "@lib/config/store";
-import { TOKENS, TOKEN_ADDRESSES, TokenSlugEnums } from "@lib/constants";
+import { TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useUnlocks, useWithdraw } from "@lib/hooks";
+import { useAdapterTime } from "@lib/hooks/adapter";
 import { formatAmount } from "@lib/utils/floats";
 import { formatMaturity, isMutationPending } from "@lib/utils/global";
 import { ClockIcon, CountdownTimerIcon } from "@radix-ui/react-icons";
 import { Badge, Flex, Grid, Heading, Separator, Text } from "@radix-ui/themes";
 import type { CSSProperties, FC } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { parseEther, type Address, type Hex } from "viem";
 import { useAccount } from "wagmi";
 import { Button, Callout } from "..";
-import { useAdapterTime } from "@lib/hooks/adapter";
 
 interface WithdrawProps {
   style?: CSSProperties;
 }
 
 export const Withdraw: FC<WithdrawProps> = (props) => {
+  const [activeUnlockId, setActiveUnlockId] = useState<Hex>("" as Hex);
   const { style } = props;
   const token = useSelectedToken();
   const { address: user } = useAccount();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
-  const { time } = useAdapterTime(token.slug)
+  const { time } = useAdapterTime(token.slug);
 
-  const { unlocks } = useUnlocks(token.slug, tenderizer, user ?? ("" as Address), chainId);
+  const { unlocks } = useUnlocks(
+    token.slug,
+    tenderizer,
+    user ?? ("" as Address),
+    chainId
+  );
 
-  const { mutate: withdraw, status: withdrawStatus } = useWithdraw(tenderizer, chainId);
+  const { mutate: withdraw, status: withdrawStatus } = useWithdraw(
+    tenderizer,
+    chainId
+  );
+
   if (!unlocks || unlocks?.length === 0) return null;
   return (
     <Callout variant="surface" style={{ ...style }}>
@@ -41,6 +51,8 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
       >
         {unlocks?.map((item, index) => {
           const isMature = item.maturity >= (time || 0);
+          const isWithdrawLoading =
+            isMutationPending(withdrawStatus) && activeUnlockId === item.id;
           return (
             <React.Fragment key={index}>
               <Flex align="center">
@@ -58,12 +70,11 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
                       width={30}
                       height={30}
                       alt="name"
-                      src={
-                        token.img?.tToken
-                      }
+                      src={token.img?.tToken}
                     ></img>
-                    {/* Assuming item.amount is the placeholder */}
-                    <Text size="1">{formatAmount(parseEther(item.amount))}</Text>
+                    <Text size="1">
+                      {formatAmount(parseEther(item.amount))}
+                    </Text>
                   </Flex>
                 </Badge>
               </Flex>
@@ -76,7 +87,11 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
                 >
                   {isMature ? <CountdownTimerIcon /> : <ClockIcon />}
                   {isMature
-                    ? `${formatMaturity(token.slug === TokenSlugEnums.MATIC ? (Number(item.maturity) - Number(time)) * 2250 : (Number(item.maturity) - Number(time)) * 13)} left`
+                    ? `${formatMaturity(
+                        token.slug === TokenSlugEnums.MATIC
+                          ? (Number(item.maturity) - Number(time)) * 2250
+                          : (Number(item.maturity) - Number(time)) * 13
+                      )} left`
                     : "Ready to withdraw"}
                 </Badge>
               </Flex>
@@ -95,25 +110,27 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
                   </Button>
                 ) : (
                   <Button
-                    className={isMutationPending(withdrawStatus) ? "animate-pulse" : ""}
-                    disabled={isMutationPending(withdrawStatus)}
+                    className={isWithdrawLoading ? "animate-pulse" : ""}
+                    disabled={isWithdrawLoading}
                     style={{ minWidth: "150px", height: "100%" }}
                     onClick={() => {
                       const unlockID = item.id as Hex;
+                      setActiveUnlockId(unlockID);
                       withdraw?.(unlockID);
                     }}
                     variant="solid"
                   >
                     <ClockIcon />
-                    {isMutationPending(withdrawStatus) ?
-                      <>Withdrawing {token.currency}...</> :
+                    {isWithdrawLoading ? (
+                      <>Withdrawing {token.currency}...</>
+                    ) : (
                       <>Withdraw {token.currency}</>
-                    }
+                    )}
                   </Button>
                 )}
               </Flex>
             </React.Fragment>
-          )
+          );
         })}
       </Grid>
     </Callout>
