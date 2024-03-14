@@ -30,16 +30,15 @@ const withdraw = async (
   chainId: number,
   wagmiConfig: Config
 ) => {
-  const publicClient = getPublicClient(wagmiConfig, { chainId });
   const signer = await getWalletClient(wagmiConfig);
-  if (!publicClient) return;
+  if (!signer) return;
 
   try {
-    const { request: withdraw } = await simulateContract(publicClient, {
+    const { request: withdraw } = await simulateContract(signer, {
       address: tenderizer,
       abi: TenderizerAbi,
       functionName: "withdraw",
-      args: [signer.account.address, getUnlockID(unlockID)], // ? need to check if this is correct
+      args: [signer.account.address, getUnlockID(unlockID)],
     });
 
     const hash = await writeContract(wagmiConfig, withdraw);
