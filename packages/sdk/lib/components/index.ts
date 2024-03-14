@@ -1,3 +1,4 @@
+export * from "./BalanceCard";
 export * from "./Button";
 export * from "./Callout";
 export * from "./CalloutLayout";
@@ -8,12 +9,12 @@ export * from "./OutputField";
 export * from "./Stake";
 export * from "./Stats";
 export * from "./Swap";
+export * from "./SwitchChain";
 export * from "./Tabs";
 export * from "./Tenderize";
 export * from "./TokenSelector";
 export * from "./Unstake";
 export * from "./Withdraw";
-export * from './SwitchChain'
 export default "./Tenderize";
 
 // Third-party components

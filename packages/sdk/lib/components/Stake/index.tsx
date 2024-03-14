@@ -19,8 +19,8 @@ import {
 import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
-import { useState, type FC, useEffect } from "react";
-import { formatEther, type Address, parseEther } from "viem";
+import { useEffect, useState, type FC } from "react";
+import { formatEther, parseEther, type Address } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 
 export const Stake: FC = () => {
@@ -76,6 +76,7 @@ export const Stake: FC = () => {
             <InputField
               variant="soft"
               className=""
+              size="3"
               max={formatEther(balance)}
               style={{ width: "100%", fontSize: 30 }}
               handleChange={(value: string) => {
