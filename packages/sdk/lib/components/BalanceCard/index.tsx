@@ -3,10 +3,10 @@ import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance } from "@lib/hooks";
 import { useCoinPrice } from "@lib/hooks/prices";
 import { COINGECKO_KEYS, type Token } from "@lib/types";
-import { formatAmount } from "@lib/utils/floats";
+import { formatAmount, formatFloatstring } from "@lib/utils/floats";
 import { Avatar, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import type { FC } from "react";
-import { parseEther } from "viem";
+import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 
 export const BalanceCard = () => {
@@ -17,13 +17,13 @@ export const BalanceCard = () => {
   const chainId = useChainId(token.slug);
   const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
-  const parsedPrice = parseEther(price?.toString() || "0");
-  const calculatePriceInCurrency = (balance * parsedPrice) / 10n ** 18n;
+  console.log("parsed balance", parseFloat(formatEther(balance)))
+  const usdBalance = (parseFloat(formatEther(balance)) * (price || 0)).toFixed(18);
   return (
     <BalanceCardView
       token={token}
       balance={balance}
-      calculatePriceInCurrency={calculatePriceInCurrency}
+      usdBalance={usdBalance}
     />
   );
 };
@@ -31,11 +31,13 @@ export const BalanceCard = () => {
 type BalanceCardViewProps = {
   token: Token;
   balance: bigint;
-  calculatePriceInCurrency: bigint;
+  usdBalance: string;
 };
 
 export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
-  const { token, balance, calculatePriceInCurrency } = props;
+  const { token, balance, usdBalance } = props;
+  console.log(balance, usdBalance)
+
   return (
     <Card className="p-3 pr-6" variant="classic" style={{ width: "100%" }}>
       <Flex justify="between" width="100%" align="start">
@@ -52,9 +54,9 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
         <Flex align="end" gap="1" direction="column">
           <Heading size="6">{formatAmount(balance)}</Heading>
           <Text
-            className="font-medium tracking-wider text-gray-500 dark:text-gray-400 "
+            className="text-md font-medium text-gray-400 dark:text-gray-400"
             size="3"
-          >{`$ ${formatAmount(calculatePriceInCurrency)}`}</Text>
+          >{`$ ${formatFloatstring(usdBalance, 2)}`}</Text>
         </Flex>
       </Flex>
     </Card>
