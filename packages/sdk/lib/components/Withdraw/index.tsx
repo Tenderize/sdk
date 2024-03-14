@@ -41,10 +41,14 @@ export const Withdraw: FC<WithdrawProps> = (props) => {
   if (!unlocks || unlocks?.length === 0) return null;
   return (
     <Callout variant="surface" style={{ ...style }}>
-      <Heading size="4">Pending Unlocks</Heading>
+      <Heading size="3">Pending Unlocks</Heading>
       <Separator orientation="horizontal" size="4" />
       <Grid
-        style={{ gridTemplateColumns: "1fr 1fr 1fr" }}
+        style={{
+          gridTemplateColumns: "1fr 1fr 1fr",
+          maxHeight: 150,
+          overflowY: "auto",
+        }}
         columns="3"
         gap="4"
         width="auto"

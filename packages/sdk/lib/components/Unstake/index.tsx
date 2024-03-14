@@ -4,6 +4,7 @@ import {
   InputField,
   MaxBalanceButton,
   OutputField,
+  SwitchChainButton,
   TokenSelector,
   Withdraw,
 } from "@lib/components";
@@ -13,10 +14,11 @@ import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance } from "@lib/hooks";
 import { useUnstake } from "@lib/hooks/unlocks";
 import { isMutationPending } from "@lib/utils/global";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
-import { useState, type FC } from "react";
-import { formatEther, parseEther } from "viem";
-import { useAccount } from "wagmi";
+import { parseEther, formatEther } from "viem";
+import { useEffect, useState, type FC } from "react";
+import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 
 export const Unstake: FC = () => {
   const [amount, setAmount] = useState<string>("");
@@ -25,12 +27,19 @@ export const Unstake: FC = () => {
   const chainId = useChainId(token.slug);
   const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
-
+  const currentChainId = useCurrentChainId();
   const { mutate: unstake, status: unstakeStatus } = useUnstake(
     tenderizer,
     parseEther(amount),
     chainId
   );
+
+  // used to rest the amount after a successful deposit
+  useEffect(() => {
+    if (unstakeStatus === "success") {
+      setAmount("");
+    }
+  }, [unstakeStatus]);
 
   return (
     <Flex gap="2" content="between" direction="column" p="2">
@@ -79,21 +88,46 @@ export const Unstake: FC = () => {
         }
         callOutActionChildren={
           <Flex gap="2" width="100%">
-            <Button
-              className={isMutationPending(unstakeStatus) ? "animate-pulse" : ""}
-              disabled={!amount || isMutationPending(unstakeStatus)}
-              style={{ width: "100%" }}
-              size="4"
-              onClick={() => {
-                unstake?.();
-              }}
-              variant="solid"
-            >
-              {isMutationPending(unstakeStatus) ?
-                <>Unstaking {token.currency}...</> :
-                <>Unstake {token.currency}</>
+            {(() => {
+              if (currentChainId !== chainId) {
+                return <SwitchChainButton requiredChainId={chainId} />;
               }
-            </Button>
+              if (unstakeStatus === "success") {
+                return (
+                  <Button
+                    style={{ width: "100%", pointerEvents: "none" }}
+                    size="4"
+                    variant="soft"
+                    color="green"
+                  >
+                    <Flex gap="2" align="center">
+                      <CheckCircledIcon />
+                      <Text>Unstaked {token.currency}</Text>
+                    </Flex>
+                  </Button>
+                );
+              }
+              return (
+                <Button
+                  className={
+                    isMutationPending(unstakeStatus) ? "animate-pulse" : ""
+                  }
+                  disabled={!amount || isMutationPending(unstakeStatus)}
+                  style={{ width: "100%" }}
+                  size="4"
+                  onClick={() => {
+                    unstake?.();
+                  }}
+                  variant="solid"
+                >
+                  {isMutationPending(unstakeStatus) ? (
+                    <>Unstaking {token.currency}...</>
+                  ) : (
+                    <>Unstake {token.currency}</>
+                  )}
+                </Button>
+              );
+            })()}
           </Flex>
         }
       ></CalloutLayout>
