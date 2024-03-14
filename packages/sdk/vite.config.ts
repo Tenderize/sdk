@@ -5,8 +5,9 @@ import dts from "vite-plugin-dts";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
 
 export default defineConfig(({ mode }) => {
+  mode;
   return {
-    plugins: [react(), dts({ include: ["lib"] }), libInjectCss()],
+    plugins: [react(), dts({ include: ["lib", "src"] }), libInjectCss()],
     build: {
       target: 'es2020',
       copyPublicDir: false,

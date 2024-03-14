@@ -10,6 +10,7 @@ type UseERC20Balance = (
     token: Address,
     account: Address | undefined,
     chainId?: number,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ) => { balance: bigint; isLoading: boolean; isError: boolean, refetch: any };
 
 export const useERC20Balance: UseERC20Balance = (

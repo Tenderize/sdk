@@ -29,6 +29,7 @@ export const SUBGRAPHS: Record<number, string> = {
     "https://api.studio.thegraph.com/query/45970/tenderize-v2-arbitrum/version/latest",
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const CHAINS: Record<number, any> = {
   [mainnet.id]: {
     ...mainnet,
