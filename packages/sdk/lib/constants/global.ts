@@ -1,7 +1,6 @@
 import arbLogo from "@lib/assets/chain/arbitrum-arb-logo.svg";
 import ethLogo from "@lib/assets/chain/ethereum-eth-logo.svg";
 import { arbitrum, mainnet } from "viem/chains";
-import { Currency, TokenSlugEnums } from ".";
 export const MAX_INT =
   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
 
@@ -42,16 +41,4 @@ export const CHAINS: Record<number, any> = {
     explorerUrl: "https://arbiscan.io/",
   },
 };
-
-export const COINGECKO_KEYS = {
-  [TokenSlugEnums.LIVEPEER]: "livepeer",
-  [TokenSlugEnums.MATIC]: "matic-network",
-  [TokenSlugEnums.GRAPH]: "the-graph",
-};
-
-export const DEFAULT_CURRENCY = {
-  code: Currency.USD,
-  symbol: "$",
-};
-
 export default {};
