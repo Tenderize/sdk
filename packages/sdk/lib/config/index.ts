@@ -29,6 +29,7 @@ export const createTenderizeConfig: CreateTenderizeConfig = (config) => {
     return {
         tenderizers: config.tenderizers,
         chains: config.chains,
+        validator: config.validator,
         web3: createConfig(
             getDefaultConfig({
                 // Your dApps chains

@@ -1,6 +1,7 @@
 import { TokenSlugEnums } from "@lib/constants";
 import type { Address, Chain } from "viem";
 import type { Config, CreateConfigParameters } from "wagmi";
+import type { ValidatorProfile } from "./tenderizer";
 
 // Assuming CreateConfigParameters already includes optional "chains" and "transports",
 // we make a version that requires these properties to be non-nullable.
@@ -19,6 +20,7 @@ type ConfigWithApiKey = Omit<CreateConfigParameters, 'chains' | 'transports'> & 
 export type TenderizeConfig = {
     tenderizers: TenderizersConfig;
     chains: TenderizeChains;
+    validator?: ValidatorProfile;
     web3: Config
 }
 
@@ -36,6 +38,7 @@ export type Web3ConfigOptions = {
 
 
 export type TenderizeConfigOptions = {
+    validator?: ValidatorProfile;
     tenderizers: TenderizersConfig;
     chains: TenderizeChains;
 } & Omit<Web3ConfigOptions, "chains">;
