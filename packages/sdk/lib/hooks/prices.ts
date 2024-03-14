@@ -15,12 +15,14 @@ const fetchCoinPrice = async (coin: CoinID): Promise<unknown> => {
 
 // Custom hook to use the useQuery hook for fetching a specific coin's price
 export const useCoinPrice = (coin: CoinID) => {
-    return useQuery({
+    const { data: price, isLoading, error } = useQuery({
         queryKey: ['coinPrice', coin],
         queryFn: () => fetchCoinPrice(coin),
         staleTime: 1000 * 60 * 5, // 5 minutes
     }
     );
+
+    return { price, isLoading, error };
 };
 
 
