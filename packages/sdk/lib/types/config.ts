@@ -1,4 +1,6 @@
-import type { CreateConfigParameters } from "wagmi";
+import { TokenSlugEnums } from "@lib/constants";
+import type { Address, Chain } from "viem";
+import type { Config, CreateConfigParameters } from "wagmi";
 
 // Assuming CreateConfigParameters already includes optional "chains" and "transports",
 // we make a version that requires these properties to be non-nullable.
@@ -14,6 +16,15 @@ type ConfigWithApiKey = Omit<CreateConfigParameters, 'chains' | 'transports'> & 
     transports?: never;
 };
 
+export type TenderizeConfig = {
+    tenderizers: TenderizersConfig;
+    chains: TenderizeChains;
+    web3: Config
+}
+
+export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
+export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };
+
 // Define the conditional ConfigOptions type
 export type Web3ConfigOptions = {
     appName?: string;
@@ -21,3 +32,10 @@ export type Web3ConfigOptions = {
     appUrl?: string;
     appIcon?: string;
 } & (ConfigWithApiKey | (ConfigWithChainsAndTransports & { apiKey?: never }));
+
+
+
+export type TenderizeConfigOptions = {
+    tenderizers: TenderizersConfig;
+    chains: TenderizeChains;
+} & Omit<Web3ConfigOptions, "chains">;

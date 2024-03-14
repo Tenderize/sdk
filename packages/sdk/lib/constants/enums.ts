@@ -3,6 +3,7 @@ export enum TokenSlugEnums {
     MATIC = 'matic',
     GRAPH = 'graph',
 }
+
 export enum TokenNameEnums {
     LIVEPEER = 'Livepeer',
     MATIC = 'Polygon',
@@ -13,4 +14,10 @@ export enum TokenSymbolEnums {
     LIVEPEER = 'LPT',
     MATIC = 'MATIC',
     GRAPH = 'GRT',
+}
+
+export enum ActionEnums {
+    STAKE = "STAKE",
+    UNSTAKE = "UNSTAKE",
+    SWAP = "SWAP",
 }

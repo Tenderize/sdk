@@ -1,15 +1,18 @@
 import { Flex } from "@radix-ui/themes";
-import { Card } from "@tenderize/sdk";
-import { Tenderize } from "@tenderize/sdk";
+import { Card, Tenderize } from "@lib/components";
+import { ConnectKitButton } from "connectkit";
 
 function App() {
   return (
     <Flex
+      gap="4"
+      direction="column"
       style={{ height: "100vh" }}
       align="center"
       justify="center"
       height={"auto"}
     >
+      <ConnectKitButton />
       <Card size={"1"} className="w-[40%]">
         <Tenderize />
       </Card>

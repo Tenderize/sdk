@@ -1,8 +1,9 @@
-import { useSelectedToken } from "@lib/hooks";
+import { useSelectedToken } from "@lib/contexts";
 import { useTenderizerStats } from "@lib/hooks/stats";
 import { formatAmount, formatFloatstring } from "@lib/utils/floats";
 import type { FC } from "react";
 import { Grid, Flex, Box, Text } from '@radix-ui/themes'
+import { useTenderizer, useChainId } from "@lib/config/store";
 
 type TenderizerStats = {
     tvl: string,
@@ -10,9 +11,11 @@ type TenderizerStats = {
 }
 
 export const TenderizerStats: FC = () => {
-    const { token, tenderizer } = useSelectedToken()
+    const token = useSelectedToken()
+    const tenderizer = useTenderizer(token.slug)
+    const chainId = useChainId(token.slug)
 
-    const { stats, isLoading, error } = useTenderizerStats(tenderizer, token.chainId ?? 1)
+    const { stats, isLoading, error } = useTenderizerStats(tenderizer, chainId)
 
     return <TenderizerStatsView tokenSymbol={token.currency} stats={stats} isLoading={isLoading} error={error} />
 }

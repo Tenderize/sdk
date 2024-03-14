@@ -23,7 +23,6 @@ export type Token = {
         value: string;
         denomination: string;
     };
-    chainId: number;
     erc2612: boolean;
     adapter: Address;
     tvl?: bigint | string;

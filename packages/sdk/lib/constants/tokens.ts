@@ -10,8 +10,6 @@ import {
   TokenSymbolEnums,
 } from "@lib/constants";
 import type { Token, TokenAddresses } from "@lib/types";
-import type { Address } from "viem";
-import { arbitrum, mainnet } from "viem/chains";
 
 export const maticToken: Token = {
   name: TokenNameEnums.MATIC,
@@ -30,7 +28,6 @@ export const maticToken: Token = {
     value: "2-3",
     denomination: "D",
   },
-  chainId: mainnet.id,
   erc2612: false,
 };
 
@@ -50,7 +47,6 @@ export const livepeerToken: Token = {
     value: "6-7",
     denomination: "D",
   },
-  chainId: arbitrum.id,
   erc2612: true,
   adapter: "0x954605F1bEc0FA1045e61E29F772c54BE2d413a8",
 };
@@ -71,7 +67,6 @@ export const graphToken: Token = {
     value: "26-52",
     denomination: "D",
   },
-  chainId: arbitrum.id,
   erc2612: false,
   adapter: "0x1eDbBF4E0469786052E93FC9538237d534D6197f",
 };
@@ -93,10 +88,3 @@ export const TOKENS_WALLET_IMAGE = {
   [TokenSlugEnums.LIVEPEER]: "/tokens/tlpt.png",
   [TokenSlugEnums.GRAPH]: "/tokens/tgrt.png",
 } as const;
-
-// TODO: should be provided as config
-export const TENDERIZERS: Record<TokenSlugEnums, Address> = {
-  [TokenSlugEnums.MATIC]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-  [TokenSlugEnums.LIVEPEER]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-  [TokenSlugEnums.GRAPH]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-};

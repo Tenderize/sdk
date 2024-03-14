@@ -15,7 +15,7 @@ type UseERC20Balance = (
 export const useERC20Balance: UseERC20Balance = (
     token,
     account,
-    chainId = 1
+    chainId
 ) => {
     const { data: balance, isLoading, isError, refetch } = useReadContract(account && {
         abi: erc20Abi,
@@ -93,16 +93,22 @@ export const useERC20Approve = (
 
 const erc20Approve = async (asset: Address, spender: Address, amount: bigint, wagmiConfig: Config, chainId: number) => {
     const publicClient = getPublicClient(wagmiConfig, { chainId });
+    const signer = await getWalletClient(wagmiConfig)
     if (!publicClient) return;
-    const { request: approve } = await simulateContract(publicClient, {
-        address: asset,
-        abi: erc20Abi,
-        functionName: 'approve',
-        args: [spender, amount],
-    });
-    const hash = await writeContract(wagmiConfig, approve);
-    await waitForTransactionReceipt(wagmiConfig, { hash, chainId })
-    return hash
+    try {
+        const { request: approve } = await simulateContract(signer, {
+            address: asset,
+            abi: erc20Abi,
+            functionName: 'approve',
+            args: [spender, amount],
+        });
+
+        const hash = await writeContract(wagmiConfig, approve);
+        await waitForTransactionReceipt(wagmiConfig, { hash, chainId })
+        return hash
+    } catch (err) {
+        console.error(err)
+    }
 }
 
 const erc20Permit = async (asset: Address, spender: Address, amount: bigint, wagmiConfig: Config, chainId: number) => {

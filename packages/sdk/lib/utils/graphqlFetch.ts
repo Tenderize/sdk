@@ -9,6 +9,7 @@ export const graphqlFetch = async (url: string, query: string, variables: any) =
         });
         return (await response.json()).data;
     } catch (err) {
+        console.log(err)
         throw err;
     }
 }
