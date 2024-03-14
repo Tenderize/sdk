@@ -125,9 +125,12 @@ export const Stake: FC = () => {
                 variant="solid"
               >
                 {isMutationPending(approveStatus) ?
-                  <>Stake {token.currency}...</> :
-                  <>Staking {token.currency}</>
-                }              </Button>
+
+                  <>Staking {token.currency}...</>
+                  :
+                  <>Stake {token.currency}</>
+                }
+              </Button>
             )}
             { }
           </Flex>

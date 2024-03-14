@@ -64,7 +64,7 @@ export const InputField: FC<Props> = ({
   };
 
   return (
-    <TextField.Root {...rest} style={{ ...style }}>
+    <TextField.Root {...rest} style={{ paddingTop: "10px", paddingBottom: "10px", ...style }}>
       <TextField.Input
         max={formatEther(max)}
         placeholder={placeholder}
