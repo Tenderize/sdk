@@ -15,11 +15,11 @@ import { useUnstake } from "@lib/hooks/unlocks";
 import { isMutationPending } from "@lib/utils/global";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 export const Unstake: FC = () => {
-  const [amount, setAmount] = useState<bigint>(0n);
+  const [amount, setAmount] = useState<string>("");
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
@@ -28,7 +28,7 @@ export const Unstake: FC = () => {
 
   const { mutate: unstake, status: unstakeStatus } = useUnstake(
     tenderizer,
-    amount,
+    parseEther(amount),
     chainId
   );
 
@@ -43,14 +43,14 @@ export const Unstake: FC = () => {
               disabled={isMutationPending(unstakeStatus)}
               variant="soft"
               className=""
-              max={balance}
+              max={formatEther(balance)}
               style={{ width: "100%", fontSize: 30 }}
               handleChange={setAmount}
               value={amount}
               icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
             />
             <MaxBalanceButton
-              max={balance}
+              max={formatEther(balance)}
               handleInputChange={setAmount}
             />
           </Flex>
@@ -62,7 +62,7 @@ export const Unstake: FC = () => {
               variant="soft"
               className=""
               style={{ width: "100%", fontSize: 30 }}
-              value={formatEther(amount)}
+              value={amount}
               icon={
                 <Flex align="center" gap="2">
                   <img

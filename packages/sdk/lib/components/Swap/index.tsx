@@ -12,11 +12,11 @@ import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance, useQuote } from "@lib/hooks";
 import { Flex, Text } from "@radix-ui/themes";
 import { useState, type FC } from "react";
-import { formatEther } from "viem";
+import { formatEther, parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 export const Swap: FC = () => {
-  const [amount, setAmount] = useState<bigint>(0n);
+  const [amount, setAmount] = useState<string>("");
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
@@ -25,7 +25,7 @@ export const Swap: FC = () => {
   const { quote } = useQuote(
     token.slug,
     tenderizer,
-    amount,
+    parseEther(amount),
     chainId
   );
 
@@ -37,14 +37,14 @@ export const Swap: FC = () => {
             <Text size="2">You Swap</Text>
             <InputField
               variant="soft"
-              max={balance}
+              max={formatEther(balance)}
               style={{ width: "100%", fontSize: 30 }}
               handleChange={setAmount}
               value={amount}
               icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
             />
             <MaxBalanceButton
-              max={balance}
+              max={formatEther(balance)}
               handleInputChange={setAmount}
             />
           </Flex>
