@@ -9,7 +9,7 @@ import {
   writeContract,
 } from "@wagmi/core";
 import { Interface } from "ethers/lib/utils";
-import { parseEther, type Address, type Hex } from "viem";
+import { type Address, type Hex } from "viem";
 import { simulateContract } from "viem/actions";
 import { useConfig, useReadContract, type Config } from "wagmi";
 
@@ -51,7 +51,7 @@ export const useDeposit = (
   permit?: ERC2612Permit
 ) => {
   const wagmiConfig = useConfig();
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async () => {
       const asset = await readContract(wagmiConfig, {
         address: tenderizer,
@@ -61,16 +61,24 @@ export const useDeposit = (
       });
       return permit
         ? depositWithPermit(
-          asset,
-          tenderizer,
-          amount,
-          permit,
-          chainId,
-          wagmiConfig
-        )
+            asset,
+            tenderizer,
+            amount,
+            permit,
+            chainId,
+            wagmiConfig
+          )
         : depositWithApprove(tenderizer, amount, chainId, wagmiConfig);
     },
+    onSuccess: () => {
+      // Reset the mutation status to idle after success
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
+    },
   });
+
+  return mutation;
 };
 
 const depositWithPermit = async (
@@ -114,7 +122,7 @@ const depositWithPermit = async (
 
     return hash;
   } catch (err) {
-    console.log(err)
+    console.log(err);
     throw err;
   }
 };
@@ -143,7 +151,7 @@ const depositWithApprove = async (
 
     return hash;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     throw error;
   }
 };
