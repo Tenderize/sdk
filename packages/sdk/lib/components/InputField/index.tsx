@@ -69,7 +69,7 @@ export const InputField: FC<Props> = ({
   };
 
   return (
-    <TextField.Root {...rest} style={{ ...style }}>
+    <TextField.Root {...rest} style={{ paddingTop: "10px", paddingBottom: "10px", paddingRight: 10, ...style }}>
       <TextField.Input
         placeholder={placeholder}
         value={inputValue}

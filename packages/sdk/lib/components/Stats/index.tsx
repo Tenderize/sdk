@@ -1,9 +1,11 @@
 import { useSelectedToken } from "@lib/contexts";
 import { useTenderizerStats } from "@lib/hooks/stats";
-import { formatAmount, formatFloatstring } from "@lib/utils/floats";
+import { formatAmount } from "@lib/utils/floats";
 import type { FC } from "react";
-import { Grid, Flex, Box, Text } from '@radix-ui/themes'
 import { useTenderizer, useChainId } from "@lib/config/store";
+import { AvatarImage, AvatarFallback, Avatar } from "@lib/components/ui/avatar"
+import { CardHeader, CardContent, Card } from "@lib/components/ui/card"
+import { Separator } from "@lib/components/ui/separator"
 
 type TenderizerStats = {
     tvl: string,
@@ -23,46 +25,32 @@ export const TenderizerStats: FC = () => {
 export const TenderizerStatsView: FC<{ tokenSymbol: string, stats: TenderizerStats, isLoading?: boolean, error?: Error | null }> = ({ tokenSymbol, stats, isLoading, error }) => {
     isLoading; error;
     return (
-        <Grid columns="2" gap="2" width="auto">
-            <Box>
-
-                <Text weight="medium">
-                    APY
-                </Text>
-
-            </Box>
-            <Box>
-                <div className="text-right">
-                    {formatFloatstring(
-                        (Number(stats.apy) * 100).toString(),
-                        2
-                    )}
-                    %
+        <Card className="w-full max-w-[full px-4 bg-white dark:bg-gray-900 rounded-lg">
+            <CardHeader className="flex flex-col items-center">
+                <div className="flex items-center gap-2">
+                    <Avatar>
+                        <AvatarImage alt="User" src="/placeholder-avatar.jpg" />
+                        <AvatarFallback>U</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium">John Doe</span>
                 </div>
-            </Box>
-            <Box>
-                <Text weight="medium">
-                    TVL
-                </Text>
-            </Box>
-            <Box>
-                <Flex gap="2">
-                    <Text align="left">
-                        {tokenSymbol}
-                    </Text>
-                    <Text align="right">
-                        {formatAmount(stats.tvl)}{' '}
-                    </Text>
-                </Flex>
-                <Flex gap="2">
-                    <Text size="2" align="left">
-                        {'$ '}
-                    </Text>
-                    <Text size="2" align="right">
-                        {formatAmount(stats.tvl /*TODO: add conversion rate*/)}
-                    </Text>
-                </Flex>
-            </Box>
-        </Grid>
-    );
+            </CardHeader>
+            <Separator className="my-4" orientation="horizontal" />
+
+            <CardContent className="grid grid-cols-9 gap-6 text-center">
+                <div className="flex flex-col col-span-4 items-center">
+                    <div className="text-sm font-medium tracking-wider text-gray-500 dark:text-gray-400">Value Locked</div>
+                    <div className="text-2xl font-semibold text-primary whitespace-nowrap">{formatAmount(stats.tvl)} {tokenSymbol}</div>
+                    <div className="text-md font-medium text-gray-400 dark:text-gray-400">$12,000,000</div>
+                </div>
+                <div className="flex flex-col col-span-1 items-center">
+                    <Separator className="" orientation="vertical" />
+                </div>
+                <div className="flex flex-col col-span-4 items-center">
+                    <div className="text-sm font-medium tracking-wider text-gray-500 dark:text-gray-400">Current Yield</div>
+                    <div className="text-2xl font-semibold tracking-tighter">{stats.apy} %</div>
+                </div>
+            </CardContent>
+        </Card>
+    )
 };

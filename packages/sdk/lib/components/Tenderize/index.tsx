@@ -1,4 +1,4 @@
-import { Stake, Swap, Unstake } from "@lib/components";
+import { Stake, Swap, TenderizerStats, Unstake, Card } from "@lib/components";
 import { Tabs } from "@lib/components";
 import { type FC } from "react";
 
@@ -21,7 +21,16 @@ const TABS_DATA = [
 ];
 
 export const Tenderize: FC = () => {
-    return <Tabs tabsData={TABS_DATA} />;
+    return (<>
+        <Card size={"1"} className="w-full max-w-[50%]">
+            <Tabs tabsData={TABS_DATA} />
+        </Card>
+        <div className="w-full max-w-[50%]">
+            <TenderizerStats />
+
+        </div>
+    </>
+    )
 };
 
 export default Tenderize

@@ -37,3 +37,10 @@ export type Token = {
 export type TokenAddresses = {
     [key: Address]: TokenSlugEnums;
 };
+
+
+export const COINGECKO_KEYS = {
+    [TokenSlugEnums.LIVEPEER]: 'livepeer',
+    [TokenSlugEnums.MATIC]: 'matic-network',
+    [TokenSlugEnums.GRAPH]: 'the-graph',
+} as const;
