@@ -17,14 +17,12 @@ export const BalanceCard = () => {
   const chainId = useChainId(token.slug);
   const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
-  console.log("parsed balance", parseFloat(formatEther(balance)))
-  const usdBalance = (parseFloat(formatEther(balance)) * (price || 0)).toFixed(18);
+
+  const usdBalance = (parseFloat(formatEther(balance)) * (price || 0)).toFixed(
+    18
+  );
   return (
-    <BalanceCardView
-      token={token}
-      balance={balance}
-      usdBalance={usdBalance}
-    />
+    <BalanceCardView token={token} balance={balance} usdBalance={usdBalance} />
   );
 };
 
@@ -36,7 +34,6 @@ type BalanceCardViewProps = {
 
 export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
   const { token, balance, usdBalance } = props;
-  console.log(balance, usdBalance)
 
   return (
     <Card className="p-3 pr-6" variant="classic" style={{ width: "100%" }}>

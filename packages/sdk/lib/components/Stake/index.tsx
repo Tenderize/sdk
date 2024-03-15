@@ -15,10 +15,15 @@ import {
   useERC20Approve,
   useERC20Balance,
   usePreviewDeposit,
+  useSimulateDeposit,
 } from "@lib/hooks";
+import { useCoinPrice } from "@lib/hooks/prices";
+import { COINGECKO_KEYS } from "@lib/types";
+import { formatFloatstring } from "@lib/utils/floats";
 import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
+import { debounce } from "lodash";
 import { useEffect, useState, type FC } from "react";
 import { formatEther, parseEther, type Address } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
@@ -54,9 +59,29 @@ export const Stake: FC = () => {
     status: approveStatus,
   } = useERC20Approve(token.address, tenderizer, parseEther(amount), chainId);
 
+  const {
+    mutate: simulateDeposit,
+    data: simulatedDepositData,
+    status: simulateStatus,
+  } = useSimulateDeposit(tenderizer, parseEther(amount), chainId);
+
+  const debouncedSimulateDeposit = debounce(() => {
+    simulateDeposit();
+  }, 2000);
+
+  const {
+    request: simulatedRequest,
+    estimatedGas = 0n,
+    estimatedGasPrice = 0n,
+  } = simulatedDepositData || {};
+
+  const { price } = useCoinPrice(COINGECKO_KEYS[token.slug]);
+  const usdEstimatedGasPrice = (
+    parseFloat(formatEther(estimatedGas * estimatedGasPrice)) * (price || 0)
+  ).toFixed(18);
+
   const { mutate: deposit, status: depositStatus } = useDeposit(
-    tenderizer,
-    parseEther(amount),
+    simulatedRequest,
     chainId
   );
 
@@ -81,10 +106,14 @@ export const Stake: FC = () => {
               style={{ width: "100%", fontSize: 30 }}
               handleChange={(value: string) => {
                 setAmount(value || "0");
+                if (currentChainId === chainId && allowance > 0n) {
+                  debouncedSimulateDeposit();
+                }
               }}
               value={amount}
               icon={<TokenSelector />}
             />
+
             <MaxBalanceButton
               max={formatEther(balance)}
               handleInputChange={(value: string) => {
@@ -113,6 +142,17 @@ export const Stake: FC = () => {
                 </Flex>
               }
             />
+
+            {allowance > 0n && (
+              <Text size="1">
+                Estimated gas fees:{" "}
+                {isMutationPending(simulateStatus)
+                  ? "loading..."
+                  : simulateStatus === "success"
+                  ? `$ ${formatFloatstring(usdEstimatedGasPrice, 8)}`
+                  : 0}
+              </Text>
+            )}
           </Flex>
         }
         callOutActionChildren={
@@ -167,7 +207,11 @@ export const Stake: FC = () => {
                   disabled={!previewDeposit || isMutationPending(depositStatus)}
                   style={{ width: "100%" }}
                   size="4"
-                  onClick={() => deposit()}
+                  onClick={() => {
+                    if (simulatedRequest) {
+                      deposit?.();
+                    }
+                  }}
                   variant="solid"
                 >
                   {isMutationPending(depositStatus) ? (

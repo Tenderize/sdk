@@ -32,4 +32,4 @@ export const formatMaturity = (maturity: number) => {
 
 export const isMutationPending = (status: string) => {
   return status === "pending";
-}
+};

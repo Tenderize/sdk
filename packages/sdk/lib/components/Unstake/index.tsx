@@ -12,14 +12,17 @@ import { useChainId, useTenderizer } from "@lib/config/store";
 import { ActionEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance } from "@lib/hooks";
-import { useUnstake } from "@lib/hooks/unlocks";
+import { useCoinPrice } from "@lib/hooks/prices";
+import { useUnstake, useUnstakeSimulate } from "@lib/hooks/unlocks";
+import { COINGECKO_KEYS } from "@lib/types";
+import { formatFloatstring } from "@lib/utils/floats";
 import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
-import { parseEther, formatEther } from "viem";
+import { debounce } from "lodash";
 import { useEffect, useState, type FC } from "react";
+import { formatEther, parseEther } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
-
 export const Unstake: FC = () => {
   const [amount, setAmount] = useState<string>("");
   const token = useSelectedToken();
@@ -28,9 +31,30 @@ export const Unstake: FC = () => {
   const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
   const currentChainId = useCurrentChainId();
+
+  const {
+    mutate: simulateUnstake,
+    data: simulatedUnstakeData,
+    status: simulateStatus,
+  } = useUnstakeSimulate(tenderizer, parseEther(amount), chainId);
+
+  const debouncedSimulateUnstake = debounce(() => {
+    simulateUnstake();
+  }, 2000);
+
+  const {
+    request: simulatedRequest,
+    estimatedGas = 0n,
+    estimatedGasPrice = 0n,
+  } = simulatedUnstakeData || {};
+  const { price } = useCoinPrice(COINGECKO_KEYS[token.slug]);
+
+  const usdEstimatedGasPrice = (
+    parseFloat(formatEther(estimatedGas * estimatedGasPrice)) * (price || 0)
+  ).toFixed(18);
+
   const { mutate: unstake, status: unstakeStatus } = useUnstake(
-    tenderizer,
-    parseEther(amount),
+    simulatedRequest,
     chainId
   );
 
@@ -54,7 +78,12 @@ export const Unstake: FC = () => {
               className=""
               max={formatEther(balance)}
               style={{ width: "100%", fontSize: 30 }}
-              handleChange={setAmount}
+              handleChange={(value: string) => {
+                setAmount(value || "0");
+                if (currentChainId === chainId) {
+                  debouncedSimulateUnstake();
+                }
+              }}
               value={amount}
               icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
             />
@@ -84,6 +113,15 @@ export const Unstake: FC = () => {
                 </Flex>
               }
             />
+
+            <Text size="1">
+              Estimated gas fees:{" "}
+              {isMutationPending(simulateStatus)
+                ? "loading..."
+                : simulateStatus === "success"
+                ? `$ ${formatFloatstring(usdEstimatedGasPrice, 8)}`
+                : 0}
+            </Text>
           </Flex>
         }
         callOutActionChildren={

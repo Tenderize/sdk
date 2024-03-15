@@ -4,6 +4,8 @@ import type { Unlock } from "@lib/types/global";
 import { graphqlFetch } from "@lib/utils/graphqlFetch";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  estimateGas,
+  getGasPrice,
   getWalletClient,
   waitForTransactionReceipt,
   writeContract,
@@ -54,17 +56,15 @@ export const useUnlocks = (
   });
   return { unlocks, isLoading, error };
 };
-
-export const useUnstake = (
-  tenderizer: Address,
-  amount: bigint,
-  chainId: number
-) => {
+export const useUnstake = (request: any, chainId: number) => {
   const wagmiConfig = useConfig();
   const mutation = useMutation({
     mutationFn: async () => {
       try {
-        return await unlock(tenderizer, amount, chainId, wagmiConfig);
+        if (!request) return;
+        const hash = await writeContract(wagmiConfig, request);
+        await waitForTransactionReceipt(wagmiConfig, { hash, chainId });
+        return hash;
       } catch (err) {
         console.log(err);
       }
@@ -79,27 +79,44 @@ export const useUnstake = (
   return mutation;
 };
 
-const unlock = async (
+export const useUnstakeSimulate = (
   tenderizer: Address,
   amount: bigint,
-  chainId: number,
-  wagmiConfig: Config
+  chainId: number
+) => {
+  const wagmiConfig = useConfig();
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (amount === 0n) return;
+      try {
+        return await unlockSimulate(tenderizer, amount, wagmiConfig, chainId);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
+  return mutation;
+};
+
+const unlockSimulate = async (
+  tenderizer: Address,
+  amount: bigint,
+  wagmiConfig: Config,
+  chainId: number
 ) => {
   const signer = await getWalletClient(wagmiConfig);
   if (!signer) return;
   try {
-    const { request: unlock } = await simulateContract(signer, {
+    const { request } = await simulateContract(signer, {
       address: tenderizer,
       abi: TenderizerAbi,
       functionName: "unlock",
       args: [amount],
     });
 
-    const hash = await writeContract(wagmiConfig, unlock);
-
-    await waitForTransactionReceipt(wagmiConfig, { hash, chainId });
-
-    return hash;
+    const estimatedGasPrice = await getGasPrice(wagmiConfig, { chainId });
+    const gas = await estimateGas(wagmiConfig, request);
+    return { request, estimatedGas: gas, estimatedGasPrice };
   } catch (error) {
     console.log(error);
     throw error;
