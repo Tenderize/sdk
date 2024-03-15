@@ -24,7 +24,7 @@ import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
 import { debounce } from "lodash";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useMemo, useState, type FC } from "react";
 import { formatEther, parseEther, type Address } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 
@@ -65,9 +65,9 @@ export const Stake: FC = () => {
     status: simulateStatus,
   } = useSimulateDeposit(tenderizer, parseEther(amount), chainId);
 
-  const debouncedSimulateDeposit = debounce(() => {
-    simulateDeposit();
-  }, 2000);
+  const debouncedSimulateDeposit = useMemo(() => {
+    return debounce(simulateDeposit, 1000);
+  }, [simulateDeposit]);
 
   const {
     request: simulatedRequest,

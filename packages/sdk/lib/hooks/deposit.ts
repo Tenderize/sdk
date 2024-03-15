@@ -166,7 +166,6 @@ const simulateWithApprove = async (
       functionName: "deposit",
       args: [signer.account.address, amount],
     });
-
     const estimatedGasPrice = await getGasPrice(wagmiConfig, { chainId });
     const gas = await estimateGas(wagmiConfig, request);
     return { request, estimatedGas: gas, estimatedGasPrice };

@@ -20,7 +20,7 @@ import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
 import { debounce } from "lodash";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useMemo, useState, type FC } from "react";
 import { formatEther, parseEther } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 export const Unstake: FC = () => {
@@ -38,9 +38,9 @@ export const Unstake: FC = () => {
     status: simulateStatus,
   } = useUnstakeSimulate(tenderizer, parseEther(amount), chainId);
 
-  const debouncedSimulateUnstake = debounce(() => {
-    simulateUnstake();
-  }, 2000);
+  const debouncedSimulateUnstake = useMemo(() => {
+    return debounce(simulateUnstake, 1000);
+  }, [simulateUnstake]);
 
   const {
     request: simulatedRequest,
