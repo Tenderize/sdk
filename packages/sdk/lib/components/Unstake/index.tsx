@@ -150,7 +150,9 @@ export const Unstake: FC = () => {
                   className={
                     isMutationPending(unstakeStatus) ? "animate-pulse" : ""
                   }
-                  disabled={!amount || isMutationPending(unstakeStatus)}
+                  disabled={
+                    !parseEther(amount) || isMutationPending(unstakeStatus)
+                  }
                   style={{ width: "100%" }}
                   size="4"
                   onClick={() => {
