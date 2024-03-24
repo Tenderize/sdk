@@ -16,8 +16,8 @@ import { useUnstake } from "@lib/hooks/unlocks";
 import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
-import { parseEther, formatEther } from "viem";
 import { useEffect, useState, type FC } from "react";
+import { formatEther, parseEther } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 
 export const Unstake: FC = () => {
@@ -42,11 +42,11 @@ export const Unstake: FC = () => {
   }, [unstakeStatus]);
 
   return (
-    <Flex gap="2" content="between" direction="column" p="2">
+    <Flex gap="2" content="between" direction="column">
       <Withdraw />
       <CalloutLayout
         callOutFirstChildren={
-          <Flex gap="2" content="between" direction="column" p="2" width="100%">
+          <Flex gap="2" content="between" direction="column" width="100%">
             <Text size="2">You Unstake</Text>
             <InputField
               disabled={isMutationPending(unstakeStatus)}
@@ -65,7 +65,7 @@ export const Unstake: FC = () => {
           </Flex>
         }
         callOutSecondChildren={
-          <Flex direction="column" gap="2" p="2" width="100%">
+          <Flex direction="column" gap="2" width="100%">
             <Text size="2">You Receive</Text>
             <OutputField
               variant="soft"

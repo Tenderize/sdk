@@ -68,10 +68,10 @@ export const Stake: FC = () => {
   }, [depositStatus]);
 
   return (
-    <Flex gap="2" content="between" direction="column" p="2">
+    <Flex gap="2" content="between" direction="column">
       <CalloutLayout
         callOutFirstChildren={
-          <Flex gap="2" content="between" direction="column" p="2" width="100%">
+          <Flex gap="2" content="between" direction="column" width="100%">
             <Text size="2">You Stake</Text>
             <InputField
               variant="soft"
@@ -94,7 +94,7 @@ export const Stake: FC = () => {
           </Flex>
         }
         callOutSecondChildren={
-          <Flex direction="column" gap="2" p="2" width="100%">
+          <Flex direction="column" gap="2" width="100%">
             <Text size="2">You Receive</Text>
             <OutputField
               variant="soft"
