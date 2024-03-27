@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { http } from "wagmi"
 import { TokenSlugEnums } from "@lib/constants";
 import { TenderizeProvider, Web3Provider } from "@lib/contexts";
 
