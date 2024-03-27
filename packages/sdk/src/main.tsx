@@ -13,9 +13,9 @@ import {
 import { arbitrum, mainnet } from "wagmi/chains";
 
 const TENDERIZERS: TenderizersConfig = {
-  [TokenSlugEnums.MATIC]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-  [TokenSlugEnums.LIVEPEER]: "0x4a3c14d7450c30f712e89659af21f90df56bc9ba",
-  [TokenSlugEnums.GRAPH]: "0x4003e23be46f3bf2b50c3c7f8b13aaecdc71ea72",
+  [TokenSlugEnums.MATIC]: "0x4af4c94e1c45678f34ef6cbc00c4edc62e03d248",
+  [TokenSlugEnums.LIVEPEER]: "0x4b0e5e54df6d5eccc7b2f838982411dc93253daf",
+  [TokenSlugEnums.GRAPH]: "0xff14e5d8ce40666ee9394cf036f3024d92e181d3",
 };
 
 const mainnetChain = {
