@@ -30,7 +30,7 @@ export const Tabs: FC<Props> = (props) => {
 
       {tabsData.map((tab) => (
         <TabsRadix.Content value={tab.value} key={tab.value}>
-          <Flex direction="column" gap="2" p="2">
+          <Flex direction="column" gap="2" my="2">
             <BalanceCard />
           </Flex>
           {tab.content()}

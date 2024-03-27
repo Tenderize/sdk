@@ -1,4 +1,4 @@
-import type { Hex } from "viem";
+import type { Address, Hex } from "viem";
 
 const maxBits = 96n;
 const maxValue = 2n ** maxBits - 1n;
@@ -32,4 +32,13 @@ export const formatMaturity = (maturity: number) => {
 
 export const isMutationPending = (status: string) => {
   return status === "pending";
-}
+};
+
+export const formatAddress = (address: Address): string => {
+  if (address?.length < 10) {
+    return address; // If the length is less than 10, return the original address
+  }
+  const start = address?.substring(0, 6);
+  const end = address?.substring(address.length - 4);
+  return `${start}....${end}`;
+};

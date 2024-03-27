@@ -17,7 +17,7 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
       color="gray"
       width={"100%"}
       position="relative"
-      style={{ minWidth: 400, height: "max-content" }}
+      style={{ height: "max-content" }}
     >
       <Box
         style={{
@@ -36,10 +36,10 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
         </IconButton>
       </Box>
       <Flex direction="column" gap="2">
-        <Callout style={{ display: "flex" }} variant="soft">
+        <Callout className="flex px-3" variant="soft">
           {callOutFirstChildren}
         </Callout>
-        <Callout style={{ display: "flex" }} variant="soft">
+        <Callout className="flex px-3" variant="soft">
           {callOutSecondChildren}
         </Callout>
         <Flex width={"100%"} justify="center">
