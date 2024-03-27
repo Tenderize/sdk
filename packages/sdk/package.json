@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build:app": "tsc --p ./tsconfig.json && vite build",
-    "build:sdk": "tsc --p ./tsconfig.build.json && vite build",
+    "build:app": "tsc --p ./tsconfig.app.json && vite build --mode production",
+    "build:sdk": "tsc --p ./tsconfig.build.json && vite build --mode library",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
