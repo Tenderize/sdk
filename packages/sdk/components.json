@@ -8,7 +8,7 @@
     "css": "lib/index.css",
     "baseColor": "slate",
     "cssVariables": true,
-    "prefix": ""
+    "prefix": "tw"
   },
   "aliases": {
     "components": "@lib/components",
