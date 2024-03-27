@@ -43,8 +43,12 @@ export const getIframeConfig = (
 ): {
   disabledTabs: TabEnum[];
   tenderizers: IframeTokenConfigMap;
-} => {
+} | null => {
   const params = new URLSearchParams(queryString?.replace("?", ""));
+
+  if (!params.size) {
+    return null;
+  }
 
   const configObject: {
     disabledTabs: TabEnum[];
