@@ -1,4 +1,4 @@
-import { useAvailableTokens } from "@lib/config/store";
+import { useTenderizeConfigStore } from "@lib/config/store";
 import { ActionEnums, TOKENS, TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken, useSelectedTokenStore } from "@lib/contexts";
 
@@ -30,7 +30,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const { setSelectedToken } = useSelectedTokenStore();
   const selectedToken = useSelectedToken();
 
-  const tokens = useAvailableTokens();
+  const { tokens } = useTenderizeConfigStore();
 
   const isWrappedToken = (action: ActionEnums) => {
     return action !== ActionEnums.STAKE;

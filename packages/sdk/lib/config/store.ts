@@ -13,19 +13,23 @@ type Store = {
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
   activeTabs: TabEnum[];
+  tokens: TokenSlugEnums[];
   setConfig: (
     tenderizers: Pick<TenderizeConfig, "tenderizers" | "chains">
   ) => void;
   setActiveTabs: (tabs: TabEnum[]) => void;
+  setTokens: (tokens: TokenSlugEnums[]) => void;
 };
 
 export const useTenderizeConfigStore = create<Store>((set) => ({
   tenderizers: {},
   chains: {},
   activeTabs: [TabEnum.STAKE, TabEnum.UNSTAKE, TabEnum.SWAP],
+  tokens: Object.keys(TOKENS) as TokenSlugEnums[],
   setConfig: (config: Pick<TenderizeConfig, "tenderizers" | "chains">) =>
     set({ tenderizers: config.tenderizers, chains: config.chains }),
   setActiveTabs: (tabs: TabEnum[]) => set({ activeTabs: tabs }),
+  setTokens: (tokens: TokenSlugEnums[]) => set({ tokens }),
 }));
 
 export const useTenderizers = (): TenderizersConfig => {

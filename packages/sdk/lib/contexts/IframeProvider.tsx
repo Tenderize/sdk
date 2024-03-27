@@ -1,4 +1,5 @@
 import { useTenderizeConfigStore } from "@lib/config/store";
+import type { TokenSlugEnums } from "@lib/constants";
 import type { IframeTokenConfigMap, TabEnum } from "@lib/hooks";
 import type { TenderizeConfig } from "@lib/types";
 import { useEffect, type FC } from "react";
@@ -13,13 +14,16 @@ export const IframeProvider: FC<{
   iframeConfig: iframeConfig;
 }> = ({ config, iframeConfig }) => {
   // This provider change the config according to the Iframe query data
-  const { setConfig, setActiveTabs, activeTabs } = useTenderizeConfigStore();
+  const { setConfig, setActiveTabs, activeTabs, setTokens } =
+    useTenderizeConfigStore();
   useEffect(() => {
     const { tenderizers: iframeTenderizers, disabledTabs } = iframeConfig;
 
     //change the tenderizers according to the query string data
     if (Object.keys(iframeTenderizers).length !== 0) {
       config.tenderizers = iframeTenderizers;
+      const tokens = Object.keys(iframeTenderizers) as TokenSlugEnums[];
+      setTokens(tokens);
       setConfig(config);
     }
 
