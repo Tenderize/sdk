@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   mode;
   return {
     plugins: [react(), dts({ include: ["lib", "src"] }), libInjectCss()],
-    build: {
+    build: mode === "library" ? {
       target: 'es2020',
       copyPublicDir: false,
       lib: {
@@ -37,6 +37,9 @@ export default defineConfig(({ mode }) => {
         //   entryFileNames: '[name].js',
         // }
       },
+    } : {
+      // Configuration for building the app
+      outDir: 'dist/app',
     },
     resolve: {
       alias: {
