@@ -1,15 +1,17 @@
+import { TokenSlugEnums } from "@lib/constants";
+import { TenderizeProvider, Web3Provider } from "@lib/contexts";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { TokenSlugEnums } from "@lib/constants";
-import { TenderizeProvider, Web3Provider } from "@lib/contexts";
 
 import { ThemeProvider } from "@lib/contexts";
+import { IframeProvider } from "@lib/contexts/IframeProvider.tsx";
 import {
   createTenderizeConfig,
   type TenderizeChains,
   type TenderizersConfig,
 } from "@lib/main.ts";
+import { getIframeConfig } from "@lib/utils/iframe.ts";
 import { arbitrum, mainnet } from "wagmi/chains";
 
 const TENDERIZERS: TenderizersConfig = {
@@ -43,9 +45,14 @@ const config = createTenderizeConfig({
   apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
 });
 
+const iframeConfig = getIframeConfig(window.location.search);
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider>
+      {iframeConfig && (
+        <IframeProvider config={config} iframeConfig={iframeConfig} />
+      )}
       <TenderizeProvider config={config}>
         <Web3Provider config={config.web3}>
           <App />

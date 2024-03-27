@@ -4,6 +4,7 @@ import type {
   TenderizeConfig,
   TenderizersConfig,
 } from "@lib/types";
+import { TabEnum } from "@lib/utils/iframe";
 import type { Address } from "viem";
 import { mainnet } from "viem/chains";
 import { create } from "zustand";
@@ -11,16 +12,20 @@ import { create } from "zustand";
 type Store = {
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
+  activeTabs: TabEnum[];
   setConfig: (
     tenderizers: Pick<TenderizeConfig, "tenderizers" | "chains">
   ) => void;
+  setActiveTabs: (tabs: TabEnum[]) => void;
 };
 
 export const useTenderizeConfigStore = create<Store>((set) => ({
   tenderizers: {},
   chains: {},
+  activeTabs: [TabEnum.STAKE, TabEnum.UNSTAKE, TabEnum.SWAP],
   setConfig: (config: Pick<TenderizeConfig, "tenderizers" | "chains">) =>
     set({ tenderizers: config.tenderizers, chains: config.chains }),
+  setActiveTabs: (tabs: TabEnum[]) => set({ activeTabs: tabs }),
 }));
 
 export const useTenderizers = (): TenderizersConfig => {
