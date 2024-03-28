@@ -35,7 +35,8 @@
     "tailwindcss-animate": "^1.0.7",
     "viem": "^2.7.19",
     "wagmi": "^2.5.7",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "ethereum-blockies-base64": "^1.0.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.17",
