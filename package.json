@@ -7,5 +7,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "ethereum-blockies-base64": "^1.0.2"
+  }
 }
