@@ -1,4 +1,4 @@
-import { getProfile, type ValidatorProfile } from "@lib/services/ens";
+import { getProfile, type ValidatorProfile } from "@lib/core/ens";
 import { useEffect, useState } from "react";
 import type { Address } from "viem";
 
@@ -8,7 +8,7 @@ interface ProfileHookResult {
   error: string | null;
 }
 
-export const useEnsProfile = (address: Address): ProfileHookResult => {
+export const useValidatorProfile = (address: Address): ProfileHookResult => {
   const [profile, setProfile] = useState<ValidatorProfile | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

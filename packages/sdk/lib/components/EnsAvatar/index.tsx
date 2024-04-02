@@ -1,4 +1,4 @@
-import { useEnsProfile } from "@lib/hooks/ensProfile";
+import { useValidatorProfile } from "@lib/hooks/useValidatorProfile";
 import { formatAddress } from "@lib/utils/global";
 import makeBlockie from "ethereum-blockies-base64";
 import { useCallback, type FC } from "react";
@@ -12,7 +12,7 @@ interface Props {
 
 export const EnsAvatar: FC<Props> = (props) => {
   const { address, textSize = "3", size = 20 } = props;
-  const { profile } = useEnsProfile(props.address);
+  const { profile } = useValidatorProfile(props.address);
 
   const renderAvatar = useCallback(() => {
     if (!address) return null;

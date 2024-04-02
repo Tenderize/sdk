@@ -1,4 +1,4 @@
-import type { ValidatorProfile } from "@lib/services/ens";
+import type { ValidatorProfile } from "@lib/core";
 import type { Address } from "viem";
 
 export const VALIDATOR_PROFILES: Record<Address, ValidatorProfile> = {
