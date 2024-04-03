@@ -1,8 +1,8 @@
+import { TokenSlugEnums } from "@lib/constants";
+import { TenderizeProvider, Web3Provider } from "@lib/contexts";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { TokenSlugEnums } from "@lib/constants";
-import { TenderizeProvider, Web3Provider } from "@lib/contexts";
 
 import { ThemeProvider } from "@lib/contexts";
 import {

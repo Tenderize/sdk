@@ -1,4 +1,4 @@
-import { TextField } from "@radix-ui/themes";
+import { cn } from "@lib/utils";
 import {
   useCallback,
   useEffect,
@@ -6,21 +6,18 @@ import {
   useState,
   type CSSProperties,
   type ChangeEvent,
-  type ComponentProps,
   type FC,
   type ReactNode,
 } from "react";
 import { parseEther } from "viem";
 
-type TextFieldRadixProps = ComponentProps<
-  typeof TextField.Root & typeof TextField.Input
->;
-interface Props extends TextFieldRadixProps {
+interface Props {
   placeholder?: string;
   icon?: ReactNode;
   value?: string;
   handleChange?: (event: string) => void;
   max?: string;
+  className?: string;
   style?: CSSProperties;
 }
 
@@ -31,6 +28,7 @@ export const InputField: FC<Props> = ({
   handleChange,
   max,
   style,
+  className,
   ...rest
 }) => {
   const [inputValue, setInputValue] = useState<string>(value || "");
@@ -69,16 +67,16 @@ export const InputField: FC<Props> = ({
   };
 
   return (
-    <TextField.Root {...rest} style={{ paddingTop: "10px", paddingBottom: "10px", paddingRight: 10, ...style }}>
-      <TextField.Input
+    <div className="flex gap-2">
+      <input
+        className={cn(className)}
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}
-        size={"3"}
         style={{ ...style }}
         {...rest}
       />
-      {icon && <TextField.Slot>{icon}</TextField.Slot>}
-    </TextField.Root>
+      {icon && <div>{icon}</div>}
+    </div>
   );
 };

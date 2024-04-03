@@ -1,9 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: [
-    './**/*.{ts,tsx}',
-  ],
+  content: ["./**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -47,6 +45,13 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          background: "hsl(var(--card-background))",
+        },
+        callout: {
+          DEFAULT: "hsl(var(--callout))",
+          soft: "hsl(var(--callout-soft))",
+          border: "hsl(var(--callout-border))",
+          foreground: "hsl(var(--callout-foreground))",
         },
       },
       borderRadius: {
@@ -71,4 +76,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

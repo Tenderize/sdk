@@ -1,8 +1,7 @@
+import "@radix-ui/themes/styles.css";
+import type { Decorator, Preview } from "@storybook/react";
 import React from "react";
-import type { Preview } from "@storybook/react";
-import type { Decorator } from "@storybook/react";
 import { ThemeProvider } from "../lib/contexts/ThemeProvider";
-import "@radix-ui/themes/styles.css"
 
 const preview: Preview = {
   parameters: {
@@ -23,7 +22,7 @@ const withThemeProvider: Decorator = (StoryFn) => {
     <ThemeProvider>
       <StoryFn />
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export const decorators = [withThemeProvider]
+export const decorators = [withThemeProvider];

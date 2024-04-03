@@ -1,21 +1,14 @@
-import { TextField } from "@radix-ui/themes";
-import {
-  type CSSProperties,
-  type ComponentProps,
-  type FC,
-  type ReactNode,
-} from "react";
+import { cn } from "@lib/utils";
+import { type CSSProperties, type FC, type ReactNode } from "react";
 
-type TextFieldRadixProps = ComponentProps<
-  typeof TextField.Root & typeof TextField.Input
->;
-interface Props extends TextFieldRadixProps {
+interface Props {
   placeholder?: string;
   icon?: ReactNode;
   value?: string;
   handleChange?: (event: string) => void;
   max?: string;
   style?: CSSProperties;
+  className?: string;
 }
 
 export const OutputField: FC<Props> = ({
@@ -23,10 +16,12 @@ export const OutputField: FC<Props> = ({
   icon,
   value,
   style,
+  className,
   ...rest
 }) => {
   return (
-    <TextField.Root
+    <div
+      className="flex gap-2 items-center justify-between"
       {...rest}
       style={{
         ...style,
@@ -34,15 +29,15 @@ export const OutputField: FC<Props> = ({
         padding: "10px 10px 10px 0px",
       }}
     >
-      <TextField.Input
+      <input
+        className={cn(className)}
         value={value}
         placeholder={placeholder}
         defaultValue={value}
-        size={"3"}
         style={{ ...style }}
         {...rest}
       />
-      {icon && <TextField.Slot>{icon}</TextField.Slot>}
-    </TextField.Root>
+      {icon && <span>{icon}</span>}
+    </div>
   );
 };

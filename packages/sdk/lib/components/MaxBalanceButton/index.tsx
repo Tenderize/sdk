@@ -1,4 +1,3 @@
-import { Flex, Text } from "@radix-ui/themes";
 import React from "react";
 
 interface Props {
@@ -15,15 +14,14 @@ export const MaxBalanceButton: React.FC<Props> = ({
   };
 
   return (
-    <Flex direction="column" gap="2">
-      <Text
-        className="cursor-pointer text-left"
-        size={"1"}
+    <div className="flex flex-col gap-2">
+      <span
+        className="cursor-pointer text-left max-w-max-content text-sm"
         onClick={handleMaxButtonClick}
       >
         Max: {max}
-      </Text>
-    </Flex>
+      </span>
+    </div>
   );
 };
 

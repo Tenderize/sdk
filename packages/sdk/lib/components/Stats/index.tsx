@@ -56,7 +56,7 @@ export const TenderizerStatsView: FC<{
             <AvatarImage alt="User" src="/placeholder-avatar.jpg" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
-          <span className="text-sm font-medium">
+          <span className="text-sm font-medium text-primary">
             {formatAddress(validator)}
           </span>
         </div>
@@ -65,13 +65,13 @@ export const TenderizerStatsView: FC<{
 
       <CardContent className="grid grid-cols-9 gap-6 text-center">
         <div className="flex flex-col col-span-4 items-center sm:col-span-3 md:col-span-4">
-          <div className="text-xs sm:text-sm font-medium tracking-wider text-gray-500 dark:text-gray-400">
+          <div className="text-xs sm:text-sm font-medium tracking-wider text-secondary dark:text-secondary">
             Value Locked
           </div>
           <div className="text-lg sm:text-2xl font-semibold text-primary whitespace-nowrap">
             {formatFloatstring(stats.tvl, 2)} {tokenSymbol}
           </div>
-          <div className="text-sm sm:text-md font-medium text-gray-400 dark:text-gray-400">
+          <div className="text-sm sm:text-md font-medium text-destructive dark:text-destructive">
             $ {formatFloatstring(stats.dollarTvl, 2)}
           </div>
         </div>
@@ -79,10 +79,10 @@ export const TenderizerStatsView: FC<{
           <Separator className="" orientation="vertical" />
         </div>
         <div className="flex flex-col col-span-4 items-center sm:col-span-3 md:col-span-4">
-          <div className="text-xs sm:text-sm font-medium tracking-wider text-gray-500 dark:text-gray-400">
+          <div className="text-xs sm:text-sm font-medium tracking-wider text-secondary dark:text-secondary">
             Current Yield
           </div>
-          <div className="text-lg sm:text-2xl font-semibold tracking-tighter">
+          <div className="text-lg sm:text-2xl font-semibold text-primary  tracking-tighter">
             {formatFloatstring((parseFloat(stats.apy) * 100).toString(), 1)} %
           </div>
         </div>

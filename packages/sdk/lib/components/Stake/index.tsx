@@ -68,17 +68,15 @@ export const Stake: FC = () => {
   }, [depositStatus]);
 
   return (
-    <Flex gap="2" content="between" direction="column">
+    <div className="gap-2 justify-between flex flex-col">
       <CalloutLayout
         callOutFirstChildren={
-          <Flex gap="2" content="between" direction="column" width="100%">
-            <Text size="2">You Stake</Text>
+          <div className="gap-2 justify-between flex flex-col w-full">
+            <span className="text-sm">You Stake</span>
             <InputField
-              variant="soft"
-              className=""
-              size="3"
+              className="bg-callout-soft px-3 focus:outline-none rounded-lg w-full"
               max={formatEther(balance)}
-              style={{ width: "100%", fontSize: 30 }}
+              style={{ fontSize: 30 }}
               handleChange={(value: string) => {
                 setAmount(value || "0");
               }}
@@ -91,32 +89,31 @@ export const Stake: FC = () => {
                 setAmount(value);
               }}
             />
-          </Flex>
+          </div>
         }
         callOutSecondChildren={
-          <Flex direction="column" gap="2" width="100%">
-            <Text size="2">You Receive</Text>
+          <div className="flex flex-col gap-2 w-full">
+            <span className="text-sm">You Receive</span>
             <OutputField
-              variant="soft"
-              className=""
-              style={{ width: "100%", fontSize: 30 }}
+              className="bg-callout-soft px-3 focus:outline-none rounded-lg w-full"
+              style={{ fontSize: 30 }}
               value={formatEther(previewDeposit ?? 0n)}
               icon={
-                <Flex align="center" gap="2">
+                <div className="flex items-center gap-2">
                   <img
                     width={30}
                     height={30}
                     src={token.img?.tToken}
                     alt={token.name}
                   />
-                  <Text size="3">{`t${token.currency}`}</Text>
-                </Flex>
+                  <span className="text-sm">{`t${token.currency}`}</span>
+                </div>
               }
             />
-          </Flex>
+          </div>
         }
         callOutActionChildren={
-          <Flex gap="2" width="100%">
+          <div className="w-full gap-2 flex">
             {(() => {
               if (currentChainId !== chainId) {
                 return <SwitchChainButton requiredChainId={chainId} />;
@@ -178,9 +175,9 @@ export const Stake: FC = () => {
                 </Button>
               );
             })()}
-          </Flex>
+          </div>
         }
       ></CalloutLayout>
-    </Flex>
+    </div>
   );
 };

@@ -4,13 +4,8 @@ import { useSelectedToken, useSelectedTokenStore } from "@lib/contexts";
 
 import type { Token } from "@lib/types";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
-import {
-  Box,
-  Button,
-  DropdownMenu as DropdownMenuRadix,
-  Flex,
-  Text,
-} from "@radix-ui/themes";
+import { Button, DropdownMenu as DropdownMenuRadix } from "@radix-ui/themes";
+
 import React, { useEffect, type FC } from "react";
 
 type DropdownMenuRadixProps = React.ComponentProps<
@@ -74,16 +69,23 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   return (
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
-        <Button variant="soft" size={"3"} style={{ padding: 0 }}>
-          <Flex gap="2" align="center" justify={"between"}>
+        <Button
+          className="min-w-[120px]"
+          variant="soft"
+          size={"3"}
+          style={{ padding: 0 }}
+        >
+          <div className="gap-2 justify-between items-center flex">
             {!!selectedTokenData?.Icon && <selectedTokenData.Icon />}
-            <Text>{selectedTokenData?.name || "Select Token"}</Text>
-            <ChevronDownIcon />
-          </Flex>
+            <span className="text-callout-foreground">
+              {selectedTokenData?.name || "Select Token"}
+            </span>
+            <ChevronDownIcon className="text-callout-foreground" />
+          </div>
         </Button>
       </DropdownMenuRadix.Trigger>
       <DropdownMenuRadix.Content>
-        <Flex direction="column" gap="4">
+        <div className="flex flex-col gap-4">
           {tokensData.map((item, index) => (
             <DropdownMenuRadix.Item
               style={{
@@ -94,18 +96,18 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
               }}
               key={index}
             >
-              <Box position={"relative"}>
-                <Flex gap="4" align="center" justify={"between"}>
+              <div className="relative">
+                <div className="gap-4 items-center justify-between flex">
                   {item.Icon && <item.Icon />}
-                  <Flex gap="1" align={"center"}>
-                    <Text>{item?.name}</Text>
+                  <div className="gap-1 items-center flex">
+                    <span className="text-primary">{item?.name}</span>
                     {selectedToken.slug === item.slug && <CheckIcon />}
-                  </Flex>
-                </Flex>
-              </Box>
+                  </div>
+                </div>
+              </div>
             </DropdownMenuRadix.Item>
           ))}
-        </Flex>
+        </div>
       </DropdownMenuRadix.Content>
     </DropdownMenuRadix.Root>
   );
