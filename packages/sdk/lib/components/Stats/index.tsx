@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@lib/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@lib/components/ui/card";
 import { Separator } from "@lib/components/ui/separator";
 import { useChainId, useTenderizer } from "@lib/config/store";
@@ -7,9 +6,9 @@ import { useTenderizerData, useTenderizerStats } from "@lib/hooks";
 import { useCoinPrice } from "@lib/hooks/prices";
 import { COINGECKO_KEYS } from "@lib/types";
 import { formatFloatstring } from "@lib/utils/floats";
-import { formatAddress } from "@lib/utils/global";
 import type { FC } from "react";
 import type { Address } from "viem";
+import { EnsAvatar } from "../EnsAvatar";
 
 type TenderizerStats = {
   tvl: string;
@@ -52,13 +51,13 @@ export const TenderizerStatsView: FC<{
     <Card className="w-full max-w-full px-3 bg-white dark:bg-gray-900 rounded-lg mb-3">
       <CardHeader className="flex flex-col items-center">
         <div className="flex flex-col items-center gap-2 sm:flex-row">
-          <Avatar className="mb-2 sm:mb-0">
-            <AvatarImage alt="User" src="/placeholder-avatar.jpg" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
-          <span className="text-sm font-medium">
-            {formatAddress(validator)}
-          </span>
+          {validator && (
+            <EnsAvatar
+              address={validator.toLowerCase() as Address}
+              size={40}
+              textSize="text-sm"
+            />
+          )}
         </div>
       </CardHeader>
       <Separator className="my-4" orientation="horizontal" />
