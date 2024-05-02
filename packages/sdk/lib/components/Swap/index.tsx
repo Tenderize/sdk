@@ -35,12 +35,17 @@ export const Swap: FC = () => {
   const { address: userAddress } = useAccount();
   const currentChainId = useCurrentChainId();
 
+  // Todo: add slippage tolerance dynamic input
+  const [slippageTolerance, setSlippageTolerance] = useState(1 / 100);
+
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
+  console.log("balance", balance);
 
   const {
     mutate: approve,
     data: approval,
     status: approveStatus,
+    reset: resetApproval,
   } = useERC20Approve(
     tenderizer,
     token.tenderswap as Address,
@@ -55,19 +60,24 @@ export const Swap: FC = () => {
     chainId
   );
 
+  const minOut =
+    quote?.out -
+    (quote?.out * parseEther(slippageTolerance.toString())) / parseEther("100");
+
   const { mutate: swap, status: swapStatus } = useSwap(
     token?.tenderswap as Address,
     tenderizer,
     parseEther(amount),
-    quote.out,
+    minOut,
     chainId
   );
-  // used to rest the amount after a successful swap
+  // Reset amount and approval after successful swap
   useEffect(() => {
     if (swapStatus === "success") {
       setAmount("");
+      resetApproval();
     }
-  }, [swapStatus]);
+  }, [resetApproval, swapStatus]);
 
   const swapFeePercentage = quote?.fee
     ? formatFloatstring(
