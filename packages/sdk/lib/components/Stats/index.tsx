@@ -64,13 +64,13 @@ export const TenderizerStatsView: FC<{
 
       <CardContent className="grid grid-cols-9 gap-6 text-center">
         <div className="flex flex-col col-span-4 items-center sm:col-span-3 md:col-span-4">
-          <div className="text-xs sm:text-sm font-medium tracking-wider text-secondary dark:text-secondary">
+          <div className="text-xs sm:text-sm font-medium tracking-wider text-secondary-foreground dark:text-secondary-foreground">
             Value Locked
           </div>
-          <div className="text-lg sm:text-2xl font-semibold text-primary whitespace-nowrap">
+          <div className="text-lg sm:text-2xl font-semibold text-primary-foreground whitespace-nowrap">
             {formatFloatstring(stats.tvl, 2)} {tokenSymbol}
           </div>
-          <div className="text-sm sm:text-md font-medium text-destructive dark:text-destructive">
+          <div className="text-sm sm:text-md font-medium text-primary-foreground dark:text-primary-foreground">
             $ {formatFloatstring(stats.dollarTvl, 2)}
           </div>
         </div>
@@ -78,10 +78,10 @@ export const TenderizerStatsView: FC<{
           <Separator className="" orientation="vertical" />
         </div>
         <div className="flex flex-col col-span-4 items-center sm:col-span-3 md:col-span-4">
-          <div className="text-xs sm:text-sm font-medium tracking-wider text-secondary dark:text-secondary">
+          <div className="text-xs sm:text-sm font-medium tracking-wider text-secondary-foreground dark:text-secondary-foreground">
             Current Yield
           </div>
-          <div className="text-lg sm:text-2xl font-semibold text-primary  tracking-tighter">
+          <div className="text-lg sm:text-2xl font-semibold text-primary-foreground  tracking-tighter">
             {formatFloatstring((parseFloat(stats.apy) * 100).toString(), 1)} %
           </div>
         </div>

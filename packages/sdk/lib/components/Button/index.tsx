@@ -1,3 +1,4 @@
+import { cn } from "@lib/utils";
 import { Button as ButtonRadix } from "@radix-ui/themes";
 import type { ComponentProps, FC, ReactNode } from "react";
 
@@ -8,9 +9,9 @@ export type ButtonProps = {
 } & ButtonRadixProps;
 
 export const Button: FC<ButtonProps> = (props) => {
-  const { children, ...rest } = props;
+  const { children, className, ...rest } = props;
   return (
-    <ButtonRadix className="cursor-pointer" {...rest}>
+    <ButtonRadix className={cn("cursor-pointer", className)} {...rest}>
       {children}
     </ButtonRadix>
   );

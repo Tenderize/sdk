@@ -77,10 +77,10 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
         >
           <div className="gap-2 justify-between items-center flex">
             {!!selectedTokenData?.Icon && <selectedTokenData.Icon />}
-            <span className="text-callout-foreground">
+            <span className="text-primary-foreground">
               {selectedTokenData?.name || "Select Token"}
             </span>
-            <ChevronDownIcon className="text-callout-foreground" />
+            <ChevronDownIcon className="text-primary-foreground" />
           </div>
         </Button>
       </DropdownMenuRadix.Trigger>

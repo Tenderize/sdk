@@ -11,20 +11,26 @@ interface Props {
 
 const colors = {
   lightMode: {
-    border: "#e2e8f0",
+    border: "#eee",
     primary: {
-      DEFAULT: "#38bdf8",
+      DEFAULT: "#fd3f0f",
+      accent: "#ffffff",
+      foreground: "#3d3d3d",
     },
     secondary: {
-      DEFAULT: "#9ca3af",
+      DEFAULT: "#3d3d3d",
+      foreground: "#9ca3af",
     },
-    destructive: {
-      DEFAULT: "#6b7280",
+    success: {
+      DEFAULT: "#f0fdf4",
+      foreground: "#166534",
     },
-    callout: {
-      DEFAULT: "#f0f9ff",
-      soft: "#f0f9ff",
-      foreground: "#0284c7",
+    card: {
+      DEFAULT: "#f4f4f5",
+    },
+    disabled: {
+      DEFAULT: "#f3f4f6",
+      foreground: "#9ca3af",
     },
   },
 };
@@ -33,7 +39,6 @@ const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
 console.log("isDarkMode", isDarkMode);
 applyColorsToRoot(colors.lightMode);
 
-export const ThemeProvider: FC<Props> = ({ children, theme }) => {
-  const mergedTheme: ThemeProviderProps = { ...theme };
-  return <Theme {...mergedTheme}>{children}</Theme>;
+export const ThemeProvider: FC<Props> = ({ children }) => {
+  return <Theme>{children}</Theme>;
 };

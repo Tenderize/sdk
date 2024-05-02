@@ -4,7 +4,7 @@ import { useERC20Balance } from "@lib/hooks";
 import { useCoinPrice } from "@lib/hooks/prices";
 import { COINGECKO_KEYS, type Token } from "@lib/types";
 import { formatAmount, formatFloatstring } from "@lib/utils/floats";
-import { Avatar, Card, Flex, Heading, Text } from "@radix-ui/themes";
+import { Avatar, Card } from "@radix-ui/themes";
 import type { FC } from "react";
 import { formatEther } from "viem";
 import { useAccount } from "wagmi";
@@ -36,25 +36,28 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
 
   return (
     <Card variant="classic" className="w-full">
-      <Flex justify="between" width="100%" align="start">
-        <Flex justify="start" gap="2">
-          <Avatar size="4" fallback src={token.img.tToken} alt={token.name} />
-          <Flex direction="column" pt={"1"}>
-            <Heading size="3">{token.name}</Heading>
-            <Heading
-              className="text-gray-500 dark:text-gray-400"
-              size="1"
-            >{`t${token.currency}`}</Heading>
-          </Flex>
-        </Flex>
-        <Flex align="end" gap="1" direction="column">
-          <Heading size="6">{formatAmount(balance)}</Heading>
-          <Text
-            className="text-md font-medium text-gray-400 dark:text-gray-400"
-            size="3"
-          >{`$ ${formatFloatstring(usdBalance, 2)}`}</Text>
-        </Flex>
-      </Flex>
+      <div className="flex items-start w-full">
+        <div className="flex justify-between w-full items-center">
+          <div className="flex justify-start gap-2">
+            <Avatar size="4" fallback src={token.img.tToken} alt={token.name} />
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold text-primary-foreground">
+                {token.name}
+              </span>
+              <span className="text-secondary-foreground text-sm font-semibold">{`t${token.currency}`}</span>
+            </div>
+          </div>
+          <div className="flex items-end gap-1 flex-col">
+            <span className="text-2xl font-semibold text-primary-foreground">
+              {formatAmount(balance)}
+            </span>
+            <span className="text-secondary-foreground text-sm font-semibold">{`$ ${formatFloatstring(
+              usdBalance,
+              2
+            )}`}</span>
+          </div>
+        </div>
+      </div>
     </Card>
   );
 };

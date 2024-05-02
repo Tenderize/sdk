@@ -21,7 +21,7 @@ export const OutputField: FC<Props> = ({
 }) => {
   return (
     <div
-      className="flex gap-2 items-center justify-between"
+      className="flex gap-2 items-center justify-between text-primary-foreground"
       {...rest}
       style={{
         ...style,

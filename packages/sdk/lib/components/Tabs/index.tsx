@@ -1,4 +1,4 @@
-import { Flex, Tabs as TabsRadix } from "@radix-ui/themes";
+import { Tabs as TabsRadix } from "@radix-ui/themes";
 import type { ComponentProps, FC } from "react";
 import { BalanceCard } from "..";
 
@@ -16,12 +16,12 @@ export const Tabs: FC<Props> = (props) => {
 
   return (
     <TabsRadix.Root {...rest} defaultValue={tabsData[0]?.value}>
-      <TabsRadix.List size="2" style={{ justifyContent: "space-around" }}>
+      <TabsRadix.List className="justify-around">
         {tabsData.map((tab) => (
           <TabsRadix.Trigger
+            className="text-xl text-primary-foreground data-[state=active]:before:text-primary data-[state=active]:before:bg-primary "
             key={tab.value}
             value={tab.value}
-            style={{ fontSize: 20 }}
           >
             {tab.name}
           </TabsRadix.Trigger>
@@ -30,9 +30,10 @@ export const Tabs: FC<Props> = (props) => {
 
       {tabsData.map((tab) => (
         <TabsRadix.Content value={tab.value} key={tab.value}>
-          <Flex direction="column" gap="2" my="2">
+          <div className="flex flex-col gap-2 my-2">
             <BalanceCard />
-          </Flex>
+          </div>
+
           {tab.content()}
         </TabsRadix.Content>
       ))}

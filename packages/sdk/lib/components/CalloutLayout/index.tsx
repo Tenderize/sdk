@@ -13,7 +13,7 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
   return (
     <div className="relative h-max-content">
       <div
-        className="absolute bg-callout-soft rounded-lg"
+        className="absolute bg-card rounded-lg"
         style={{
           left: "50%",
           right: "50%",
@@ -31,10 +31,10 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
         />
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex p-3 bg-callout-soft rounded-lg text-callout-foreground">
+        <div className="flex p-3 bg-card rounded-lg text-callout-foreground">
           {callOutFirstChildren}
         </div>
-        <div className="flex p-3 bg-callout-soft rounded-lg text-callout-foreground">
+        <div className="flex p-3 bg-card rounded-lg text-callout-foreground">
           {callOutSecondChildren}
         </div>
         <div className="w-full justify-center">{callOutActionChildren}</div>
