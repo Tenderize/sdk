@@ -21,9 +21,11 @@ import { isMutationPending } from "@lib/utils/global";
 import {
   CheckCircledIcon,
   ExclamationTriangleIcon,
+  GlobeIcon,
+  RocketIcon,
 } from "@radix-ui/react-icons";
 import { Flex, Text } from "@radix-ui/themes";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useState, type ChangeEvent, type FC } from "react";
 import { formatEther, parseEther, type Address } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 
@@ -36,13 +38,9 @@ export const Swap: FC = () => {
   const currentChainId = useCurrentChainId();
 
   // Todo: add slippage tolerance dynamic input
-  const [slippageTolerance, setSlippageTolerance] = useState(1 / 100);
+  const [slippageToleranceValue, setSlippageToleranceValue] = useState(1);
 
-  //Todo: remove after adding slippage input
-  console.log(setSlippageTolerance);
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
-  console.log("balance", balance);
-
   const {
     mutate: approve,
     data: approval,
@@ -62,6 +60,7 @@ export const Swap: FC = () => {
     chainId
   );
 
+  const slippageTolerance = slippageToleranceValue / 100;
   const minOut =
     quote?.out -
     (quote?.out * parseEther(slippageTolerance.toString())) / parseEther("100");
@@ -132,10 +131,35 @@ export const Swap: FC = () => {
                 </Flex>
               }
             />
-
-            <span className="text-sm">{`Expected swap fees: ${formatAmount(
-              quote.fee
-            )} t${token?.currency} (${swapFeePercentage} %)`}</span>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-1">
+                <GlobeIcon className="text-lg" />
+                <span className="text-[12px]">{`Expected swap fees: ${formatAmount(
+                  quote.fee
+                )} t${token?.currency} (${swapFeePercentage} %)`}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <RocketIcon className=" text-lg" />
+                <span className="text-[12px]">Slippage threshold:</span>
+                <input
+                  type="number"
+                  min={1}
+                  max={10}
+                  className="border border-gray-300 rounded-md py-2  w-15 h-10 text-center outline-none"
+                  style={{ fontSize: 15, height: "20px" }}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    let { value } = e.target;
+                    if (!value) return;
+                    if (parseFloat(value) > 10) {
+                      value = "10";
+                    }
+                    setSlippageToleranceValue(parseFloat(value));
+                  }}
+                  value={slippageToleranceValue.toString()}
+                />
+                <span className="text-[12px]">%</span>
+              </div>
+            </div>
           </Flex>
         }
         callOutActionChildren={

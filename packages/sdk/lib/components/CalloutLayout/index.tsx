@@ -19,24 +19,24 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
       position="relative"
       style={{ height: "max-content" }}
     >
-      <Box
-        style={{
-          left: "50%",
-          right: "50%",
-          top: "46%",
-          transform: "translate(-50%, -50%)",
-          width: "max-content",
-          borderRadius: "10px",
-          border: "8px solid #fff",
-        }}
-        position={"absolute"}
-      >
-        <IconButton variant="surface">
-          <ArrowDownIcon width="20" height="20" />
-        </IconButton>
-      </Box>
       <Flex direction="column" gap="2">
-        <Callout className="flex px-3" variant="soft">
+        <Callout className="flex px-3 relative" variant="soft">
+          <Box
+            style={{
+              left: "50%",
+              right: "50%",
+              bottom: "-52px",
+              transform: "translate(-50%, -50%)",
+              width: "max-content",
+              borderRadius: "10px",
+              border: "8px solid #fff",
+            }}
+            position={"absolute"}
+          >
+            <IconButton variant="surface">
+              <ArrowDownIcon width="20" height="20" />
+            </IconButton>
+          </Box>
           {callOutFirstChildren}
         </Callout>
         <Callout className="flex px-3" variant="soft">
