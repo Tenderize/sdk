@@ -38,6 +38,8 @@ export const Swap: FC = () => {
   // Todo: add slippage tolerance dynamic input
   const [slippageTolerance, setSlippageTolerance] = useState(1 / 100);
 
+  //Todo: remove after adding slippage input
+  console.log(setSlippageTolerance);
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
   console.log("balance", balance);
 
