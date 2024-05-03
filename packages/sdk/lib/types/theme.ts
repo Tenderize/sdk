@@ -6,27 +6,35 @@ export interface BrandPalette {
   };
   colors: {
     lightMode: LightModeColors;
+    darkMode: LightModeColors;
   };
 }
 
 interface LightModeColors {
   border: string;
+  background: string;
   primary: ColorSet;
   secondary: ColorSet;
   success: ColorSet;
   card: {
     DEFAULT: string;
   };
-  disabled: DisabledColorSet;
+  disabled: CommonColorSet;
+  panel: CommonColorSet;
+  badge: Badge;
 }
 
-interface ColorSet {
-  DEFAULT: string;
+interface ColorSet extends CommonColorSet {
   accent: string;
-  foreground: string;
 }
 
-interface DisabledColorSet {
+interface CommonColorSet {
   DEFAULT: string;
   foreground: string;
+}
+interface Badge {
+  error: string;
+  errorForeground: string;
+  info: string;
+  infoForeground: string;
 }

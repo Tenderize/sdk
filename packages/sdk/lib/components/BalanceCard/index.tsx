@@ -35,7 +35,10 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
   const { token, balance, usdBalance } = props;
 
   return (
-    <Card variant="classic" className="w-full">
+    <Card
+      variant="classic"
+      className="w-full bg-background border-border border border-b-none"
+    >
       <div className="flex items-start w-full">
         <div className="flex justify-between w-full items-center">
           <div className="flex justify-start gap-2">

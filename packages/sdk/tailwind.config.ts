@@ -37,8 +37,18 @@ module.exports = {
           DEFAULT: "hsl(var(--disabled))",
           foreground: "hsl(var(--disabled-foreground))",
         },
+        panel: {
+          DEFAULT: "hsl(var(--panel))",
+          foreground: "hsl(var(--panel-foreground))",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
+        },
+        badge: {
+          error: "hsl(var(--badge-error))",
+          errorForeground: "hsl(var(--badge-errorForeground))",
+          info: "hsl(var(--badge-info))",
+          infoForeground: "hsl(var(--badge-infoForeground))",
         },
       },
       borderRadius: {

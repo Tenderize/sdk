@@ -16,7 +16,7 @@ export const Tabs: FC<Props> = (props) => {
 
   return (
     <TabsRadix.Root {...rest} defaultValue={tabsData[0]?.value}>
-      <TabsRadix.List className="justify-around">
+      <TabsRadix.List className="justify-around bg-background">
         {tabsData.map((tab) => (
           <TabsRadix.Trigger
             className="text-xl text-primary-foreground data-[state=active]:before:text-primary data-[state=active]:before:bg-primary "

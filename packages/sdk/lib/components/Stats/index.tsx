@@ -48,7 +48,7 @@ export const TenderizerStatsView: FC<{
   isLoading;
   error;
   return (
-    <Card className="w-full max-w-full px-3 bg-white dark:bg-gray-900 rounded-lg mb-3">
+    <Card className="w-full max-w-full px-3 bg-background dark:bg-gray-900 rounded-lg mb-3">
       <CardHeader className="flex flex-col items-center">
         <div className="flex flex-col items-center gap-2 sm:flex-row">
           {validator && (

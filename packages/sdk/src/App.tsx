@@ -1,20 +1,12 @@
 import { Tenderize } from "@lib/components";
-import { Flex } from "@radix-ui/themes";
 import { ConnectKitButton } from "connectkit";
 
 function App() {
   return (
-    <Flex
-      gap="4"
-      direction="column"
-      style={{ height: "100%" }}
-      align="center"
-      justify="center"
-      height={"auto"}
-    >
+    <div className="flex flex-col gap-4 items-center justify-center h-full">
       <ConnectKitButton />
       <Tenderize />
-    </Flex>
+    </div>
   );
 }
 
