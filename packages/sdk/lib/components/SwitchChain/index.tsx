@@ -30,9 +30,8 @@ export const SwitchChainButton: FC<SwitchChainButtonProps> = ({
 
   return (
     <Button
-      className={`bg-primary ${
-        isMutationPending(status) ? "animate-pulse" : ""
-      }`}
+      className={`${isMutationPending(status) ? "animate-pulse" : ""}`}
+      secondary
       disabled={isMutationPending(status)}
       size="4"
       style={{ width: "100%" }}

@@ -130,6 +130,34 @@ export const applyColorsToRoot = (colors: {
         }
       }
     }
-    console.log("root.style", root.style);
+  }
+};
+export const applyFontFamily = ({
+  name,
+  familyUrl,
+}: {
+  name: string;
+  familyUrl: string;
+}) => {
+  const fontStyles = `
+    @import url('${familyUrl}');
+
+    body {
+      font-family: ${name};
+    }
+  `;
+
+  const styleElement = document.createElement("style");
+  styleElement.innerHTML = fontStyles;
+  document.head.appendChild(styleElement);
+
+  // Find the element with data-is-root-theme="true"
+  const rootThemeElement = document.querySelector(
+    '[data-is-root-theme="true"]'
+  ) as HTMLElement;
+
+  // Apply font family to the element if found
+  if (rootThemeElement) {
+    rootThemeElement.style.fontFamily = "'Lato', sans-serif";
   }
 };

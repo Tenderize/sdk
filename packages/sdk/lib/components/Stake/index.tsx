@@ -120,39 +120,23 @@ export const Stake: FC = () => {
 
               if (depositStatus === "success") {
                 return (
-                  <Button
-                    className="text-success-foreground bg-success w-full"
-                    style={{ pointerEvents: "none" }}
-                    size="4"
-                  >
+                  <Button className="w-full" success size="4">
                     <div className="flex gap-2 items-center">
                       <CheckCircledIcon />
-                      <span className="text-success-foreground">
-                        Staked {token.currency}
-                      </span>
+                      <span>Staked {token.currency}</span>
                     </div>
                   </Button>
                 );
               }
-              const depositDisabled =
-                !previewDeposit || isMutationPending(depositStatus);
-              const buttonClass = `${
-                depositDisabled ? "bg-disabled" : "bg-primary"
-              } ${
-                depositDisabled
-                  ? "text-disabled-foreground"
-                  : "text-primary-accent"
-              }
-                 ${isMutationPending(depositStatus) ? "animate-pulse" : ""}`;
 
               if (!approval && allowance < parseEther(amount)) {
                 return (
                   <Button
-                    className={buttonClass}
+                    className="w-full"
                     disabled={
                       !previewDeposit || isMutationPending(approveStatus)
                     }
-                    style={{ width: "100%" }}
+                    primary
                     size="4"
                     onClick={() => approve()}
                     variant="solid"
@@ -168,9 +152,9 @@ export const Stake: FC = () => {
 
               return (
                 <Button
-                  className={buttonClass}
                   disabled={!previewDeposit || isMutationPending(depositStatus)}
-                  style={{ width: "100%" }}
+                  primary
+                  className="w-full"
                   size="4"
                   onClick={() => deposit()}
                   variant="solid"

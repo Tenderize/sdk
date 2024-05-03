@@ -70,7 +70,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
         <Button
-          className="min-w-[120px]"
+          className={"focus:outline-none min-w-[120px]"}
           variant="soft"
           size={"3"}
           style={{ padding: 0 }}
@@ -100,7 +100,9 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
                 <div className="gap-4 items-center justify-between flex">
                   {item.Icon && <item.Icon />}
                   <div className="gap-1 items-center flex">
-                    <span className="text-primary">{item?.name}</span>
+                    <span className="text-primary-foreground">
+                      {item?.name}
+                    </span>
                     {selectedToken.slug === item.slug && <CheckIcon />}
                   </div>
                 </div>
