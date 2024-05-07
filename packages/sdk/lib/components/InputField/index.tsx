@@ -1,4 +1,8 @@
+import { useSelectedToken } from "@lib/contexts";
+import { useCoinPrice } from "@lib/hooks/prices";
+import { COINGECKO_KEYS } from "@lib/types";
 import { cn } from "@lib/utils";
+import { formatFloatstring } from "@lib/utils/floats";
 import {
   useCallback,
   useEffect,
@@ -33,6 +37,9 @@ export const InputField: FC<Props> = ({
 }) => {
   const [inputValue, setInputValue] = useState<string>(value || "");
   const prevValueRef = useRef<string | undefined>(undefined);
+  const token = useSelectedToken();
+  const { price } = useCoinPrice(COINGECKO_KEYS[token.slug]);
+  const dollarPrice = ((price || 0) * Number(inputValue)).toString();
 
   const handleInputOutsideChange = useCallback(
     (value: string) => {
@@ -67,16 +74,23 @@ export const InputField: FC<Props> = ({
   };
 
   return (
-    <div className="flex gap-2">
-      <input
-        className={cn(className)}
-        placeholder={placeholder}
-        value={inputValue}
-        onChange={handleInputChange}
-        style={{ ...style }}
-        {...rest}
-      />
-      {icon && <div>{icon}</div>}
+    <div className="flex flex-col relative">
+      <div className="flex gap-2">
+        <input
+          className={cn(className)}
+          placeholder={placeholder}
+          value={inputValue}
+          onChange={handleInputChange}
+          style={{ ...style }}
+          {...rest}
+        />
+        {icon && <div>{icon}</div>}
+      </div>
+      {inputValue && Number(inputValue) > 0 && (
+        <span className="text-sm absolute bottom-[-28px] left-[14px] text-secondary-foreground font-semibold">
+          ${formatFloatstring(dollarPrice, 2)}
+        </span>
+      )}
     </div>
   );
 };

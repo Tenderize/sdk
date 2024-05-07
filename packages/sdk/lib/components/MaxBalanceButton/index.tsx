@@ -16,7 +16,7 @@ export const MaxBalanceButton: React.FC<Props> = ({
   return (
     <div className="flex flex-col gap-2">
       <span
-        className="cursor-pointer text-left max-w-max-content text-sm text-primary-foreground"
+        className="cursor-pointer text-right max-w-max-content text-sm text-secondary-foreground font-semibold"
         onClick={handleMaxButtonClick}
       >
         Max: {max}

@@ -1,4 +1,8 @@
+import { useSelectedToken } from "@lib/contexts";
+import { useCoinPrice } from "@lib/hooks/prices";
+import { COINGECKO_KEYS } from "@lib/types";
 import { cn } from "@lib/utils";
+import { formatFloatstring } from "@lib/utils/floats";
 import { type CSSProperties, type FC, type ReactNode } from "react";
 
 interface Props {
@@ -19,25 +23,36 @@ export const OutputField: FC<Props> = ({
   className,
   ...rest
 }) => {
+  const token = useSelectedToken();
+  const { price } = useCoinPrice(COINGECKO_KEYS[token.slug]);
+  const dollarPrice = ((price || 0) * Number(value)).toString();
+  console.log("OutputField", value, dollarPrice);
   return (
-    <div
-      className="flex gap-2 items-center justify-between text-primary-foreground"
-      {...rest}
-      style={{
-        ...style,
-        pointerEvents: "none",
-        padding: "10px 10px 10px 0px",
-      }}
-    >
-      <input
-        className={cn(className)}
-        value={value}
-        placeholder={placeholder}
-        defaultValue={value}
-        style={{ ...style }}
+    <div className="flex flex-col">
+      <div
+        className="flex gap-2 items-center justify-between text-primary-foreground"
         {...rest}
-      />
-      {icon && <span>{icon}</span>}
+        style={{
+          ...style,
+          pointerEvents: "none",
+          padding: "10px 10px 10px 0px",
+        }}
+      >
+        <input
+          className={cn(className)}
+          value={value}
+          placeholder={placeholder}
+          defaultValue={value}
+          style={{ ...style }}
+          {...rest}
+        />
+        {icon && <span>{icon}</span>}
+      </div>
+      {value && Number(value) > 0 && (
+        <span className="text-sm pl-[14px] text-secondary-foreground font-semibold">
+          ${formatFloatstring(dollarPrice, 2)}
+        </span>
+      )}
     </div>
   );
 };
