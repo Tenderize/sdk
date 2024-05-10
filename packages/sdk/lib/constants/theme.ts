@@ -32,7 +32,7 @@ export const defaultTheme = {
       },
       panel: {
         DEFAULT: "#fff7ed",
-        foreground: "#fb923c",
+        foreground: "#FED7CB",
       },
       badge: {
         error: "#ffe4e6",
