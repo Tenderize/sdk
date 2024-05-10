@@ -74,7 +74,7 @@ export const graphToken: Token = {
 export const TOKENS = {
   matic: maticToken,
   livepeer: livepeerToken,
-  // graph: graphToken,
+  graph: graphToken,
 } as const;
 
 export const TOKEN_ADDRESSES: TokenAddresses = {

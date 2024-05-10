@@ -86,29 +86,32 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
       </DropdownMenuRadix.Trigger>
       <DropdownMenuRadix.Content>
         <div className="flex flex-col gap-4">
-          {tokensData.map((item, index) => (
-            <DropdownMenuRadix.Item
-              style={{
-                ...(selectedToken?.slug === item.slug && { opacity: 0.5 }),
-              }}
-              onSelect={() => {
-                setSelectedToken(item.slug);
-              }}
-              key={index}
-            >
-              <div className="relative">
-                <div className="gap-4 items-center justify-between flex">
-                  {item.Icon && <item.Icon />}
-                  <div className="gap-1 items-center flex">
-                    <span className="text-primary-foreground">
-                      {item?.name}
-                    </span>
-                    {selectedToken.slug === item.slug && <CheckIcon />}
+          {tokensData.map((item, index) => {
+            if (item.slug === TokenSlugEnums.GRAPH) return; // Todo: add tokens to the list fro outside the SDK
+            return (
+              <DropdownMenuRadix.Item
+                style={{
+                  ...(selectedToken?.slug === item.slug && { opacity: 0.5 }),
+                }}
+                onSelect={() => {
+                  setSelectedToken(item.slug);
+                }}
+                key={index}
+              >
+                <div className="relative">
+                  <div className="gap-4 items-center justify-between flex">
+                    {item.Icon && <item.Icon />}
+                    <div className="gap-1 items-center flex">
+                      <span className="text-primary-foreground">
+                        {item?.name}
+                      </span>
+                      {selectedToken.slug === item.slug && <CheckIcon />}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </DropdownMenuRadix.Item>
-          ))}
+              </DropdownMenuRadix.Item>
+            );
+          })}
         </div>
       </DropdownMenuRadix.Content>
     </DropdownMenuRadix.Root>
