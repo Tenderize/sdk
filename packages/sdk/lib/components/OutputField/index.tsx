@@ -26,11 +26,10 @@ export const OutputField: FC<Props> = ({
   const token = useSelectedToken();
   const { price } = useCoinPrice(COINGECKO_KEYS[token.slug]);
   const dollarPrice = ((price || 0) * Number(value)).toString();
-  console.log("OutputField", value, dollarPrice);
   return (
     <div className="flex flex-col">
       <div
-        className="flex gap-2 items-center justify-between text-primary-foreground"
+        className="flex gap-2 items-center justify-between text-primary-foreground relative"
         {...rest}
         style={{
           ...style,
@@ -46,7 +45,9 @@ export const OutputField: FC<Props> = ({
           style={{ ...style }}
           {...rest}
         />
-        {icon && <span>{icon}</span>}
+        {icon && (
+          <span className="absolute top-[20px] right-[26px]">{icon}</span>
+        )}
       </div>
       {value && Number(value) > 0 && (
         <span className="text-sm pl-[14px] text-secondary-foreground font-semibold">
