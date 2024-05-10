@@ -29,5 +29,5 @@ export const ThemeProvider: FC<Props> = ({ children, theme }) => {
     applyColorsToRoot(mode);
   }, [addTheme.fonts, mode]);
 
-  return <Theme>{children}</Theme>;
+  return <Theme className="bg-background">{children}</Theme>;
 };

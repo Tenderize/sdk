@@ -159,5 +159,6 @@ export const applyFontFamily = ({
   // Apply font family to the element if found
   if (rootThemeElement) {
     rootThemeElement.style.fontFamily = "'Lato', sans-serif";
+    rootThemeElement.className = "radix-themes bg-background h-full";
   }
 };
