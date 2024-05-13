@@ -1,6 +1,6 @@
 import { Cross2Icon, RowsIcon } from "@radix-ui/react-icons";
-import { ConnectKitButton } from "connectkit";
 import { useState, type FC } from "react";
+import { ConnectButton } from "../ConnectButton";
 import DarkModeBrandingLogo from "./assets/dark-stakeCapital.png";
 import LightModeBrandingLogo from "./assets/light-stakeCapital.svg";
 
@@ -60,35 +60,14 @@ const DesktopNavView = () => {
       {NavData.map((navItem) => (
         <a
           key={navItem.title}
-          className="text-lg text-primary-foreground hover:underline hover:underline-offset-4"
+          className="text-lg text-primary-foreground hover:underline hover:underline-offset-4 flex flex-grow-0 flex-shrink-0"
           href={navItem.href}
         >
           {navItem.title}
         </a>
       ))}
 
-      <ConnectKitButton.Custom>
-        {({
-          isConnected,
-          isConnecting,
-          show,
-
-          truncatedAddress,
-        }) => {
-          return (
-            <button
-              onClick={show}
-              className="bg-primary text-primary-accent rounded-lg p-2 font-semibold cursor-pointer"
-            >
-              {isConnecting && !isConnected
-                ? "Connecting..."
-                : isConnected
-                ? truncatedAddress
-                : "Connect Wallet"}
-            </button>
-          );
-        }}
-      </ConnectKitButton.Custom>
+      <ConnectButton />
     </nav>
   );
 };
@@ -108,22 +87,7 @@ const MobileNavView: FC<{ setIsMenuOpen: (a: boolean) => void }> = () => {
           <hr className="w-full border-t border-border" />
         </>
       ))}
-      <ConnectKitButton.Custom>
-        {({ isConnected, isConnecting, show, truncatedAddress }) => {
-          return (
-            <button
-              onClick={show}
-              className="bg-primary text-primary-accent rounded-lg p-2 font-semibold cursor-pointer"
-            >
-              {isConnecting && !isConnected
-                ? "Connecting..."
-                : isConnected
-                ? truncatedAddress
-                : "Connect Wallet"}
-            </button>
-          );
-        }}
-      </ConnectKitButton.Custom>
+      <ConnectButton />
     </nav>
   );
 };
