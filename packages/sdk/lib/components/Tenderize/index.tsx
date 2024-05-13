@@ -29,15 +29,15 @@ const TABS_DATA = [
 export const Tenderize: FC = () => {
   return (
     <>
+      <div className="w-[95%] md:w-[650px] lg:w-[650px] ">
+        <TenderizerStats />
+      </div>
       <Card
         size={"1"}
         className="w-[95%] md:w-[650px] lg:w-[650px] border border-border"
       >
         <Tabs tabsData={TABS_DATA} />
       </Card>
-      <div className="w-[95%] md:w-[650px] lg:w-[650px] ">
-        <TenderizerStats />
-      </div>
     </>
   );
 };
