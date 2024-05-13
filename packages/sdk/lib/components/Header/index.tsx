@@ -1,7 +1,8 @@
 import { Cross2Icon, RowsIcon } from "@radix-ui/react-icons";
 import { ConnectKitButton } from "connectkit";
 import { useState, type FC } from "react";
-import BrandingLogo from "./assets/stakeCapital.svg";
+import DarkModeBrandingLogo from "./assets/dark-stakeCapital.png";
+import LightModeBrandingLogo from "./assets/light-stakeCapital.svg";
 
 const NavData = [
   {
@@ -20,6 +21,7 @@ const NavData = [
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   return (
     <header className="flex h-16 w-full items-center justify-between px-4 md:px-6 bg-card relative">
       <a className="flex items-center gap-2 " href="#">
@@ -28,7 +30,7 @@ export const Header = () => {
           alt="branding"
           height={20}
           width={250}
-          src={BrandingLogo}
+          src={isDarkMode ? DarkModeBrandingLogo : LightModeBrandingLogo}
         ></img>
       </a>
       <DesktopNavView />
