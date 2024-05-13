@@ -74,5 +74,14 @@
 
     body {
         @apply bg-background !important;
+        height: 100vh;
+    }
+    footer{
+        position: fixed;
+        bottom: 0;
+    }
+    header{
+        position: fixed;
+        top: 0;
     }
 }
