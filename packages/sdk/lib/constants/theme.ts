@@ -9,6 +9,8 @@ export const defaultTheme = {
     lightMode: {
       border: "#eee",
       background: "#ffffff",
+      midnight: "#303030",
+      white: "#ffffff",
       primary: {
         DEFAULT: "#fd3f0f",
         accent: "#ffffff",
@@ -41,40 +43,41 @@ export const defaultTheme = {
         infoForeground: "#ea580c",
       },
     },
-    // Todo: Dark mode colrs need to work on this
+    // Todo: Dark mode colors need to work on this
     darkMode: {
-      border: "#374151",
-      background: "#111827",
+      border: "#eee",
+      background: "#ffffff",
+      midnight: "#303030",
       primary: {
-        DEFAULT: "#F97316",
-        accent: "#111827",
-        foreground: "#F3F4F6",
+        DEFAULT: "#fd3f0f",
+        accent: "#ffffff",
+        foreground: "#3d3d3d",
       },
       secondary: {
-        DEFAULT: "#6B7280",
-        foreground: "#F3F4F6",
-        accent: "#111827",
+        DEFAULT: "#d1d5db",
+        foreground: "#9ca3af",
+        accent: "#ffffff",
       },
       success: {
-        DEFAULT: "#10B981",
-        foreground: "#F3F4F6",
+        DEFAULT: "#f0fdf4",
+        foreground: "#166534",
       },
       card: {
-        DEFAULT: "#4B5563",
+        DEFAULT: "#f4f4f5",
       },
       disabled: {
-        DEFAULT: "#374151",
-        foreground: "#6B7280",
+        DEFAULT: "#f3f4f6",
+        foreground: "#9ca3af",
       },
       panel: {
-        DEFAULT: "#4A5568",
-        foreground: "#FBBF24",
+        DEFAULT: "#fff7ed",
+        foreground: "#FED7CB",
       },
       badge: {
-        error: "#FECACA",
-        errorForeground: "#EF4444",
-        info: "#FCD34D",
-        infoForeground: "#D97706",
+        error: "#ffe4e6",
+        errorForeground: "#f87171",
+        info: "#fed7aa",
+        infoForeground: "#ea580c",
       },
     },
   },

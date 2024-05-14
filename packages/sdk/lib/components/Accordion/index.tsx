@@ -8,14 +8,14 @@ interface Props {
 
 export const Accordion: FC<Props> = ({ data }) => (
   <AccordionRadix.Root
-    className="bg-background w-full rounded-lg transition-all duration-300"
+    className="bg-background w-full rounded-lg"
     type="single"
     collapsible
   >
     {data.map((item, index) => (
       <AccordionRadix.Item
         key={index}
-        className="rounded-lg border border-border mb-2 hover:border-primary transition-all duration-300 px-4"
+        className="rounded-lg border border-border mb-2 hover:border-primary transition duration-700 ease-in-out px-4"
         value={`item-${index}`}
       >
         <AccordionRadix.Header
@@ -34,7 +34,7 @@ export const Accordion: FC<Props> = ({ data }) => (
             />
           </AccordionRadix.Trigger>
         </AccordionRadix.Header>
-        <AccordionRadix.Content className="text-primary-foreground data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp pb-4">
+        <AccordionRadix.Content className="data-[state=open]:text-primary-foreground text-secondary-foreground data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up pb-4 transition-transform duration-300">
           {item.answer}
         </AccordionRadix.Content>
       </AccordionRadix.Item>

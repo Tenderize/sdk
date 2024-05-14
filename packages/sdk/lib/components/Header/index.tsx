@@ -2,18 +2,20 @@ import { Cross2Icon, RowsIcon } from "@radix-ui/react-icons";
 import { useState, type FC } from "react";
 import { ConnectButton } from "../ConnectButton";
 import DarkModeBrandingLogo from "./assets/dark-stakeCapital.png";
-import LightModeBrandingLogo from "./assets/light-stakeCapital.svg";
 
 const NavData = [
   {
+    id: 1,
     title: "Services",
     href: "#",
   },
   {
+    id: 2,
     title: "Protocols",
     href: "#",
   },
   {
+    id: 3,
     title: "Contact Us",
     href: "#",
   },
@@ -21,16 +23,15 @@ const NavData = [
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   return (
-    <header className="flex h-16 w-full items-center justify-between px-4 md:px-6 bg-card relative">
+    <header className="flex h-16 w-full items-center justify-between px-4 md:px-6 bg-midnight text-white relative">
       <a className="flex items-center gap-2 " href="#">
         <img
-          className="absolute top-[22px] left-[20px] "
+          className="absolute top-[22px] left-[90px] sm:left-[135px] "
           alt="branding"
           height={20}
           width={250}
-          src={isDarkMode ? DarkModeBrandingLogo : LightModeBrandingLogo}
+          src={DarkModeBrandingLogo}
         ></img>
       </a>
       <DesktopNavView />
@@ -60,7 +61,10 @@ const DesktopNavView = () => {
       {NavData.map((navItem) => (
         <a
           key={navItem.title}
-          className="text-lg text-primary-foreground hover:underline hover:underline-offset-4 flex flex-grow-0 flex-shrink-0"
+          className={`${
+            navItem.id === 3 &&
+            "border-2 border-primary text-primary px-4 py-1 rounded-lg "
+          }text-lg text-white hover:underline hover:underline-offset-4 flex flex-grow-0 flex-shrink-0`}
           href={navItem.href}
         >
           {navItem.title}
@@ -74,13 +78,16 @@ const DesktopNavView = () => {
 
 const MobileNavView: FC<{ setIsMenuOpen: (a: boolean) => void }> = () => {
   return (
-    <nav className="flex flex-col items-center gap-2 md:hidden absolute w-full bg-card z-10 rounded-b-lg left-0 top-[63px] transition-all pb-2 border-b shadow border-border">
+    <nav className="p-2 flex flex-col items-center gap-2 md:hidden absolute w-full bg-card z-10 rounded-b-lg left-0 top-[63px] transition-all pb-2 border-b shadow border-border">
       {NavData.map((navItem) => (
         <>
           <a
             key={navItem.title}
-            className="text-lg text-primary-foreground hover:underline hover:underline-offset-4"
-            href={navItem.href}
+            className={`${
+              navItem.id === 3 &&
+              "border-2 border-primary text-primary px-4 py-1 rounded-lg "
+            }text-lg text-primary-foreground hover:underline hover:underline-offset-4"
+            href={navItem.href`}
           >
             {navItem.title}
           </a>

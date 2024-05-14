@@ -13,6 +13,8 @@ export interface BrandPalette {
 interface LightModeColors {
   border: string;
   background: string;
+  midnight: string;
+  white: string;
   primary: ColorSet;
   secondary: ColorSet;
   success: ColorSet;
