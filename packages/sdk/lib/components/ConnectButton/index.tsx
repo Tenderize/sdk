@@ -1,7 +1,7 @@
 import { ConnectKitButton } from "connectkit";
 export const ConnectButton = () => {
   return (
-    <div className="connect-kit w-full">
+    <div className="connect-kit w-full flex justify-center">
       <ConnectKitButton showBalance />
     </div>
   );
