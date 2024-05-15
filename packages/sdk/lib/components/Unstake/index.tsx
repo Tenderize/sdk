@@ -25,7 +25,7 @@ export const Unstake: FC = () => {
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
-  const { address: userAddress } = useAccount();
+  const { address: userAddress, isConnected } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
   const currentChainId = useCurrentChainId();
   const { mutate: unstake, status: unstakeStatus } = useUnstake(
@@ -79,7 +79,7 @@ export const Unstake: FC = () => {
                     src={token.img?.token}
                     alt={token.name}
                   />
-                  <span className="text-sm">{`t${token.currency}`}</span>
+                  <span className="text-sm">{`${token.currency}`}</span>
                 </div>
               }
             />
@@ -88,7 +88,7 @@ export const Unstake: FC = () => {
         callOutActionChildren={
           <div className="w-full gap-2 flex">
             {(() => {
-              if (currentChainId !== chainId) {
+              if (currentChainId !== chainId || !isConnected) {
                 return <SwitchChainButton requiredChainId={chainId} />;
               }
               if (unstakeStatus === "success") {

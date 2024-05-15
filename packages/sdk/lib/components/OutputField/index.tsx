@@ -29,7 +29,7 @@ export const OutputField: FC<Props> = ({
   return (
     <div className="flex flex-col">
       <div
-        className="flex gap-2 items-center justify-between text-primary-foreground relative"
+        className="flex gap-4 items-center justify-between text-primary-foreground relative"
         {...rest}
         style={{
           ...style,
@@ -45,12 +45,10 @@ export const OutputField: FC<Props> = ({
           style={{ ...style }}
           {...rest}
         />
-        {icon && (
-          <span className="absolute top-[20px] right-[26px]">{icon}</span>
-        )}
+        {icon && <div className="pl-2 min-w-[105px]">{icon}</div>}
       </div>
       {value && Number(value) > 0 && (
-        <span className="text-sm pl-[14px] text-secondary-foreground font-semibold">
+        <span className="text-sm pr-[10px] text-right text-secondary-foreground font-semibold">
           ${formatFloatstring(dollarPrice, 2)}
         </span>
       )}

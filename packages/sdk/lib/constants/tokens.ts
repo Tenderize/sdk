@@ -1,9 +1,6 @@
 import Grt from "@lib/assets/tokens/grt.png";
 import Lpt from "@lib/assets/tokens/lpt.png";
 import Matic from "@lib/assets/tokens/matic.png";
-import TGrt from "@lib/assets/tokens/tgrt.png";
-import TLpt from "@lib/assets/tokens/tlpt.png";
-import TMatic from "@lib/assets/tokens/tmatic.png";
 import {
   TokenNameEnums,
   TokenSlugEnums,
@@ -20,7 +17,7 @@ export const maticToken: Token = {
   slug: TokenSlugEnums.MATIC,
   img: {
     token: Matic,
-    tToken: TMatic,
+    tToken: Matic,
   },
   color: "#580DF5",
   validator: "validator",
@@ -37,7 +34,7 @@ export const livepeerToken: Token = {
   slug: TokenSlugEnums.LIVEPEER,
   img: {
     token: Lpt,
-    tToken: TLpt,
+    tToken: Lpt,
   },
   color: "#57BE78",
   validator: "orchestrator",
@@ -57,7 +54,7 @@ export const graphToken: Token = {
   slug: TokenSlugEnums.GRAPH,
   img: {
     token: Grt,
-    tToken: TGrt,
+    tToken: Grt,
   },
   color: "#707CE9",
   validator: "indexer",

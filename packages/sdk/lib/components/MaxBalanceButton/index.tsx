@@ -1,3 +1,4 @@
+import { formatFloatstring } from "@lib/utils/floats";
 import React from "react";
 
 interface Props {
@@ -14,12 +15,15 @@ export const MaxBalanceButton: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex gap-2">
+      <span className="text-sm text-secondary-foreground font-semibold">
+        Balance: {formatFloatstring(max, 3)}
+      </span>
       <span
-        className="cursor-pointer text-right max-w-max-content text-sm text-secondary-foreground font-semibold"
         onClick={handleMaxButtonClick}
+        className="text-sm text-secondary-foreground hover:text-primary cursor-pointer  "
       >
-        Max: {max}
+        Max
       </span>
     </div>
   );

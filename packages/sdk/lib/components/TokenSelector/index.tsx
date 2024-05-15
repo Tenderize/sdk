@@ -40,8 +40,8 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     selectedToken,
   }) => (
     <img
-      width={isWrappedToken(action) ? 30 : 25}
-      height={isWrappedToken(action) ? 30 : 25}
+      width={25}
+      height={25}
       src={
         isWrappedToken(action)
           ? selectedToken?.img.tToken
@@ -70,12 +70,12 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
         <Button
-          className={"focus:outline-none min-w-[120px]"}
+          className={"focus:outline-none min-w-[105px]"}
           variant="soft"
           size={"3"}
           style={{ padding: 0 }}
         >
-          <div className="gap-2 justify-between items-center flex">
+          <div className="gap-2 justify-start items-center flex min-w-[105px]">
             {!!selectedTokenData?.Icon && <selectedTokenData.Icon />}
             <span className="text-primary-foreground">
               {selectedTokenData?.name || "Select Token"}

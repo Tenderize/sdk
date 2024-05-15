@@ -87,7 +87,7 @@ export const InputField: FC<Props> = ({
         {icon && <div>{icon}</div>}
       </div>
       {inputValue && Number(inputValue) > 0 && (
-        <span className="text-sm absolute bottom-[-28px] left-[14px] text-secondary-foreground font-semibold">
+        <span className="text-sm absolute bottom-[-28px] right-[6px] text-secondary-foreground font-semibold">
           ${formatFloatstring(dollarPrice, 2)}
         </span>
       )}

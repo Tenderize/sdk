@@ -27,7 +27,7 @@ export const Stake: FC = () => {
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
-  const { address: user } = useAccount();
+  const { address: user, isConnected } = useAccount();
   const currentChainId = useCurrentChainId();
 
   const { previewDeposit } = usePreviewDeposit(
@@ -100,8 +100,8 @@ export const Stake: FC = () => {
               icon={
                 <div className="flex items-center gap-2">
                   <img
-                    width={30}
-                    height={30}
+                    width={25}
+                    height={25}
                     src={token.img?.tToken}
                     alt={token.name}
                   />
@@ -114,7 +114,7 @@ export const Stake: FC = () => {
         callOutActionChildren={
           <div className="w-full gap-2 flex">
             {(() => {
-              if (currentChainId !== chainId) {
+              if (currentChainId !== chainId || !isConnected) {
                 return <SwitchChainButton requiredChainId={chainId} />;
               }
 
