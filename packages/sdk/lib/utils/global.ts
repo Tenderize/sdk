@@ -107,9 +107,8 @@ export const colorToHSL = (color: string): string => {
   return `${h} ${s}% ${l}%`;
 };
 
-export const applyColorsToRoot = (colors: {
-  [key: string]: string | { [subKey: string]: string };
-}) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const applyColorsToRoot = (colors: any) => {
   const root = document.documentElement;
   for (const key in colors) {
     if (Object.prototype.hasOwnProperty.call(colors, key)) {
