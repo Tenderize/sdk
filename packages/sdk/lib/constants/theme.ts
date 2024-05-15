@@ -15,6 +15,11 @@ export const defaultTheme = {
         DEFAULT: "#fd3f0f",
         accent: "#ffffff",
         foreground: "#3d3d3d",
+        "500": "#97316",
+        "400": "#fb923c",
+        "300": "#fdba74",
+        "200": "#fed7aa",
+        "100": "#ffedd5",
       },
       secondary: {
         DEFAULT: "#d1d5db",
@@ -52,6 +57,11 @@ export const defaultTheme = {
         DEFAULT: "#fd3f0f",
         accent: "#ffffff",
         foreground: "#3d3d3d",
+        "500": "#97316",
+        "400": "#fb923c",
+        "300": "#fdba74",
+        "200": "#fed7aa",
+        "100": "#ffedd5",
       },
       secondary: {
         DEFAULT: "#d1d5db",

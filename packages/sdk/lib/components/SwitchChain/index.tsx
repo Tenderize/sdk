@@ -3,7 +3,7 @@ import { CHAINS } from "@lib/constants";
 import { isMutationPending } from "@lib/utils/global";
 import { type FC } from "react";
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
-import { ConnectButton } from "../ConnectButton";
+import { CustomConnectButton } from "../ConnectButton";
 type ChainId = number;
 
 type SwitchChainButtonProps = {
@@ -26,7 +26,7 @@ export const SwitchChainButton: FC<SwitchChainButtonProps> = ({
     return null;
   }
   if (!isConnected) {
-    return <ConnectButton />;
+    return <CustomConnectButton />;
   }
 
   if (currentChainId === requiredChainId) {

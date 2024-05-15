@@ -23,6 +23,11 @@ module.exports = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
           accent: "hsl(var(--primary-accent))",
+          "500": "hsl(var(--primary-500))",
+          "400": "hsl(var(--primary-400))",
+          "300": "hsl(var(--primary-300))",
+          "200": "hsl(var(--primary-200))",
+          "100": "hsl(var(--primary-100))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",

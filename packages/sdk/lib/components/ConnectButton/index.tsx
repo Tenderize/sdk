@@ -1,6 +1,13 @@
 import { ConnectKitButton } from "connectkit";
 export const ConnectButton = () => {
   return (
+    <div className="connect-kit w-full">
+      <ConnectKitButton showBalance />
+    </div>
+  );
+};
+export const CustomConnectButton = () => {
+  return (
     <ConnectKitButton.Custom>
       {({ isConnected, isConnecting, show, truncatedAddress, ...rest }) => {
         console.log("rest", rest);

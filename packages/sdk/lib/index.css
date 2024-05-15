@@ -84,4 +84,22 @@
         position: fixed;
         top: 0;
     }
+
+    /* Below css is for connectkit button theming */
+    .connect-kit .secondary {
+        @apply  font-bold border-2 border-primary;
+        border: 2px solid hsl(var(--primary));
+    }
+    .connect-kit .primary {
+        @apply bg-primary text-primary-accent font-bold border-2 border-primary;
+        border: 2px solid hsl(var(--primary));
+    }
+    .connect-kit .primary:hover {
+        @apply  font-bold;
+        border: 2px solid hsl(var(--primary));
+        background-color: hsl(var(--primary)) !important;
+        color: hsl(var(--primary-accent)) !important;
+        border: 2px solid hsl(var(--primary)) !important;
+    }
+
 }
