@@ -1,7 +1,13 @@
 import { ConnectKitButton } from "connectkit";
+import { useAccount } from "wagmi";
 export const ConnectButton = () => {
+  const { isConnected } = useAccount();
   return (
-    <div className="connect-kit w-full flex justify-center transform hover:-translate-y-[2px] transition duration-150 ease-out hover:ease-in">
+    <div
+      className={`${
+        isConnected && "connected-kit"
+      } connect-kit w-full flex justify-center transform hover:-translate-y-[2px] transition duration-150 ease-out hover:ease-in`}
+    >
       <ConnectKitButton showBalance />
     </div>
   );

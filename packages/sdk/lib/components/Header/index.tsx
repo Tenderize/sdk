@@ -1,4 +1,4 @@
-import { Cross2Icon, RowsIcon } from "@radix-ui/react-icons";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState, type FC } from "react";
 import { ConnectButton } from "../ConnectButton";
 import BrandingLogo from "./assets/stakeCapital.avif";
@@ -38,8 +38,8 @@ export const Header = () => {
         <DesktopNavView />
         {isMenuOpen && <MobileNavView setIsMenuOpen={setIsMenuOpen} />}
         <button
-          className="inline-flex items-center justify-center whitespace-nowrap
-        rounded-md text-sm font-medium ring-offset-background transition-colors
+          className="flex-col flex items-center justify-center items-center whitespace-nowrap gap-1
+        rounded-full text-sm font-medium ring-offset-background transition-colors
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
         disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent
         text-primary h-10 w-10 md:hidden"
@@ -47,9 +47,13 @@ export const Header = () => {
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {!isMenuOpen ? (
-            <RowsIcon className="w-[25px] h-[22px]" />
+            <>
+              <div className="w-[14px] h-[2px] bg-midnight rounded-md  transition-transform duration-150 ease-linear"></div>
+              <div className="w-[14px] h-[2px] bg-midnight rounded-md  transition-transform duration-150 ease-linear"></div>
+              <div className="w-[14px] h-[2px] bg-midnight rounded-md  transition-transform duration-150 ease-linear"></div>
+            </>
           ) : (
-            <Cross2Icon className="w-[25px] h-[22px]" />
+            <Cross2Icon className="w-[25px] h-[22px] transition duration-150 ease-out text-midnight font-bold" />
           )}
         </button>
       </div>
@@ -65,9 +69,9 @@ const DesktopNavView = () => {
           key={navItem.title}
           className={`${
             navItem.id === 3 &&
-            "border-2 border-primary text-primary px-4 py-1 rounded-lg"
+            "border-2 border-white text-white px-4 py-1 rounded-sm flex items-center"
           } text-sm font-bold min-w-min text-white overflow-hidden inline-block whitespace-nowrap
-            px-5 py-3  border border-transparent min-h-11 rounded-md shadow-button text-center
+            px-5 py-3  h-[44px] rounded-md shadow-button text-center
             select-none cursor-pointer transform hover:-translate-y-[2px] hover:bg-secondary-500 transition duration-150 ease-out hover:ease-in`}
           href={navItem.href}
         >
@@ -82,20 +86,22 @@ const DesktopNavView = () => {
 
 const MobileNavView: FC<{ setIsMenuOpen: (a: boolean) => void }> = () => {
   return (
-    <nav className="p-2 flex flex-col items-center gap-2 md:hidden absolute w-full bg-card z-10 rounded-b-lg left-0 top-[63px] transition-all pb-2 border-b shadow border-border">
+    <nav
+      className="p-2 pt-8 flex flex-col items-center gap-6 md:hidden absolute w-full  z-10
+    rounded-b-lg left-0 top-[63px] transition-all pb-2 border-b shadow border-border bg-midnight h-[90vh]"
+    >
       {NavData.map((navItem) => (
         <>
           <a
             key={navItem.title}
             className={`${
               navItem.id === 3 &&
-              "border-2 border-primary text-primary px-4 py-1 rounded-lg "
-            }text-lg text-primary-foreground hover:underline hover:underline-offset-4"
+              "border-2 border-white text-primary px-4 py-2 rounded-sm "
+            } text-sm font-bold text-white  w-[120px]"
             href={navItem.href`}
           >
             {navItem.title}
           </a>
-          <hr className="w-full border-t border-border" />
         </>
       ))}
       <ConnectButton />
