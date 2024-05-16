@@ -1,7 +1,7 @@
 import { ConnectKitButton } from "connectkit";
 export const ConnectButton = () => {
   return (
-    <div className="connect-kit w-full flex justify-center">
+    <div className="connect-kit w-full flex justify-center transform hover:-translate-y-[2px] transition duration-150 ease-out hover:ease-in">
       <ConnectKitButton showBalance />
     </div>
   );
@@ -9,8 +9,7 @@ export const ConnectButton = () => {
 export const CustomConnectButton = () => {
   return (
     <ConnectKitButton.Custom>
-      {({ isConnected, isConnecting, show, truncatedAddress, ...rest }) => {
-        console.log("rest", rest);
+      {({ isConnected, isConnecting, show, truncatedAddress }) => {
         return (
           <>
             <button

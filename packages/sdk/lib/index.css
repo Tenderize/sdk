@@ -81,8 +81,9 @@
         bottom: 0;
     }
     header{
-        position: fixed;
+        position: sticky;
         top: 0;
+        z-index: 9;
     }
 
     /* Below css is for connectkit button theming */

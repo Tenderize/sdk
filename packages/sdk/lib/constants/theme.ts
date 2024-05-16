@@ -25,6 +25,7 @@ export const defaultTheme = {
         DEFAULT: "#d1d5db",
         foreground: "#9ca3af",
         accent: "#ffffff",
+        "500": "#404040",
       },
       success: {
         DEFAULT: "#f0fdf4",
@@ -67,6 +68,7 @@ export const defaultTheme = {
         DEFAULT: "#d1d5db",
         foreground: "#9ca3af",
         accent: "#ffffff",
+        "500": "#404040",
       },
       success: {
         DEFAULT: "#f0fdf4",
