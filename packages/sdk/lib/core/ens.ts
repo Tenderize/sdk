@@ -1,4 +1,5 @@
 import { VALIDATOR_PROFILES } from "@lib/constants/validators";
+import type { PublicClient } from "viem";
 import { createPublicClient, getAddress, http, type Address } from "viem";
 import { mainnet } from "viem/chains";
 import type { GetEnsAvatarReturnType } from "viem/ens";
@@ -17,7 +18,7 @@ export type ValidatorProfile = {
 
 export type FetchEnsAvatarResult = GetEnsAvatarReturnType;
 
-export const publicClient = createPublicClient({
+export const publicClient: PublicClient = createPublicClient({
   chain: mainnet,
   transport: http(
     "https://eth-mainnet.g.alchemy.com/v2/trD7ShUu0k9JzVNt6HGZL-NKxWByZeYF"

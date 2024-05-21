@@ -1,5 +1,6 @@
 import { ConnectKitButton } from "connectkit";
 import { useAccount } from "wagmi";
+
 export const ConnectButton = () => {
   const { isConnected } = useAccount();
   return (
