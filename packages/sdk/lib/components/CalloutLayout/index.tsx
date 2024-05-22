@@ -1,5 +1,7 @@
 import { ArrowDownIcon } from "@radix-ui/react-icons";
+import { Box, Container, Flex, IconButton } from "@radix-ui/themes";
 import type { FC } from "react";
+import { Callout } from "../Callout";
 
 interface CalloutlayoutProps {
   callOutFirstChildren: React.ReactNode;
@@ -11,34 +13,39 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
   const { callOutFirstChildren, callOutSecondChildren, callOutActionChildren } =
     props;
   return (
-    <div className="relative h-max-content">
-      <div
-        className="absolute bg-card rounded-lg"
+    <Container
+      color="gray"
+      width={"100%"}
+      position="relative"
+      style={{ height: "max-content" }}
+    >
+      <Box
         style={{
           left: "50%",
           right: "50%",
-          top: "43%",
+          top: "46%",
           transform: "translate(-50%, -50%)",
           width: "max-content",
           borderRadius: "10px",
           border: "8px solid #fff",
         }}
+        position={"absolute"}
       >
-        <ArrowDownIcon
-          width="25"
-          height="25"
-          className="text-callout-foreground"
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex p-3 bg-card rounded-lg text-callout-foreground">
+        <IconButton variant="surface">
+          <ArrowDownIcon width="20" height="20" />
+        </IconButton>
+      </Box>
+      <Flex direction="column" gap="2">
+        <Callout className="flex px-3" variant="soft">
           {callOutFirstChildren}
-        </div>
-        <div className="flex p-3 bg-card rounded-lg text-callout-foreground">
+        </Callout>
+        <Callout className="flex px-3" variant="soft">
           {callOutSecondChildren}
-        </div>
-        <div className="w-full justify-center">{callOutActionChildren}</div>
-      </div>
-    </div>
+        </Callout>
+        <Flex width={"100%"} justify="center">
+          {callOutActionChildren}
+        </Flex>
+      </Flex>
+    </Container>
   );
 };

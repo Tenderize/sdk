@@ -1,8 +1,4 @@
-import { useSelectedToken } from "@lib/contexts";
-import { useCoinPrice } from "@lib/hooks/prices";
-import { COINGECKO_KEYS } from "@lib/types";
-import { cn } from "@lib/utils";
-import { formatFloatstring } from "@lib/utils/floats";
+import { TextField } from "@radix-ui/themes";
 import {
   useCallback,
   useEffect,
@@ -10,18 +6,21 @@ import {
   useState,
   type CSSProperties,
   type ChangeEvent,
+  type ComponentProps,
   type FC,
   type ReactNode,
 } from "react";
 import { parseEther } from "viem";
 
-interface Props {
+type TextFieldRadixProps = ComponentProps<
+  typeof TextField.Root & typeof TextField.Input
+>;
+interface Props extends TextFieldRadixProps {
   placeholder?: string;
   icon?: ReactNode;
   value?: string;
   handleChange?: (event: string) => void;
   max?: string;
-  className?: string;
   style?: CSSProperties;
 }
 
@@ -32,14 +31,10 @@ export const InputField: FC<Props> = ({
   handleChange,
   max,
   style,
-  className,
   ...rest
 }) => {
   const [inputValue, setInputValue] = useState<string>(value || "");
   const prevValueRef = useRef<string | undefined>(undefined);
-  const token = useSelectedToken();
-  const { price } = useCoinPrice(COINGECKO_KEYS[token.slug]);
-  const dollarPrice = ((price || 0) * Number(inputValue)).toString();
 
   const handleInputOutsideChange = useCallback(
     (value: string) => {
@@ -74,23 +69,16 @@ export const InputField: FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col relative">
-      <div className="flex gap-2">
-        <input
-          className={cn(className)}
-          placeholder={placeholder}
-          value={inputValue}
-          onChange={handleInputChange}
-          style={{ ...style }}
-          {...rest}
-        />
-        {icon && <div>{icon}</div>}
-      </div>
-      {inputValue && Number(inputValue) > 0 && (
-        <span className="text-sm absolute bottom-[-28px] right-[6px] text-secondary-foreground font-semibold">
-          ${formatFloatstring(dollarPrice, 2)}
-        </span>
-      )}
-    </div>
+    <TextField.Root {...rest} style={{ paddingTop: "10px", paddingBottom: "10px", paddingRight: 10, ...style }}>
+      <TextField.Input
+        placeholder={placeholder}
+        value={inputValue}
+        onChange={handleInputChange}
+        size={"3"}
+        style={{ ...style }}
+        {...rest}
+      />
+      {icon && <TextField.Slot>{icon}</TextField.Slot>}
+    </TextField.Root>
   );
 };

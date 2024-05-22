@@ -18,6 +18,7 @@ import {
 } from "@lib/hooks";
 import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { Flex, Text } from "@radix-ui/themes";
 import { useEffect, useState, type FC } from "react";
 import { formatEther, parseEther, type Address } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
@@ -27,7 +28,7 @@ export const Stake: FC = () => {
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
-  const { address: user, isConnected } = useAccount();
+  const { address: user } = useAccount();
   const currentChainId = useCurrentChainId();
 
   const { previewDeposit } = usePreviewDeposit(
@@ -67,15 +68,17 @@ export const Stake: FC = () => {
   }, [depositStatus]);
 
   return (
-    <div className="gap-2 justify-between flex flex-col">
+    <Flex gap="2" content="between" direction="column">
       <CalloutLayout
         callOutFirstChildren={
-          <div className="gap-2 justify-between flex flex-col w-full">
-            <span className="text-sm text-primary-foreground">You Stake</span>
+          <Flex gap="2" content="between" direction="column" width="100%">
+            <Text size="2">You Stake</Text>
             <InputField
-              className="bg-card  px-3 focus:outline-none rounded-lg w-full text-primary-foreground"
+              variant="soft"
+              className=""
+              size="3"
               max={formatEther(balance)}
-              style={{ fontSize: 30 }}
+              style={{ width: "100%", fontSize: 30 }}
               handleChange={(value: string) => {
                 setAmount(value || "0");
               }}
@@ -88,55 +91,62 @@ export const Stake: FC = () => {
                 setAmount(value);
               }}
             />
-          </div>
+          </Flex>
         }
         callOutSecondChildren={
-          <div className="flex flex-col gap-2 w-full">
-            <span className="text-sm text-primary-foreground">You Receive</span>
+          <Flex direction="column" gap="2" width="100%">
+            <Text size="2">You Receive</Text>
             <OutputField
-              className="bg-card px-3 focus:outline-none rounded-lg w-full"
-              style={{ fontSize: 30 }}
+              variant="soft"
+              className=""
+              style={{ width: "100%", fontSize: 30 }}
               value={formatEther(previewDeposit ?? 0n)}
               icon={
-                <div className="flex items-center gap-2">
+                <Flex align="center" gap="2">
                   <img
-                    width={25}
-                    height={25}
+                    width={30}
+                    height={30}
                     src={token.img?.tToken}
                     alt={token.name}
                   />
-                  <span className="text-sm">{`t${token.currency}`}</span>
-                </div>
+                  <Text size="3">{`t${token.currency}`}</Text>
+                </Flex>
               }
             />
-          </div>
+          </Flex>
         }
         callOutActionChildren={
-          <div className="w-full gap-2 flex">
+          <Flex gap="2" width="100%">
             {(() => {
-              if (currentChainId !== chainId || !isConnected) {
+              if (currentChainId !== chainId) {
                 return <SwitchChainButton requiredChainId={chainId} />;
               }
 
               if (depositStatus === "success") {
                 return (
-                  <Button className="w-full" success size="4">
-                    <div className="flex gap-2 items-center">
+                  <Button
+                    style={{ width: "100%", pointerEvents: "none" }}
+                    size="4"
+                    variant="soft"
+                    color="green"
+                  >
+                    <Flex gap="2" align="center">
                       <CheckCircledIcon />
-                      <span>Staked {token.currency}</span>
-                    </div>
+                      <Text>Staked {token.currency}</Text>
+                    </Flex>
                   </Button>
                 );
               }
-
               if (!approval && allowance < parseEther(amount)) {
                 return (
                   <Button
-                    className="w-full"
+                    className={
+                      isMutationPending(approveStatus) ? "animate-pulse" : ""
+                    }
                     disabled={
                       !previewDeposit || isMutationPending(approveStatus)
                     }
-                    primary
+                    style={{ width: "100%" }}
                     size="4"
                     onClick={() => approve()}
                     variant="solid"
@@ -149,12 +159,13 @@ export const Stake: FC = () => {
                   </Button>
                 );
               }
-
               return (
                 <Button
+                  className={
+                    isMutationPending(depositStatus) ? "animate-pulse" : ""
+                  }
                   disabled={!previewDeposit || isMutationPending(depositStatus)}
-                  primary
-                  className="w-full"
+                  style={{ width: "100%" }}
                   size="4"
                   onClick={() => deposit()}
                   variant="solid"
@@ -167,9 +178,9 @@ export const Stake: FC = () => {
                 </Button>
               );
             })()}
-          </div>
+          </Flex>
         }
       ></CalloutLayout>
-    </div>
+    </Flex>
   );
 };

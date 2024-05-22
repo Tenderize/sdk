@@ -6,20 +6,20 @@ import { useAdapterTime } from "@lib/hooks/adapter";
 import { formatAmount } from "@lib/utils/floats";
 import { formatMaturity, isMutationPending } from "@lib/utils/global";
 import { ClockIcon, CountdownTimerIcon } from "@radix-ui/react-icons";
-import { Badge, Flex, Text } from "@radix-ui/themes";
+import { Badge, Flex, Grid, Heading, Separator, Text } from "@radix-ui/themes";
 import type { CSSProperties, FC } from "react";
 import React, { useState } from "react";
 import { parseEther, type Address, type Hex } from "viem";
 import { useAccount } from "wagmi";
-import { Button, Card } from "..";
+import { Button, Callout, Card } from "..";
 
 interface WithdrawProps {
   style?: CSSProperties;
 }
 
-export const Withdraw: FC<WithdrawProps> = () => {
+export const Withdraw: FC<WithdrawProps> = (props) => {
   const [activeUnlockId, setActiveUnlockId] = useState<Hex>("" as Hex);
-
+  const { style } = props;
   const token = useSelectedToken();
   const { address: user } = useAccount();
   const tenderizer = useTenderizer(token.slug);
@@ -40,12 +40,20 @@ export const Withdraw: FC<WithdrawProps> = () => {
 
   if (!unlocks || unlocks?.length === 0) return null;
   return (
-    <div className="border w-full bg-panel border-panel-foreground flex flex-col text-panel-foreground p-3 rounded-lg">
-      <span className="w-full text-lg font-semibold text-primary-foreground">
+    <Callout
+      size="3"
+      className="w-full px-3"
+      variant="surface"
+      style={{ ...style, display: "flex", flexDirection: "column" }}
+    >
+      <Heading className="w-full" size="3">
         Pending Unlocks
-      </span>
-      <div className="w-full h-2 border-b border-border mb-2" />
-      <div className="w-full grid grid-cols-1 sm:grid-cols-3 max-h-36 overflow-y-auto gap-4">
+      </Heading>
+      <Separator className="w-full" orientation="horizontal" size="4" />
+      <Grid
+        className="w-full grid-cols-1 sm:grid-cols-3 max-h-[150px] overflow-y-auto  gap-4"
+        width="100%"
+      >
         {unlocks?.map((item, index) => {
           const isMature = item.maturity >= (time || 0);
           const isWithdrawLoading =
@@ -92,7 +100,7 @@ export const Withdraw: FC<WithdrawProps> = () => {
               </Card>
               {/* tablet and desktop view  */}
               <Badge
-                className="w-full py-[3px] px-[5px] min-h-[40px] hidden sm:flex bg-badge-error text-badge-errorForeground"
+                className="w-full py-[3px] px-[5px] min-h-[40px] hidden sm:flex"
                 radius="full"
               >
                 <Flex align="center" gap="2">
@@ -107,7 +115,8 @@ export const Withdraw: FC<WithdrawProps> = () => {
               </Badge>
 
               <Badge
-                className="hidden sm:flex bg-badge-info text-badge-infoForeground"
+                className="hidden sm:flex"
+                color="orange"
                 variant="soft"
                 radius="full"
                 style={{ width: "100%", padding: "10px", minWidth: "150px" }}
@@ -134,8 +143,8 @@ export const Withdraw: FC<WithdrawProps> = () => {
             </React.Fragment>
           );
         })}
-      </div>
-    </div>
+      </Grid>
+    </Callout>
   );
 };
 
@@ -164,7 +173,6 @@ const GridActionButton: FC<GridActionButtonProps> = ({
     return (
       <Button
         variant="soft"
-        secondary
         className="h-full w-full"
         style={{
           pointerEvents: "none",
@@ -178,7 +186,6 @@ const GridActionButton: FC<GridActionButtonProps> = ({
     return (
       <Button
         className={`w-full h-full ${isWithdrawLoading ? "animate-pulse" : ""}`}
-        primary
         disabled={isWithdrawLoading}
         onClick={() => {
           const unlockID = item.id as Hex;

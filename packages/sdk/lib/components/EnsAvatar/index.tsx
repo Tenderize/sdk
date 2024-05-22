@@ -26,7 +26,7 @@ export const EnsAvatar: FC<Props> = (props) => {
 
     return (
       <div
-        className="text-primary-foreground"
+        className="text-gray-500"
         style={{ width: `${size}px`, height: `${size}px` }}
       >
         <img
@@ -50,7 +50,7 @@ export const EnsAvatar: FC<Props> = (props) => {
       {renderAvatar()}
 
       <div
-        className={`${textSize}font-medium truncate max-w-[240px] text-primary-foreground`}
+        className={`${textSize}font-medium truncate max-w-[240px] text-gray-500`}
       >
         {profile?.name || formatAddress(address || "0x0")}
       </div>

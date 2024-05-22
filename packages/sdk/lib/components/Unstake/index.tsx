@@ -15,7 +15,7 @@ import { useERC20Balance } from "@lib/hooks";
 import { useUnstake } from "@lib/hooks/unlocks";
 import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { useEffect, useState, type FC } from "react";
 import { formatEther, parseEther } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
@@ -25,7 +25,7 @@ export const Unstake: FC = () => {
   const token = useSelectedToken();
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
-  const { address: userAddress, isConnected } = useAccount();
+  const { address: userAddress } = useAccount();
   const { balance } = useERC20Balance(tenderizer, userAddress, chainId);
   const currentChainId = useCurrentChainId();
   const { mutate: unstake, status: unstakeStatus } = useUnstake(
@@ -46,15 +46,15 @@ export const Unstake: FC = () => {
       <Withdraw />
       <CalloutLayout
         callOutFirstChildren={
-          <div className="gap-2 justify-between flex flex-col w-full">
-            <span className="text-sm text-primary-foreground">You Unstake</span>
+          <Flex gap="2" content="between" direction="column" width="100%">
+            <Text size="2">You Unstake</Text>
             <InputField
-              className="bg-card  px-3 focus:outline-none rounded-lg w-full text-primary-foreground"
+              disabled={isMutationPending(unstakeStatus)}
+              variant="soft"
+              className=""
               max={formatEther(balance)}
-              style={{ fontSize: 30 }}
-              handleChange={(value: string) => {
-                setAmount(value || "0");
-              }}
+              style={{ width: "100%", fontSize: 30 }}
+              handleChange={setAmount}
               value={amount}
               icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
             />
@@ -62,50 +62,58 @@ export const Unstake: FC = () => {
               max={formatEther(balance)}
               handleInputChange={setAmount}
             />
-          </div>
+          </Flex>
         }
         callOutSecondChildren={
-          <div className="flex flex-col gap-2 w-full">
-            <span className="text-sm text-primary-foreground">You Receive</span>
+          <Flex direction="column" gap="2" width="100%">
+            <Text size="2">You Receive</Text>
             <OutputField
-              className="bg-card px-3 focus:outline-none rounded-lg w-full"
-              style={{ fontSize: 30 }}
+              variant="soft"
+              className=""
+              style={{ width: "100%", fontSize: 30 }}
               value={amount}
               icon={
-                <div className="flex items-center gap-2">
+                <Flex align="center" gap="2">
                   <img
                     width={25}
                     height={25}
                     src={token.img?.token}
                     alt={token.name}
                   />
-                  <span className="text-sm">{`${token.currency}`}</span>
-                </div>
+                  <Text size="3">{`${token.currency}`}</Text>
+                </Flex>
               }
             />
-          </div>
+          </Flex>
         }
         callOutActionChildren={
-          <div className="w-full gap-2 flex">
+          <Flex gap="2" width="100%">
             {(() => {
-              if (currentChainId !== chainId || !isConnected) {
+              if (currentChainId !== chainId) {
                 return <SwitchChainButton requiredChainId={chainId} />;
               }
               if (unstakeStatus === "success") {
                 return (
-                  <Button className="w-full" success size="4">
-                    <div className="flex gap-2 items-center">
+                  <Button
+                    style={{ width: "100%", pointerEvents: "none" }}
+                    size="4"
+                    variant="soft"
+                    color="green"
+                  >
+                    <Flex gap="2" align="center">
                       <CheckCircledIcon />
-                      <span>Unstaked {token.currency}</span>
-                    </div>
+                      <Text>Unstaked {token.currency}</Text>
+                    </Flex>
                   </Button>
                 );
               }
               return (
                 <Button
+                  className={
+                    isMutationPending(unstakeStatus) ? "animate-pulse" : ""
+                  }
                   disabled={!amount || isMutationPending(unstakeStatus)}
-                  primary
-                  className="w-full"
+                  style={{ width: "100%" }}
                   size="4"
                   onClick={() => {
                     unstake?.();
@@ -120,7 +128,7 @@ export const Unstake: FC = () => {
                 </Button>
               );
             })()}
-          </div>
+          </Flex>
         }
       ></CalloutLayout>
     </Flex>
