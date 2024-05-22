@@ -1,12 +1,13 @@
 import * as AccordionRadix from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import type { FC } from "react";
 
-interface Props {
-  data: { question: string; answer: string }[];
+interface Props<T> {
+  data: T[];
+  titleKey: keyof T;
+  contentKey: keyof T;
 }
 
-export const Accordion: FC<Props> = ({ data }) => (
+export const Accordion = <T,>({ data, titleKey, contentKey }: Props<T>) => (
   <AccordionRadix.Root
     className="bg-background w-full rounded-lg"
     type="single"
@@ -27,15 +28,15 @@ export const Accordion: FC<Props> = ({ data }) => (
             className="text-primary w-full group flex h-[45px] flex-1 cursor-default items-center justify-between cursor-pointer "
             aria-hidden
           >
-            {item.question}
+            {item[titleKey] as React.ReactNode}
             <ChevronDownIcon
-              className="text-primary ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 group-data-[state=open]:rotate-180"
+              className="text-primary  transition-transform duration-300 group-data-[state=open]:rotate-180"
               aria-hidden
             />
           </AccordionRadix.Trigger>
         </AccordionRadix.Header>
         <AccordionRadix.Content className="data-[state=open]:text-primary-foreground text-secondary-foreground data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up pb-4 transition-transform duration-300">
-          {item.answer}
+          {item[contentKey] as React.ReactNode}
         </AccordionRadix.Content>
       </AccordionRadix.Item>
     ))}

@@ -13,7 +13,7 @@ export const FAQ = () => {
       <h2 className="text-primary-foreground text-2xl font-bold mb-4 text-center">
         Frequently Asked Questions
       </h2>
-      <Accordion data={data} />
+      <Accordion data={data} titleKey="question" contentKey="answer" />
     </div>
   );
 };

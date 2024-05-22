@@ -74,8 +74,8 @@ module.exports = {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 300ms cubic-bezier(0.87, 0, 0.13, 1)",
-        "accordion-up": "accordion-up 300ms cubic-bezier(0.87, 0, 0.13, 1)",
+        "accordion-down": "accordion-down 100ms ease-in-out",
+        "accordion-up": "accordion-up 100ms ease-in-out",
       },
     },
   },
