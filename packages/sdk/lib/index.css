@@ -9,6 +9,7 @@
 
         --card: 0 0% 100%;
         --card-foreground: 222.2 84% 4.9%;
+        --card-background: 222.2 84% 4.9%;
 
         --popover: 0 0% 100%;
         --popover-foreground: 222.2 84% 4.9%;
@@ -72,6 +73,51 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-background !important;
+        height: 100vh;
     }
+    footer{
+        position: absolute;
+        bottom: 0;
+    }
+    header{
+        position: sticky;
+        top: 0;
+        z-index: 9;
+    }
+
+    /* Below css is for overriding connectkit button theming */
+    .connect-kit .secondary {
+        @apply  font-bold border-2 border-primary;
+        border: 2px solid hsl(var(--primary));
+        height: 44px;
+        border-radius: calc(var(--radius) - 4px) !important;
+    }
+    .connect-kit button:hover .primary{
+        background-color: hsl(var(--primary)) !important;
+
+    }
+    .connect-kit button:hover .secondary{
+      @apply bg-secondary-500
+    }
+    .connect-kit .primary {
+        @apply bg-primary text-primary-accent font-bold border-2 border-primary rounded-sm;
+        border: 2px solid hsl(var(--primary));
+        height: 44px;
+        border-radius: calc(var(--radius) - 4px) !important;
+    }
+    .connected-kit .primary {
+        border-top-right-radius: calc(var(--radius) - 4px) !important;
+        border-bottom-right-radius: calc(var(--radius) - 4px) !important;
+        border-top-left-radius: calc(var(--radius)) !important;
+        border-bottom-left-radius: calc(var(--radius)) !important;;
+    }
+    .connect-kit .primary:hover {
+        @apply  font-bold rounded-sm;
+        border: 2px solid hsl(var(--primary));
+        background-color: hsl(var(--primary)) !important;
+        color: hsl(var(--primary-accent)) !important;
+        border: 2px solid hsl(var(--primary)) !important;
+    }
+
 }

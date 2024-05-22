@@ -1,4 +1,4 @@
-import { Flex, Text } from "@radix-ui/themes";
+import { formatFloatstring } from "@lib/utils/floats";
 import React from "react";
 
 interface Props {
@@ -15,15 +15,17 @@ export const MaxBalanceButton: React.FC<Props> = ({
   };
 
   return (
-    <Flex direction="column" gap="2">
-      <Text
-        className="cursor-pointer text-left"
-        size={"1"}
+    <div className="flex gap-2">
+      <span className="text-sm text-secondary-foreground font-semibold">
+        Balance: {formatFloatstring(max, 3)}
+      </span>
+      <span
         onClick={handleMaxButtonClick}
+        className="text-sm text-primary hover:text-primary-400  cursor-pointer"
       >
-        Max: {max}
-      </Text>
-    </Flex>
+        Max
+      </span>
+    </div>
   );
 };
 

@@ -1,9 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: [
-    './**/*.{ts,tsx}',
-  ],
+  content: ["./**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
@@ -18,35 +16,46 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        midnight: "hsl(var(--midnight))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          accent: "hsl(var(--primary-accent))",
+          "500": "hsl(var(--primary-500))",
+          "400": "hsl(var(--primary-400))",
+          "300": "hsl(var(--primary-300))",
+          "200": "hsl(var(--primary-200))",
+          "100": "hsl(var(--primary-100))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          accent: "hsl(var(--secondary-accent))",
+          "500": "hsl(var(--secondary-500))",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        disabled: {
+          DEFAULT: "hsl(var(--disabled))",
+          foreground: "hsl(var(--disabled-foreground))",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+        panel: {
+          DEFAULT: "hsl(var(--panel))",
+          foreground: "hsl(var(--panel-foreground))",
         },
         card: {
           DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        },
+        badge: {
+          error: "hsl(var(--badge-error))",
+          errorForeground: "hsl(var(--badge-errorForeground))",
+          info: "hsl(var(--badge-info))",
+          infoForeground: "hsl(var(--badge-infoForeground))",
         },
       },
       borderRadius: {
@@ -65,10 +74,10 @@ module.exports = {
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        "accordion-down": "accordion-down 300ms cubic-bezier(0.87, 0, 0.13, 1)",
+        "accordion-up": "accordion-up 300ms cubic-bezier(0.87, 0, 0.13, 1)",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
