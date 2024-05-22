@@ -70,10 +70,11 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
         <Button
-          className={"focus:outline-none min-w-[105px]"}
+          className={
+            "focus:outline-none min-w-[105px] bg-primary-100 hover:bg-primary-200 text-primary-foreground p-1 cursor-pointer"
+          }
           variant="soft"
           size={"3"}
-          style={{ padding: 0 }}
         >
           <div className="gap-2 justify-start items-center flex min-w-[105px]">
             {!!selectedTokenData?.Icon && <selectedTokenData.Icon />}
@@ -85,11 +86,12 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
         </Button>
       </DropdownMenuRadix.Trigger>
       <DropdownMenuRadix.Content>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           {tokensData.map((item, index) => {
             if (item.slug === TokenSlugEnums.GRAPH) return; // Todo: add tokens to the list fro outside the SDK
             return (
               <DropdownMenuRadix.Item
+                className="bg-transparent hover:bg-primary-300 cursor-pointer"
                 style={{
                   ...(selectedToken?.slug === item.slug && { opacity: 0.5 }),
                 }}

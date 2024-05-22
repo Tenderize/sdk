@@ -103,7 +103,9 @@ export const Unstake: FC = () => {
               }
               return (
                 <Button
-                  disabled={!amount || isMutationPending(unstakeStatus)}
+                  disabled={
+                    !parseEther(amount) || isMutationPending(unstakeStatus)
+                  }
                   primary
                   className="w-full"
                   size="4"
