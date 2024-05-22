@@ -1,5 +1,6 @@
 import * as TabsRadix from "@radix-ui/react-tabs";
 import type { ComponentProps, FC } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { BalanceCard } from "..";
 
 type TextFieldRadixProps = ComponentProps<typeof TabsRadix.Root>;
@@ -13,10 +14,14 @@ interface Props extends TextFieldRadixProps {
 
 export const Tabs: FC<Props> = (props) => {
   const { tabsData, ...rest } = props;
+  const location = useLocation();
 
+  const activeTab =
+    tabsData.find((tab) => tab.value === location?.pathname?.split("/")[1])
+      ?.value || "stake";
   return (
-    <TabsRadix.Root {...rest} defaultValue={tabsData[0]?.value}>
-      <TabsRadix.List className="justify-center bg-card rounded-lg items-center flex rounded-lg gap-0 py-2">
+    <TabsRadix.Root {...rest} defaultValue={activeTab}>
+      <TabsRadix.List style={{ justifyContent: "space-around" }}>
         {tabsData.map((tab) => (
           <TabsRadix.Trigger
             className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-5 text-xl
@@ -26,7 +31,7 @@ export const Tabs: FC<Props> = (props) => {
             key={tab.value}
             value={tab.value}
           >
-            {tab.name}
+            <NavLink to={tab.value}>{tab.name}</NavLink>
           </TabsRadix.Trigger>
         ))}
       </TabsRadix.List>

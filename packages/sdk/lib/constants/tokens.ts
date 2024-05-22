@@ -12,7 +12,7 @@ export const maticToken: Token = {
   name: TokenNameEnums.MATIC,
   currency: TokenSymbolEnums.MATIC,
   address: "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
-  tenderswap: "0x90a2738490fe0ec19263d23dd8cbacd3409063f6",
+  tenderswap: "0x422BEF50e75098c3337790627689fF1aAA06C057",
   adapter: "0xB2E9706A600395929b25E402C5B850E6025868E1",
   slug: TokenSlugEnums.MATIC,
   img: {
@@ -39,7 +39,7 @@ export const livepeerToken: Token = {
   color: "#57BE78",
   validator: "orchestrator",
   address: "0x289ba1701c2f088cf0faf8b3705246331cb8a839",
-  tenderswap: "0x739942a5e255186497a1880b63364b9f03ec89bc",
+  tenderswap: "0x686962481543d543934903C3FE8bDe8c5dB9Bd97",
   unlockPeriod: {
     value: "6-7",
     denomination: "D",
@@ -59,7 +59,7 @@ export const graphToken: Token = {
   color: "#707CE9",
   validator: "indexer",
   address: "0x9623063377ad1b27544c965ccd7342f7ea7e88c7",
-  tenderswap: "0x2c7b29b0d07276ba2df4abe02e9a38b5693af9c6",
+  tenderswap: "0x7ee73bCa91f833C4E06BDC5F0e9f9aB7Ed9dB67d",
   unlockPeriod: {
     value: "26-52",
     denomination: "D",
