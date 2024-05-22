@@ -7,7 +7,7 @@ import { libInjectCss } from "vite-plugin-lib-inject-css";
 export default defineConfig(({ mode }) => {
   mode;
   return {
-    plugins: [react(), dts({ include: ["lib", "src"] }), libInjectCss()],
+    plugins: [react(), dts({ include: ["lib"] }), libInjectCss()],
     build: mode === "library" ? {
       target: 'es2020',
       copyPublicDir: false,
