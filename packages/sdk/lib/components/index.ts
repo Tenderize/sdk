@@ -15,6 +15,7 @@ export * from "./Swap";
 export * from "./SwitchChain";
 export * from "./Tabs";
 export * from "./Tenderize";
+export * from "./TokenAvatar";
 export * from "./TokenSelector";
 export * from "./Unstake";
 export * from "./Withdraw";

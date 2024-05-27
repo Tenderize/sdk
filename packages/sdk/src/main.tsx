@@ -39,6 +39,16 @@ const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  branding: {
+    [TokenSlugEnums.MATIC]: {
+      name: "tMATIC Stake Capital",
+      avatar: "/lib/assets/tokens/matic.png",
+    },
+    [TokenSlugEnums.LIVEPEER]: {
+      name: "tLPT Stake Capital",
+      avatar: "/lib/assets/tokens/matic.png",
+    },
+  },
   // transports: {
   //   [mainnetChain.id]: http("http://localhost:8546"),
   //   [arbitrumChain.id]: http("http://localhost:8545"),

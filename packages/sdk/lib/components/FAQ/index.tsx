@@ -1,10 +1,34 @@
+import { useTokenBranding } from "@lib/config/store";
+import { TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { Accordion } from "../Accordion";
-import { faq } from "./faq";
+import { useGenerateFaq } from "./faq";
+
+const FaqConfig: Partial<
+  Record<TokenSlugEnums, { validatorName: string; unstakingPeriod: string }>
+> = {
+  [TokenSlugEnums.MATIC]: {
+    validatorName: "Stake Capital",
+    unstakingPeriod: "2-3 days",
+  },
+  [TokenSlugEnums.LIVEPEER]: {
+    validatorName: "Livepeer Capital",
+    unstakingPeriod: "2-3 days",
+  },
+} as const;
 
 export const FAQ = () => {
   const token = useSelectedToken();
-  const data = faq[token.slug];
+  const { validatorName, unstakingPeriod } =
+    FaqConfig[token?.slug as TokenSlugEnums] || {};
+  const { name: symbol } = useTokenBranding(token);
+  console.log("symbol", symbol);
+
+  const data = useGenerateFaq(
+    symbol,
+    validatorName as string,
+    unstakingPeriod as string
+  );
   if (!data) {
     return null;
   }

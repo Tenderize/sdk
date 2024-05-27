@@ -24,10 +24,18 @@ export type TenderizeConfig = {
   chains: TenderizeChains;
   web3: Config;
   tokens?: TokenSlugEnums[];
+  branding?: {
+    [key in TokenSlugEnums]?: Branding;
+  };
 };
 
 export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
 export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };
+
+export type Branding = {
+  name: string;
+  avatar?: string;
+};
 
 // Define the conditional ConfigOptions type
 export type Web3ConfigOptions = {
@@ -41,4 +49,7 @@ export type TenderizeConfigOptions = {
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
   tokens?: TokenSlugEnums[];
+  branding?: {
+    [key in TokenSlugEnums]?: Branding;
+  };
 } & Omit<Web3ConfigOptions, "chains">;

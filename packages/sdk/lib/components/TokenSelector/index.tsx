@@ -1,4 +1,4 @@
-import { useTenderizeConfigStore } from "@lib/config/store";
+import { useBranding, useTenderizeConfigStore } from "@lib/config/store";
 import { ActionEnums, TOKENS, TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken, useSelectedTokenStore } from "@lib/contexts";
 
@@ -24,8 +24,8 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const { action = ActionEnums.STAKE, defaultValue } = props;
   const { setSelectedToken } = useSelectedTokenStore();
   const selectedToken = useSelectedToken();
-
   const { tokens } = useTenderizeConfigStore();
+  const branding = useBranding();
 
   const isWrappedToken = (action: ActionEnums) => {
     return action !== ActionEnums.STAKE;
@@ -56,7 +56,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     return {
       Icon: () => <Icon action={action} selectedToken={TOKENS[item]} />,
       name: isWrappedToken(action)
-        ? `t${TOKENS[t as TokenSlugEnums].currency}`
+        ? branding?.[item]?.name || `t${TOKENS[item].currency}`
         : TOKENS[t as TokenSlugEnums].currency,
       slug: t as TokenSlugEnums,
     };
@@ -70,13 +70,17 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
         <Button
+          style={{ width: "max-content" }}
           className={
             "focus:outline-none min-w-[105px] bg-primary-100 hover:bg-primary-200 text-primary-foreground p-1 cursor-pointer"
           }
           variant="soft"
           size={"3"}
         >
-          <div className="gap-2 justify-start items-center flex min-w-[105px]">
+          <div
+            style={{ width: "max-content" }}
+            className="gap-2 justify-start items-center flex min-w-[105px] max-w-full"
+          >
             {!!selectedTokenData?.Icon && <selectedTokenData.Icon />}
             <span className="text-primary-foreground">
               {selectedTokenData?.name || "Select Token"}

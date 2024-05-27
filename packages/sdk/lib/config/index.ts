@@ -67,5 +67,6 @@ export const createTenderizeConfig: CreateTenderizeConfig = (config) => {
       })
     ),
     ...(config?.tokens && { tokens: config.tokens }),
+    ...(config?.branding && { branding: config.branding }),
   };
 };
