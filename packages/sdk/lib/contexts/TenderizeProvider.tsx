@@ -25,10 +25,11 @@ export const TenderizeProvider: FC<{
   children: ReactNode;
 }> = ({ config, children }) => {
   // This provider wraps the Web3 provider and uses a zustand store to store the config.tenderizers
-  const { setConfig } = useTenderizeConfigStore();
+  const { setConfig, setTokens } = useTenderizeConfigStore();
   useEffect(() => {
     setConfig(config);
-  }, [config, setConfig]);
+    config?.tokens && setTokens(config.tokens);
+  }, [config, setConfig, setTokens]);
 
   return <>{children}</>;
 };

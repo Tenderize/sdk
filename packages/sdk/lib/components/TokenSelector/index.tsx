@@ -88,7 +88,6 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
       <DropdownMenuRadix.Content>
         <div className="flex flex-col gap-2">
           {tokensData.map((item, index) => {
-            if (item.slug === TokenSlugEnums.GRAPH) return; // Todo: add tokens to the list fro outside the SDK
             return (
               <DropdownMenuRadix.Item
                 className="bg-transparent hover:bg-primary-300 cursor-pointer"

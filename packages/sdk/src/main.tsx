@@ -38,6 +38,7 @@ const CHAINS: TenderizeChains = {
 const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   // transports: {
   //   [mainnetChain.id]: http("http://localhost:8546"),
   //   [arbitrumChain.id]: http("http://localhost:8545"),
