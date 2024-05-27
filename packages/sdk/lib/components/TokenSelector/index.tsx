@@ -1,4 +1,9 @@
-import { useBranding, useTenderizeConfigStore } from "@lib/config/store";
+import {
+  useBranding,
+  useChainId,
+  useTenderizeConfigStore,
+  useTenderizer,
+} from "@lib/config/store";
 import { ActionEnums, TOKENS, TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken, useSelectedTokenStore } from "@lib/contexts";
 
@@ -6,7 +11,9 @@ import type { Token } from "@lib/types";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { Button, DropdownMenu as DropdownMenuRadix } from "@radix-ui/themes";
 
+import { useTenderizerData } from "@lib/hooks";
 import React, { useEffect, type FC } from "react";
+import { TokenAvatar } from "../TokenAvatar";
 
 type DropdownMenuRadixProps = React.ComponentProps<
   typeof DropdownMenuRadix.Root &
@@ -26,6 +33,9 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const selectedToken = useSelectedToken();
   const { tokens } = useTenderizeConfigStore();
   const branding = useBranding();
+  const tenderizer = useTenderizer(selectedToken.slug);
+  const chainId = useChainId(selectedToken.slug);
+  const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
 
   const isWrappedToken = (action: ActionEnums) => {
     return action !== ActionEnums.STAKE;
@@ -35,26 +45,35 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     if (defaultValue) setSelectedToken(defaultValue);
   }, [defaultValue, setSelectedToken]);
 
-  const Icon: FC<{ action: ActionEnums; selectedToken: Token }> = ({
-    action,
-    selectedToken,
-  }) => (
-    <img
-      width={25}
-      height={25}
-      src={
-        isWrappedToken(action)
-          ? selectedToken?.img.tToken
-          : selectedToken?.img.token
-      }
-      alt={selectedToken?.name}
-    />
-  );
+  const Icon: FC<{
+    action: ActionEnums;
+    selectedToken: Token;
+    slug: TokenSlugEnums;
+  }> = ({ action, selectedToken, slug }) => {
+    return isWrappedToken(action) ? (
+      <TokenAvatar
+        key={selectedToken.slug}
+        defaultUrl={selectedToken.img?.tToken}
+        size={25}
+        imgUrl={branding?.[slug]?.avatar}
+        address={tenderizerData.validator}
+      />
+    ) : (
+      <img
+        width={25}
+        height={25}
+        src={selectedToken?.img.token}
+        alt={selectedToken?.name}
+      />
+    );
+  };
 
   const tokensData = tokens.map((t) => {
     const item = t as TokenSlugEnums;
     return {
-      Icon: () => <Icon action={action} selectedToken={TOKENS[item]} />,
+      Icon: () => (
+        <Icon action={action} selectedToken={TOKENS[item]} slug={item} />
+      ),
       name: isWrappedToken(action)
         ? branding?.[item]?.name || `t${TOKENS[item].currency}`
         : TOKENS[t as TokenSlugEnums].currency,

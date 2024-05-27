@@ -46,7 +46,7 @@ const config = createTenderizeConfig({
     },
     [TokenSlugEnums.LIVEPEER]: {
       name: "tLPT Stake Capital",
-      avatar: "/lib/assets/tokens/matic.png",
+      avatar: "/lib/assets/tokens/lpt.png",
     },
   },
   // transports: {

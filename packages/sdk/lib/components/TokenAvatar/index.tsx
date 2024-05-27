@@ -39,7 +39,7 @@ export const TokenAvatar: FC<Props> = (props) => {
           }
           setImgSrc(defaultUrl);
         }}
-        className="rounded-full"
+        className={`${profile?.avatar === imgSrc && "rounded-full"}`}
         alt={address as string}
         {...imageProps}
       />
