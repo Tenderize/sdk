@@ -4,13 +4,8 @@ import { useSelectedToken, useSelectedTokenStore } from "@lib/contexts";
 
 import type { Token } from "@lib/types";
 import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
-import {
-  Box,
-  Button,
-  DropdownMenu as DropdownMenuRadix,
-  Flex,
-  Text,
-} from "@radix-ui/themes";
+import { Button, DropdownMenu as DropdownMenuRadix } from "@radix-ui/themes";
+
 import React, { useEffect, type FC } from "react";
 
 type DropdownMenuRadixProps = React.ComponentProps<
@@ -45,8 +40,8 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     selectedToken,
   }) => (
     <img
-      width={isWrappedToken(action) ? 30 : 25}
-      height={isWrappedToken(action) ? 30 : 25}
+      width={25}
+      height={25}
       src={
         isWrappedToken(action)
           ? selectedToken?.img.tToken
@@ -74,38 +69,52 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   return (
     <DropdownMenuRadix.Root>
       <DropdownMenuRadix.Trigger>
-        <Button variant="soft" size={"3"} style={{ padding: 0 }}>
-          <Flex gap="2" align="center" justify={"between"}>
+        <Button
+          className={
+            "focus:outline-none min-w-[105px] bg-primary-100 hover:bg-primary-200 text-primary-foreground p-1 cursor-pointer"
+          }
+          variant="soft"
+          size={"3"}
+        >
+          <div className="gap-2 justify-start items-center flex min-w-[105px]">
             {!!selectedTokenData?.Icon && <selectedTokenData.Icon />}
-            <Text>{selectedTokenData?.name || "Select Token"}</Text>
-            <ChevronDownIcon />
-          </Flex>
+            <span className="text-primary-foreground">
+              {selectedTokenData?.name || "Select Token"}
+            </span>
+            <ChevronDownIcon className="text-primary-foreground" />
+          </div>
         </Button>
       </DropdownMenuRadix.Trigger>
       <DropdownMenuRadix.Content>
-        <Flex direction="column" gap="4">
-          {tokensData.map((item, index) => (
-            <DropdownMenuRadix.Item
-              style={{
-                ...(selectedToken?.slug === item.slug && { opacity: 0.5 }),
-              }}
-              onSelect={() => {
-                setSelectedToken(item.slug);
-              }}
-              key={index}
-            >
-              <Box position={"relative"}>
-                <Flex gap="4" align="center" justify={"between"}>
-                  {item.Icon && <item.Icon />}
-                  <Flex gap="1" align={"center"}>
-                    <Text>{item?.name}</Text>
-                    {selectedToken.slug === item.slug && <CheckIcon />}
-                  </Flex>
-                </Flex>
-              </Box>
-            </DropdownMenuRadix.Item>
-          ))}
-        </Flex>
+        <div className="flex flex-col gap-2">
+          {tokensData.map((item, index) => {
+            if (item.slug === TokenSlugEnums.GRAPH) return; // Todo: add tokens to the list fro outside the SDK
+            return (
+              <DropdownMenuRadix.Item
+                className="bg-transparent hover:bg-primary-300 cursor-pointer"
+                style={{
+                  ...(selectedToken?.slug === item.slug && { opacity: 0.5 }),
+                }}
+                onSelect={() => {
+                  setSelectedToken(item.slug);
+                }}
+                key={index}
+              >
+                <div className="relative">
+                  <div className="gap-4 items-center justify-between flex">
+                    {item.Icon && <item.Icon />}
+                    <div className="gap-1 items-center flex">
+                      <span className="text-primary-foreground">
+                        {item?.name}
+                      </span>
+                      {selectedToken.slug === item.slug && <CheckIcon />}
+                    </div>
+                  </div>
+                </div>
+              </DropdownMenuRadix.Item>
+            );
+          })}
+        </div>
       </DropdownMenuRadix.Content>
     </DropdownMenuRadix.Root>
   );

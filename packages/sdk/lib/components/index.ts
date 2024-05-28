@@ -1,8 +1,11 @@
+export * from "./Accordion";
 export * from "./BalanceCard";
 export * from "./Button";
 export * from "./Callout";
 export * from "./CalloutLayout";
 export * from "./Card";
+export * from "./ConnectButton";
+export * from "./EnsAvatar";
 export * from "./InputField";
 export * from "./MaxBalanceButton";
 export * from "./OutputField";
@@ -16,7 +19,6 @@ export * from "./TokenSelector";
 export * from "./Unstake";
 export * from "./Withdraw";
 export default "./Tenderize";
-
 // Third-party components
 
 // ConnectKit

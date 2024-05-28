@@ -27,7 +27,6 @@ export const TenderizeProvider: FC<{
   // This provider wraps the Web3 provider and uses a zustand store to store the config.tenderizers
   const { setConfig } = useTenderizeConfigStore();
   useEffect(() => {
-    console.log("TenderizeProviderConfig", config);
     setConfig(config);
   }, [config, setConfig]);
 

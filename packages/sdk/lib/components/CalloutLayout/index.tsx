@@ -1,7 +1,5 @@
 import { ArrowDownIcon } from "@radix-ui/react-icons";
-import { Box, Container, Flex, IconButton } from "@radix-ui/themes";
 import type { FC } from "react";
-import { Callout } from "../Callout";
 
 interface CalloutlayoutProps {
   callOutFirstChildren: React.ReactNode;
@@ -13,39 +11,34 @@ export const CalloutLayout: FC<CalloutlayoutProps> = (props) => {
   const { callOutFirstChildren, callOutSecondChildren, callOutActionChildren } =
     props;
   return (
-    <Container
-      color="gray"
-      width={"100%"}
-      position="relative"
-      style={{ height: "max-content" }}
-    >
-      <Flex direction="column" gap="2">
-        <Callout className="flex px-3 relative" variant="soft">
-          <Box
+    <div className="h-max-content">
+      <div className="flex flex-col gap-2">
+        <div className="flex p-3 bg-card rounded-lg text-callout-foreground relative">
+          {callOutFirstChildren}
+          <div
+            className="absolute bg-card rounded-lg"
             style={{
               left: "50%",
               right: "50%",
-              bottom: "-52px",
+              bottom: "-37%",
               transform: "translate(-50%, -50%)",
               width: "max-content",
               borderRadius: "10px",
               border: "8px solid #fff",
             }}
-            position={"absolute"}
           >
-            <IconButton variant="surface">
-              <ArrowDownIcon width="20" height="20" />
-            </IconButton>
-          </Box>
-          {callOutFirstChildren}
-        </Callout>
-        <Callout className="flex px-3" variant="soft">
+            <ArrowDownIcon
+              width="25"
+              height="25"
+              className="text-callout-foreground"
+            />
+          </div>
+        </div>
+        <div className="flex p-3 bg-card rounded-lg text-callout-foreground">
           {callOutSecondChildren}
-        </Callout>
-        <Flex width={"100%"} justify="center">
-          {callOutActionChildren}
-        </Flex>
-      </Flex>
-    </Container>
+        </div>
+        <div className="w-full justify-center">{callOutActionChildren}</div>
+      </div>
+    </div>
   );
 };

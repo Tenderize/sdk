@@ -24,7 +24,6 @@ import {
   GlobeIcon,
   RocketIcon,
 } from "@radix-ui/react-icons";
-import { Flex, Text } from "@radix-ui/themes";
 import { useEffect, useState, type ChangeEvent, type FC } from "react";
 import { formatEther, parseEther, type Address } from "viem";
 import { useAccount, useChainId as useCurrentChainId } from "wagmi";
@@ -59,6 +58,7 @@ export const Swap: FC = () => {
     parseEther(amount),
     chainId
   );
+  console.log(quote);
 
   const slippageTolerance = slippageToleranceValue / 100;
   const minOut =
@@ -92,16 +92,18 @@ export const Swap: FC = () => {
     : 0;
 
   return (
-    <Flex gap="2" content="between" direction="column">
+    <div className="gap-2 justify-between flex flex-col">
       <CalloutLayout
         callOutFirstChildren={
-          <Flex gap="2" content="between" direction="column" width="100%">
-            <Text size="2">You Swap</Text>
+          <div className="gap-2 justify-between flex flex-col w-full">
+            <span className="text-sm text-primary-foreground">You Swap</span>
             <InputField
-              variant="soft"
+              className="bg-card  px-3 focus:outline-none rounded-lg w-full text-primary-foreground"
               max={formatEther(balance)}
-              style={{ width: "100%", fontSize: 30 }}
-              handleChange={setAmount}
+              style={{ fontSize: 30 }}
+              handleChange={(value: string) => {
+                setAmount(value || "0");
+              }}
               value={amount}
               icon={<TokenSelector action={ActionEnums.UNSTAKE} />}
             />
@@ -109,62 +111,75 @@ export const Swap: FC = () => {
               max={formatEther(balance)}
               handleInputChange={setAmount}
             />
-          </Flex>
+          </div>
         }
         callOutSecondChildren={
-          <Flex direction="column" gap="2" width="100%">
-            <Text size="2">You Receive</Text>
+          <div className="flex flex-col gap-2 w-full">
+            <span className="text-sm text-primary-foreground">You Receive</span>
             <OutputField
-              variant="soft"
-              className=""
-              style={{ width: "100%", fontSize: 30 }}
-              value={formatEther(quote.out ?? 0n)}
+              className="bg-card px-3 focus:outline-none rounded-lg w-full"
+              style={{ fontSize: 30 }}
+              value={amount}
               icon={
-                <Flex align="center" gap="2">
+                <div className="flex items-center gap-2">
                   <img
                     width={25}
                     height={25}
                     src={token.img?.token}
                     alt={token.name}
                   />
-                  <Text size="3">{`${token.currency}`}</Text>
-                </Flex>
+                  <span className="text-sm">{`t${token.currency}`}</span>
+                </div>
               }
             />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               <div className="flex items-center gap-1">
-                <GlobeIcon className="text-lg" />
-                <span className="text-[12px]">{`Expected swap fees: ${formatAmount(
+                <GlobeIcon className="text-lg text-secondary-foreground" />
+                <span className="text-[12px] text-secondary-foreground">{`Expected swap fees: ${formatAmount(
                   quote.fee
                 )} t${token?.currency} (${swapFeePercentage} %)`}</span>
               </div>
               <div className="flex items-center gap-1">
-                <RocketIcon className=" text-lg" />
-                <span className="text-[12px]">Slippage threshold:</span>
+                <RocketIcon className=" text-lg text-secondary-foreground" />
+                <span className="text-[12px] text-secondary-foreground">
+                  Slippage threshold:
+                </span>
                 <input
                   type="number"
                   min={1}
                   max={10}
-                  className="border border-gray-300 rounded-md py-2  w-15 h-10 text-center outline-none"
+                  className="border border-gray-300 rounded-md py-2  w-15 h-10 text-center outline-none text-secondary-foreground"
                   style={{ fontSize: 15, height: "20px" }}
+                  onKeyDown={() => {
+                    setSlippageToleranceValue(0);
+                  }}
                   onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     let { value } = e.target;
-                    if (!value) return;
-                    if (parseFloat(value) > 10) {
-                      value = "10";
+                    if (!value) {
+                      value = "1";
                     }
-                    setSlippageToleranceValue(parseFloat(value));
+
+                    let numericValue = parseFloat(value);
+
+                    // Ensure the value is within the allowed range
+                    if (numericValue < 1) {
+                      numericValue = 1;
+                    } else if (numericValue > 10) {
+                      numericValue = 10;
+                    }
+
+                    setSlippageToleranceValue(numericValue);
                   }}
                   value={slippageToleranceValue.toString()}
                 />
                 <span className="text-[12px]">%</span>
               </div>
             </div>
-          </Flex>
+          </div>
         }
         callOutActionChildren={
           <div className="flex flex-col gap-2 w-full">
-            <Flex gap="2" width="100%">
+            <div className="flex w-full gap-2">
               {(() => {
                 if (currentChainId !== chainId) {
                   return <SwitchChainButton requiredChainId={chainId} />;
@@ -178,21 +193,19 @@ export const Swap: FC = () => {
                       variant="soft"
                       color="green"
                     >
-                      <Flex gap="2" align="center">
+                      <div className="flex items-center gap-2">
                         <CheckCircledIcon />
-                        <Text>Staked {token.currency}</Text>
-                      </Flex>
+                        <span>Swapped {token.currency}</span>
+                      </div>
                     </Button>
                   );
                 }
                 if (!approval) {
                   return (
                     <Button
-                      className={
-                        isMutationPending(approveStatus) ? "animate-pulse" : ""
-                      }
+                      className="w-full"
                       disabled={!amount || isMutationPending(approveStatus)}
-                      style={{ width: "100%" }}
+                      primary
                       size="4"
                       onClick={() => approve()}
                       variant="solid"
@@ -208,14 +221,13 @@ export const Swap: FC = () => {
 
                 return (
                   <Button
-                    className={
-                      isMutationPending(swapStatus) ? "animate-pulse" : ""
-                    }
+                    className={"w-full"}
                     disabled={!amount || isMutationPending(swapStatus)}
                     style={{ width: "100%" }}
                     size="4"
                     onClick={() => swap?.()}
                     variant="solid"
+                    primary
                   >
                     {isMutationPending(swapStatus) ? (
                       <>Swaping {token.currency}...</>
@@ -225,7 +237,8 @@ export const Swap: FC = () => {
                   </Button>
                 );
               })()}
-            </Flex>
+            </div>
+
             <div
               className={`${
                 parseFloat(swapFeePercentage.toString()) > 0.02 ? "hidden" : ""
@@ -243,6 +256,6 @@ export const Swap: FC = () => {
           </div>
         }
       ></CalloutLayout>
-    </Flex>
+    </div>
   );
 };

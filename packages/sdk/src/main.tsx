@@ -1,10 +1,10 @@
 import { TokenSlugEnums } from "@lib/constants";
 import { TenderizeProvider, Web3Provider } from "@lib/contexts";
+import { ThemeProvider } from "@lib/contexts/ThemeProvider";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 
-import { ThemeProvider } from "@lib/contexts";
 import { IframeProvider } from "@lib/contexts/IframeProvider.tsx";
 import {
   createTenderizeConfig,
@@ -15,8 +15,8 @@ import { getIframeConfig } from "@lib/utils/iframe.ts";
 import { arbitrum, mainnet } from "wagmi/chains";
 
 const TENDERIZERS: TenderizersConfig = {
-  [TokenSlugEnums.MATIC]: "0x4af4c94e1c45678f34ef6cbc00c4edc62e03d248",
-  [TokenSlugEnums.LIVEPEER]: "0x4b0e5e54df6d5eccc7b2f838982411dc93253daf",
+  [TokenSlugEnums.MATIC]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
+  [TokenSlugEnums.LIVEPEER]: "0x3a760477ca7cb37dec4df9b9e19ce15cb265bff8",
   [TokenSlugEnums.GRAPH]: "0xff14e5d8ce40666ee9394cf036f3024d92e181d3",
 };
 
