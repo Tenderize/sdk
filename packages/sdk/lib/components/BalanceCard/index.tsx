@@ -1,4 +1,8 @@
-import { useChainId, useTenderizer, useTokenBranding } from "@lib/config/store";
+import {
+  useChainId,
+  useTenderizer,
+  useTokenMetadataByToken,
+} from "@lib/config/store";
 import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance, useTenderizerData } from "@lib/hooks";
 import { useCoinPrice } from "@lib/hooks/prices";
@@ -37,7 +41,7 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
-  const { name, avatar: brandAvatar } = useTokenBranding(token);
+  const { name, avatar: metaDataAvatar } = useTokenMetadataByToken(token);
   return (
     <Card
       variant="classic"
@@ -50,7 +54,7 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
               key={token.slug}
               defaultUrl={token.img?.tToken}
               size={50}
-              imgUrl={brandAvatar}
+              imgUrl={metaDataAvatar}
               address={tenderizerData.validator}
             />
             <div className="flex flex-col">

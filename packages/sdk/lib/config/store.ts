@@ -1,10 +1,10 @@
 import { TOKENS, type TokenSlugEnums } from "@lib/constants";
 import type {
-  Branding,
   TenderizeChains,
   TenderizeConfig,
   TenderizersConfig,
   Token,
+  TokenMetadata,
 } from "@lib/types";
 import { TabEnum } from "@lib/utils/iframe";
 import type { Address } from "viem";
@@ -16,27 +16,30 @@ type Store = {
   chains: TenderizeChains;
   activeTabs: TabEnum[];
   tokens: TokenSlugEnums[];
-  branding: Partial<Record<TokenSlugEnums, Branding>> | null;
+  tokenMetadata: Partial<Record<TokenSlugEnums, TokenMetadata>> | null;
   setConfig: (
     tenderizers: Pick<TenderizeConfig, "tenderizers" | "chains">
   ) => void;
   setActiveTabs: (tabs: TabEnum[]) => void;
   setTokens: (tokens: TokenSlugEnums[]) => void;
-  setBranding?: (brandings: Partial<Record<TokenSlugEnums, Branding>>) => void;
+  setBranding?: (
+    brandings: Partial<Record<TokenSlugEnums, TokenMetadata>>
+  ) => void;
 };
 
 export const useTenderizeConfigStore = create<Store>((set) => ({
   tenderizers: {},
   chains: {},
   activeTabs: [TabEnum.STAKE, TabEnum.UNSTAKE, TabEnum.SWAP],
-  branding: null,
+  tokenMetadata: null,
   tokens: Object.keys(TOKENS) as TokenSlugEnums[],
   setConfig: (config: Pick<TenderizeConfig, "tenderizers" | "chains">) =>
     set({ tenderizers: config.tenderizers, chains: config.chains }),
   setActiveTabs: (tabs: TabEnum[]) => set({ activeTabs: tabs }),
   setTokens: (tokens: TokenSlugEnums[]) => set({ tokens }),
-  setBranding: (branding?: Partial<Record<TokenSlugEnums, Branding>>) =>
-    set({ branding: branding }),
+  setBranding: (
+    tokenMetadata?: Partial<Record<TokenSlugEnums, TokenMetadata>>
+  ) => set({ tokenMetadata }),
 }));
 
 export const useTenderizers = (): TenderizersConfig => {
@@ -61,15 +64,15 @@ export const useAvailableTokens = () => {
   return useTenderizeConfigStore(() => Object.keys(TOKENS));
 };
 
-export const useTokenBranding = (token: Token) => {
+export const useTokenMetadataByToken = (token: Token) => {
   return useTenderizeConfigStore((state) => {
-    const { name, avatar } = state?.branding?.[token.slug] ?? {};
+    const { name, avatar } = state?.tokenMetadata?.[token.slug] ?? {};
     return {
       name: name || `t${token.currency}`,
       avatar: avatar || token.img.tToken,
     };
   });
 };
-export const useBranding = () => {
-  return useTenderizeConfigStore((state) => state.branding);
+export const useTokenMetadata = () => {
+  return useTenderizeConfigStore((state) => state.tokenMetadata);
 };

@@ -24,15 +24,15 @@ export type TenderizeConfig = {
   chains: TenderizeChains;
   web3: Config;
   tokens?: TokenSlugEnums[];
-  branding?: {
-    [key in TokenSlugEnums]?: Branding;
+  tokenMetadata?: {
+    [key in TokenSlugEnums]?: TokenMetadata;
   };
 };
 
 export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
 export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };
 
-export type Branding = {
+export type TokenMetadata = {
   name: string;
   avatar?: string;
 };
@@ -49,7 +49,7 @@ export type TenderizeConfigOptions = {
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
   tokens?: TokenSlugEnums[];
-  branding?: {
-    [key in TokenSlugEnums]?: Branding;
+  tokenMetadata?: {
+    [key in TokenSlugEnums]?: TokenMetadata;
   };
 } & Omit<Web3ConfigOptions, "chains">;

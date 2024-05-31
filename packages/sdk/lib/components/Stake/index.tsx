@@ -8,7 +8,11 @@ import {
   TokenAvatar,
   TokenSelector,
 } from "@lib/components";
-import { useChainId, useTenderizer, useTokenBranding } from "@lib/config/store";
+import {
+  useChainId,
+  useTenderizer,
+  useTokenMetadataByToken,
+} from "@lib/config/store";
 import { useSelectedToken } from "@lib/contexts";
 import {
   useDeposit,
@@ -27,7 +31,7 @@ import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 export const Stake: FC = () => {
   const [amount, setAmount] = useState<string>("");
   const token = useSelectedToken();
-  const { name } = useTokenBranding(token);
+  const { name } = useTokenMetadataByToken(token);
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { address: user, isConnected } = useAccount();
@@ -40,7 +44,7 @@ export const Stake: FC = () => {
   );
   const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
   const { address: userAddress } = useAccount();
-  const { avatar: brandAvatar } = useTokenBranding(token);
+  const { avatar: metaDataAvatar } = useTokenMetadataByToken(token);
 
   const { balance } = useERC20Balance(token.address, userAddress, chainId);
 
@@ -107,7 +111,7 @@ export const Stake: FC = () => {
                     key={token.slug}
                     defaultUrl={token.img?.tToken}
                     size={25}
-                    imgUrl={brandAvatar}
+                    imgUrl={metaDataAvatar}
                     address={tenderizerData.validator}
                   />
                   <span className="text-sm">{name}</span>

@@ -29,7 +29,7 @@ export const TenderizeProvider: FC<{
   useEffect(() => {
     setConfig(config);
     config?.tokens && setTokens(config.tokens);
-    config?.branding && setBranding && setBranding(config.branding);
+    config?.tokenMetadata && setBranding && setBranding(config.tokenMetadata);
   }, [config, setBranding, setConfig, setTokens]);
 
   return <>{children}</>;

@@ -1,8 +1,8 @@
 import {
-  useBranding,
   useChainId,
   useTenderizeConfigStore,
   useTenderizer,
+  useTokenMetadata,
 } from "@lib/config/store";
 import { ActionEnums, TOKENS, TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken, useSelectedTokenStore } from "@lib/contexts";
@@ -32,7 +32,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const { setSelectedToken } = useSelectedTokenStore();
   const selectedToken = useSelectedToken();
   const { tokens } = useTenderizeConfigStore();
-  const branding = useBranding();
+  const tokenMetaData = useTokenMetadata();
   const tenderizer = useTenderizer(selectedToken.slug);
   const chainId = useChainId(selectedToken.slug);
   const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
@@ -55,7 +55,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
         key={selectedToken.slug}
         defaultUrl={selectedToken.img?.tToken}
         size={25}
-        imgUrl={branding?.[slug]?.avatar}
+        imgUrl={tokenMetaData?.[slug]?.avatar}
         address={tenderizerData.validator}
       />
     ) : (
@@ -75,7 +75,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
         <Icon action={action} selectedToken={TOKENS[item]} slug={item} />
       ),
       name: isWrappedToken(action)
-        ? branding?.[item]?.name || `t${TOKENS[item].currency}`
+        ? tokenMetaData?.[item]?.name || `t${TOKENS[item].currency}`
         : TOKENS[t as TokenSlugEnums].currency,
       slug: t as TokenSlugEnums,
     };

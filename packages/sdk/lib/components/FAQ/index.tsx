@@ -1,4 +1,4 @@
-import { useTokenBranding } from "@lib/config/store";
+import { useTokenMetadataByToken } from "@lib/config/store";
 import { TokenSlugEnums } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { Accordion } from "../Accordion";
@@ -21,7 +21,7 @@ export const FAQ = () => {
   const token = useSelectedToken();
   const { validatorName, unstakingPeriod } =
     FaqConfig[token?.slug as TokenSlugEnums] || {};
-  const { name: symbol } = useTokenBranding(token);
+  const { name: symbol } = useTokenMetadataByToken(token);
   console.log("symbol", symbol);
 
   const data = useGenerateFaq(

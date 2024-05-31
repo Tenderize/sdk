@@ -39,7 +39,7 @@ const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
-  branding: {
+  tokenMetadata: {
     [TokenSlugEnums.MATIC]: {
       name: "tMATIC Stake Capital",
       avatar: "/lib/assets/tokens/matic.png",
