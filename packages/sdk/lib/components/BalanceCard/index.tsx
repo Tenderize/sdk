@@ -1,13 +1,18 @@
-import { useChainId, useTenderizer } from "@lib/config/store";
+import {
+  useChainId,
+  useTenderizer,
+  useTokenMetadataByToken,
+} from "@lib/config/store";
 import { useSelectedToken } from "@lib/contexts";
-import { useERC20Balance } from "@lib/hooks";
+import { useERC20Balance, useTenderizerData } from "@lib/hooks";
 import { useCoinPrice } from "@lib/hooks/prices";
 import { COINGECKO_KEYS, type Token } from "@lib/types";
 import { formatAmount, formatFloatstring } from "@lib/utils/floats";
-import { Avatar, Card } from "@radix-ui/themes";
+import { Card } from "@radix-ui/themes";
 import type { FC } from "react";
 import { formatEther } from "viem";
 import { useAccount } from "wagmi";
+import { TokenAvatar } from "../TokenAvatar";
 
 export const BalanceCard = () => {
   const token = useSelectedToken();
@@ -33,7 +38,10 @@ type BalanceCardViewProps = {
 
 export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
   const { token, balance, usdBalance } = props;
-
+  const tenderizer = useTenderizer(token.slug);
+  const chainId = useChainId(token.slug);
+  const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
+  const { name, avatar: metaDataAvatar } = useTokenMetadataByToken(token);
   return (
     <Card
       variant="classic"
@@ -42,12 +50,20 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
       <div className="flex items-start w-full">
         <div className="flex justify-between w-full items-center">
           <div className="flex justify-start gap-2">
-            <Avatar size="4" fallback src={token.img.tToken} alt={token.name} />
+            <TokenAvatar
+              key={token.slug}
+              defaultUrl={token.img?.tToken}
+              size={50}
+              imgUrl={metaDataAvatar}
+              address={tenderizerData.validator}
+            />
             <div className="flex flex-col">
               <span className="text-lg font-semibold text-primary-foreground">
                 {token.name}
               </span>
-              <span className="text-secondary-foreground text-sm font-semibold">{`t${token.currency}`}</span>
+              <span className="text-secondary-foreground text-sm font-semibold">
+                {name}
+              </span>
             </div>
           </div>
           <div className="flex items-end gap-1 flex-col">

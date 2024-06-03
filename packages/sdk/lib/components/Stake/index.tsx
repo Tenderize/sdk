@@ -5,9 +5,14 @@ import {
   MaxBalanceButton,
   OutputField,
   SwitchChainButton,
+  TokenAvatar,
   TokenSelector,
 } from "@lib/components";
-import { useChainId, useTenderizer } from "@lib/config/store";
+import {
+  useChainId,
+  useTenderizer,
+  useTokenMetadataByToken,
+} from "@lib/config/store";
 import { useSelectedToken } from "@lib/contexts";
 import {
   useDeposit,
@@ -15,6 +20,7 @@ import {
   useERC20Approve,
   useERC20Balance,
   usePreviewDeposit,
+  useTenderizerData,
 } from "@lib/hooks";
 import { isMutationPending } from "@lib/utils/global";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
@@ -25,6 +31,7 @@ import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 export const Stake: FC = () => {
   const [amount, setAmount] = useState<string>("");
   const token = useSelectedToken();
+  const { name } = useTokenMetadataByToken(token);
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { address: user, isConnected } = useAccount();
@@ -35,8 +42,9 @@ export const Stake: FC = () => {
     parseEther(amount),
     chainId
   );
-
+  const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
   const { address: userAddress } = useAccount();
+  const { avatar: metaDataAvatar } = useTokenMetadataByToken(token);
 
   const { balance } = useERC20Balance(token.address, userAddress, chainId);
 
@@ -99,13 +107,14 @@ export const Stake: FC = () => {
               value={formatEther(previewDeposit ?? 0n)}
               icon={
                 <div className="flex items-center gap-2">
-                  <img
-                    width={25}
-                    height={25}
-                    src={token.img?.tToken}
-                    alt={token.name}
+                  <TokenAvatar
+                    key={token.slug}
+                    defaultUrl={token.img?.tToken}
+                    size={25}
+                    imgUrl={metaDataAvatar}
+                    address={tenderizerData.validator}
                   />
-                  <span className="text-sm">{`t${token.currency}`}</span>
+                  <span className="text-sm">{name}</span>
                 </div>
               }
             />
