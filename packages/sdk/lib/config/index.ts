@@ -70,3 +70,5 @@ export const createTenderizeConfig: CreateTenderizeConfig = (config) => {
     ...(config?.tokenMetadata && { tokenMetadata: config.tokenMetadata }),
   };
 };
+
+export * from "./store";
