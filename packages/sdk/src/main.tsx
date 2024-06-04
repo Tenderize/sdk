@@ -39,20 +39,6 @@ const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
-  tokenMetadata: {
-    [TokenSlugEnums.MATIC]: {
-      name: "tMATIC Stake Capital",
-      avatar: "/lib/assets/tokens/matic.png",
-    },
-    [TokenSlugEnums.LIVEPEER]: {
-      name: "tLPT Stake Capital",
-      avatar: "/lib/assets/tokens/lpt.png",
-    },
-  },
-  // transports: {
-  //   [mainnetChain.id]: http("http://localhost:8546"),
-  //   [arbitrumChain.id]: http("http://localhost:8545"),
-  // },
   apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
 });
 
