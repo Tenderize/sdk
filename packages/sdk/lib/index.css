@@ -76,10 +76,7 @@
         @apply bg-background !important;
         height: 100vh;
     }
-    footer{
-        position: absolute;
-        bottom: 0;
-    }
+
     header{
         position: sticky;
         top: 0;
