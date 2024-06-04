@@ -33,7 +33,7 @@ export const FAQ = () => {
     return null;
   }
   return (
-    <div className="w-[95%] md:w-[650px] lg:w-[650px] ">
+    <div className="w-full md:w-[650px] lg:w-[650px] ">
       <h2 className="text-primary-foreground text-2xl font-bold mb-4 text-center">
         Frequently Asked Questions
       </h2>

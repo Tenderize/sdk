@@ -25,7 +25,7 @@ export const Accordion = <T,>({ data, titleKey, contentKey }: Props<T>) => (
         >
           <AccordionRadix.Trigger
             style={{ cursor: "pointer" }}
-            className="text-primary w-full group flex h-[45px] flex-1 cursor-default items-center justify-between cursor-pointer "
+            className="text-primary w-full group flex h-[45px] flex-1 cursor-default items-center justify-between cursor-pointer text-left "
             aria-hidden
           >
             {item[titleKey] as React.ReactNode}
@@ -35,7 +35,7 @@ export const Accordion = <T,>({ data, titleKey, contentKey }: Props<T>) => (
             />
           </AccordionRadix.Trigger>
         </AccordionRadix.Header>
-        <AccordionRadix.Content className="data-[state=open]:text-primary-foreground text-secondary-foreground data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up pb-4 transition-transform duration-300">
+        <AccordionRadix.Content className="text-left data-[state=open]:text-primary-foreground text-secondary-foreground data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up pb-4 transition-transform duration-300">
           {item[contentKey] as React.ReactNode}
         </AccordionRadix.Content>
       </AccordionRadix.Item>
