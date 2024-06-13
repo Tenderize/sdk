@@ -15,7 +15,8 @@ export type IframeTokenConfigMap = {
   [Key in TokenSlugEnums]?: Address;
 };
 
-type IframeConfigMap = IframeTokenConfigMap & TabConfig;
+type IframeConfigMap = IframeTokenConfigMap &
+  TabConfig & { tokens?: TokenSlugEnums[] };
 
 export const generateIframeQueryString = (
   configMap: IframeConfigMap
@@ -28,6 +29,9 @@ export const generateIframeQueryString = (
   });
   if (configMap.disabledTabs) {
     query += `disabledTabs=${configMap.disabledTabs.join(",")}&`;
+  }
+  if (configMap.tokens) {
+    query += `tokens=${configMap.tokens.join(",")}&`;
   }
 
   // Remove the last '&' if present
@@ -43,6 +47,7 @@ export const getIframeConfig = (
 ): {
   disabledTabs: TabEnum[];
   tenderizers: IframeTokenConfigMap;
+  tokens: TokenSlugEnums[] | [];
 } | null => {
   const params = new URLSearchParams(queryString?.replace("?", ""));
 
@@ -53,9 +58,11 @@ export const getIframeConfig = (
   const configObject: {
     disabledTabs: TabEnum[];
     tenderizers: IframeTokenConfigMap;
+    tokens: TokenSlugEnums[] | [];
   } = {
     disabledTabs: [],
     tenderizers: {},
+    tokens: [],
   };
 
   params.forEach((value, key) => {
@@ -66,6 +73,15 @@ export const getIframeConfig = (
           (tab: string) => TabEnum[tab.toUpperCase() as keyof typeof TabEnum]
         );
     }
+    if (key === "tokens") {
+      configObject[key] = value
+        .split(",")
+        .map(
+          (token: string) =>
+            TokenSlugEnums[token.toUpperCase() as keyof typeof TokenSlugEnums]
+        );
+    }
+
     const keyInTokenSlugEnums =
       key.toUpperCase() as keyof typeof TokenSlugEnums;
     if (TokenSlugEnums[keyInTokenSlugEnums]) {

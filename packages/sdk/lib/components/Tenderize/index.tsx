@@ -72,11 +72,9 @@ export function Tenderize() {
     )
   );
   return (
-    <>
-      <div className="flex flex-col gap-4 items-center justify-center h-full pb-2">
-        <RouterProvider router={router} />
-      </div>
-    </>
+    <div className="flex flex-col gap-4 items-center justify-center h-full pb-2 w-full">
+      <RouterProvider router={router} />
+    </div>
   );
 }
 export default Tenderize;
