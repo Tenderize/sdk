@@ -7,6 +7,7 @@ import { useEffect, type FC } from "react";
 type iframeConfig = {
   disabledTabs: TabEnum[];
   tenderizers: IframeTokenConfigMap;
+  tokens: TokenSlugEnums[] | [];
 };
 
 export const IframeProvider: FC<{
@@ -17,13 +18,18 @@ export const IframeProvider: FC<{
   const { setConfig, setActiveTabs, activeTabs, setTokens } =
     useTenderizeConfigStore();
   useEffect(() => {
-    const { tenderizers: iframeTenderizers, disabledTabs } = iframeConfig;
-
+    const {
+      tenderizers: iframeTenderizers,
+      disabledTabs,
+      tokens,
+    } = iframeConfig;
     //change the tenderizers according to the query string data
     if (Object.keys(iframeTenderizers).length !== 0) {
       config.tenderizers = iframeTenderizers;
-      const tokens = Object.keys(iframeTenderizers) as TokenSlugEnums[];
-      setTokens(tokens);
+      if (config?.tokens?.length !== 0) {
+        setTokens(tokens);
+        config.tokens = tokens;
+      }
       setConfig(config);
     }
 
