@@ -38,7 +38,7 @@ const CHAINS: TenderizeChains = {
 const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
-  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
   apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
 });
 
