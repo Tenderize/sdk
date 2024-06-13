@@ -1,0 +1,24 @@
+## React SDK
+
+This guide provides detailed information about our React SDK.
+This library is built on top of our Tenderizers APP to ease the integration in React applications by providing a set of components with their equivalent HOCs, as well as helper functions based on the React Hooks API, so you can interact with the underneath SDK and work towards any use cases.
+Go to our React SDK [GitHub repository](https://github.com/Tenderize/sdk) to see the source code.
+
+## Language support
+
+This SDK requires React 17.0.0 or above, since it uses React Context API.
+
+Some features, use React Hooks API that requires React 17.0.0 or later. Also remember to follow the rules of React hooks when using these. When it comes to browser support, our SDK bundle supports all the other major browsers.
+
+Initialization
+Set up Split in your code base in two steps.
+
+1. Import the SDK into your project
+   You can import the SDK into your project using one of the following methods:
+
+```js filename="Install"  copy
+npm i @tenderize/sdk
+yarn add @tenderize/sdk
+bun install @tenderize/sdk
+pnpm install @tenderize/sdk
+```

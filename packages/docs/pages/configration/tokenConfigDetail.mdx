@@ -1,0 +1,59 @@
+# Tokens Parameter Details
+
+The `tokens` parameter allows you to specify which tokens should be supported by the Tenderize SDK. Here’s how it works:
+
+Default Tokens: If no tokens array is provided, the SDK will default to supporting the following tokens: `TokenSlugEnums.MATIC`, `TokenSlugEnums.LIVEPEER`, and `TokenSlugEnums.GRAPH`.
+
+Custom Tokens: You can customize the tokens by providing an array of TokenSlugEnums values. For example, `[TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER]` specifies that only MATIC and LIVEPEER tokens should be supported.
+
+Single Token: You can also specify a single token, e.g., `[TokenSlugEnums.MATIC]`, to support only MATIC tokens.
+
+# Example Use Cases
+
+## 1. Support Default Tokens:
+
+```typescript filename="DefaultTokens"  copy
+import { createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+`Result: SDK supports default tokens (MATIC, LIVEPEER, GRAPH).`
+
+## 2. Support Custom Tokens:
+
+    ```typescript filename="CustomTokens"  copy
+    import {TokenSlugEnums,createTenderizeConfig } from "@tenderize/sdk";
+
+    const config = createTenderizeConfig({
+      tenderizers: TENDERIZERS,
+      chains: CHAINS,
+      tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+      apiKey: ALCHEMY_API_KEY as string,
+    });
+    ```
+
+`Result: SDK supports only MATIC and LIVEPEER tokens.`
+
+## 3. Support Single Token:
+
+    ```typescript filename="SingleToken"  copy
+     import {TokenSlugEnums,createTenderizeConfig } from "@tenderize/sdk";
+
+    const config = createTenderizeConfig({
+      tenderizers: TENDERIZERS,
+      chains: CHAINS,
+      tokens: [TokenSlugEnums.MATIC],
+      apiKey: ALCHEMY_API_KEY as string,
+    });
+    ```
+
+`Result: SDK supports only MATIC tokens.`
+
+```
+
+```

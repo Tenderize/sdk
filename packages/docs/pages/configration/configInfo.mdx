@@ -1,0 +1,71 @@
+## Importing Modules
+
+Begin by importing the necessary modules and components from the SDK:
+
+```js filename="import"  copy
+import {
+  TokenSlugEnums,
+  createTenderizeConfig,
+  type TenderizeChains,
+  type TenderizersConfig,
+} from "@tenderize/sdk";
+```
+
+## Type Definitions
+
+The following types are used in the configuration of the SDK:
+
+```js filename="Types"  copy
+export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
+export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };
+
+export enum TokenSlugEnums {
+  LIVEPEER = "livepeer",
+  MATIC = "matic",
+  GRAPH = "graph",
+}
+```
+
+## Tenderizer Configuration
+
+The Tenderize SDK currently supports Matic, Livepeer, and Graph tokens.
+For each token, you need to pass the address of the token's related tenderizer which you
+want to use in the SDK for staking, withdrawing, and swapping.
+
+```js filename="TENDERIZERS"  copy
+const TENDERIZERS: TenderizersConfig = {
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+};
+```
+
+### Chain Configuration
+
+Set up the mainnet and arbitrum chain configurations. The SDK supports both the mainnet and arbitrum chains. The mainnet chain is for Matic, while the arbitrum chain is for Livepeer and Graph tokens.
+
+```js filename="Recommended"  copy
+npm i wagmi
+yarn add wagmi
+bun install wagmi
+pnpm install wagmi
+```
+
+```typescript filename="Chains"  copy
+import { arbitrum, mainnet } from "wagmi/chains";
+// Note: You can use any other chain provider, but we recommend using wagmi because under the hood we use wagmi.
+
+const mainnetChain = {
+  ...mainnet,
+};
+
+const arbitrumChain = {
+  ...arbitrum,
+};
+
+const CHAINS: TenderizeChains = {
+  [TokenSlugEnums.MATIC]: mainnetChain, // Matic on mainnet
+  [TokenSlugEnums.LIVEPEER]: arbitrumChain, // Livepeer on arbitrum
+  [TokenSlugEnums.GRAPH]: arbitrumChain, // Graph on arbitrum
+};
+```

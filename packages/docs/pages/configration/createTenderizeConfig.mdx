@@ -1,0 +1,122 @@
+# createTenderizeConfig
+
+The Tenderize SDK facilitates interaction with blockchain networks using Alchemy as the provider. Below is how you configure the SDK using TypeScript definitions and essential setup instructions.
+
+## Configuration Example
+
+```js filename="TENDERIZERS"  copy
+import { type TenderizersConfig } from "@tenderize/sdk";
+
+const TENDERIZERS: TenderizersConfig = {
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+};
+```
+
+```typescript filename="Chains"  copy
+import { arbitrum, mainnet } from "wagmi/chains";
+// Note: You can use any other chain provider, but we recommend using wagmi because under the hood we use wagmi.
+
+import { type TenderizeChains } from "@tenderize/sdk";
+
+const mainnetChain = {
+  ...mainnet,
+};
+const arbitrumChain = {
+  ...arbitrum,
+};
+const CHAINS: TenderizeChains = {
+  [TokenSlugEnums.MATIC]: mainnetChain, // Matic on mainnet
+  [TokenSlugEnums.LIVEPEER]: arbitrumChain, // Livepeer on arbitrum
+  [TokenSlugEnums.GRAPH]: arbitrumChain, // Graph on arbitrum
+};
+```
+
+## Create a Tenderize Config
+
+```typescript filename="CreateConfig"  copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokenMetadata: {
+    [TokenSlugEnums.MATIC]: {
+      name: "tMATIC Stake Capital",
+    },
+    [TokenSlugEnums.LIVEPEER]: {
+      name: "tLPT Stake Capital",
+    },
+  },
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+## createTenderizeConfig Parameters
+
+```typescript filename="Params"  copy
+export type TenderizeConfigOptions = {
+  tenderizers: TenderizersConfig;
+  chains: TenderizeChains;
+  tokens?: TokenSlugEnums[];
+  tokenMetadata?: {
+    [key in TokenSlugEnums]?: TokenMetadata;
+  };
+};
+
+export type TokenMetadata = {
+  name: string;
+  avatar?: string;
+};
+```
+
+## Configuration Parameters
+
+The Tenderize SDK configuration requires the following parameters:
+
+1.`tenderizers`: Configuration for tenderizers.
+
+2.`chains`: Configuration for blockchain networks.
+
+3.`tokens (optional)`: Specifies blockchain tokens to interact with. Defaults to [MATIC, LIVEPEER, THE_GRAPH] if not provided.
+
+4.`tokenMetadata (optional)`: Provides metadata for specified tokens.
+
+5.`apiKey`: Alchemy API key for Ethereum blockchain interaction.
+Obtaining the Alchemy Provider Key
+To use the SDK, obtain an Alchemy API key:
+
+Create an Alchemy Account on [Supernode](https://www.alchemy.com/supernode) and create an account.
+Create an App: Navigate to your dashboard, create an app, and select your desired Ethereum network (e.g., Mainnet, Rinkeby).
+Obtain API Key: Locate your API key under the "View Key" section.
+
+# Environment Variable Setup
+
+## Accessing the API Key Securely
+
+To securely access your Alchemy API key within your application:
+
+- If you are using Vite as your build tool, access the API key using `import.meta.env.ALCHEMY_API_KEY`.
+  here is the ink of [Vite](https://vitejs.dev/guide/env-and-mode.html#env-files).
+- If you are using npm or another Node.js environment, access the API key using `process.env.ALCHEMY_API_KEY`.
+
+Ensure to handle your API key securely and avoid exposing
+it in your source code or version control repositories. Storing sensitive information like API keys in environment variables helps maintain the security of your application.
+
+# Return Type
+
+After invoking createTenderizeConfig, the function returns a TenderizeConfig object:
+
+```typescript filename="Return"  copy
+export type TenderizeConfig = {
+  tenderizers: TenderizersConfig;
+  chains: TenderizeChains;
+  web3: Config;
+  tokens?: TokenSlugEnums[];
+  tokenMetadata?: {
+    [key in TokenSlugEnums]?: TokenMetadata;
+  };
+};
+```
