@@ -79,7 +79,7 @@ const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
-  apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
+  apiKey: ALCHEMY_API_KEY as string,
 });
 // Application structure using TenderizeProvider, Web3Provider, and ThemeProvider
 <TenderizeProvider config={config}>
@@ -113,7 +113,7 @@ const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
-  apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
+  apiKey: ALCHEMY_API_KEY as string,
 });
 
 // Custom web3 instance
