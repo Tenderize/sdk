@@ -46,15 +46,15 @@ const iframeConfig = getIframeConfig(window.location.search);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider>
+    <TenderizeProvider config={config}>
       {iframeConfig && (
         <IframeProvider config={config} iframeConfig={iframeConfig} />
       )}
-      <TenderizeProvider config={config}>
-        <Web3Provider config={config.web3}>
+      <Web3Provider config={config.web3}>
+        <ThemeProvider>
           <App />
-        </Web3Provider>
-      </TenderizeProvider>
-    </ThemeProvider>
+        </ThemeProvider>
+      </Web3Provider>
+    </TenderizeProvider>
   </React.StrictMode>
 );
