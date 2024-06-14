@@ -1,8 +1,8 @@
 ## Importing Modules
 
-Begin by importing the necessary modules and components from the SDK:
+To start, import the essential modules and components from the SDK:
 
-```js filename="import"  copy
+```js filename="import" copy
 import {
   TokenSlugEnums,
   createTenderizeConfig,
@@ -13,9 +13,9 @@ import {
 
 ## Type Definitions
 
-The following types are used in the configuration of the SDK:
+The following type definitions are crucial for configuring the SDK:
 
-```js filename="Types"  copy
+```js filename="Types" copy
 export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
 export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };
 
@@ -24,15 +24,16 @@ export enum TokenSlugEnums {
   MATIC = "matic",
   GRAPH = "graph",
 }
+
 ```
 
 ## Tenderizer Configuration
 
-The Tenderize SDK currently supports Matic, Livepeer, and Graph tokens.
-For each token, you need to pass the address of the token's related tenderizer which you
-want to use in the SDK for staking, withdrawing, and swapping.
+The Tenderize SDK supports Matic, Livepeer, and Graph tokens.
+For each token, provide the address of the corresponding tenderizer
+to enable staking, withdrawing, and swapping within the SDK.
 
-```js filename="TENDERIZERS"  copy
+```js filename="TENDERIZERS" copy
 const TENDERIZERS: TenderizersConfig = {
   [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
   [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
@@ -42,9 +43,11 @@ const TENDERIZERS: TenderizersConfig = {
 
 ### Chain Configuration
 
-Set up the mainnet and arbitrum chain configurations. The SDK supports both the mainnet and arbitrum chains. The mainnet chain is for Matic, while the arbitrum chain is for Livepeer and Graph tokens.
+To ensure smooth operation, set up the mainnet and Arbitrum chain configurations. The SDK supports both the mainnet and Arbitrum chains. The mainnet chain is used for Matic tokens, while the Arbitrum chain supports Livepeer and Graph tokens.
 
-```js filename="Recommended"  copy
+First, install the recommended package to manage the chains:
+
+```bash filename="Recommended" copy
 npm i wagmi
 yarn add wagmi
 bun install wagmi
@@ -53,7 +56,7 @@ pnpm install wagmi
 
 ```typescript filename="Chains"  copy
 import { arbitrum, mainnet } from "wagmi/chains";
-// Note: You can use any other chain provider, but we recommend using wagmi because under the hood we use wagmi.
+// Note: While any chain provider can be used, we recommend wagmi for its seamless integration with our SDK.
 
 const mainnetChain = {
   ...mainnet,

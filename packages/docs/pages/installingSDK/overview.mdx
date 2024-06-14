@@ -1,24 +1,62 @@
-## React SDK
+# SDK Overview: React SDK
 
-This guide provides detailed information about our React SDK.
-This library is built on top of our Tenderizers APP to ease the integration in React applications by providing a set of components with their equivalent HOCs, as well as helper functions based on the React Hooks API, so you can interact with the underneath SDK and work towards any use cases.
-Go to our React SDK [GitHub repository](https://github.com/Tenderize/sdk) to see the source code.
+## Introduction
 
-## Language support
+Welcome to the documentation for our React SDK. This guide offers comprehensive information about our React SDK, designed to streamline the integration of our Tenderizers APP into React applications.
 
-This SDK requires React 17.0.0 or above, since it uses React Context API.
+## Key Features
 
-Some features, use React Hooks API that requires React 17.0.0 or later. Also remember to follow the rules of React hooks when using these. When it comes to browser support, our SDK bundle supports all the other major browsers.
+The React SDK provides:
 
-Initialization
-Set up Split in your code base in two steps.
+- A set of pre-built components and their equivalent Higher-Order Components (HOCs).
+- Helper functions based on the React Hooks API.
 
-1. Import the SDK into your project
-   You can import the SDK into your project using one of the following methods:
+These features enable seamless interaction with the underlying SDK, facilitating a variety of use cases.
 
-```js filename="Install"  copy
+## Repository
+
+For access to the source code and further implementation details, please visit our [React SDK GitHub repository](https://github.com/Tenderize/sdk).
+
+## Language Support
+
+The SDK requires **React 17.0.0** or later, as it employs the React Context API.
+
+Several features utilize the React Hooks API, which also necessitates **React 17.0.0** or higher. It is crucial to follow the [rules of React Hooks](https://reactjs.org/docs/hooks-rules.html) when implementing these features. Regarding browser compatibility, the SDK bundle supports all major browsers.
+
+## Initialization
+
+Setting up the SDK in your codebase involves two primary steps.
+
+### Step 1: Install the SDK
+
+Install the SDK using one of the following package managers:
+
+```js filename="Install" copy
+// npm
 npm i @tenderize/sdk
+
+// yarn
 yarn add @tenderize/sdk
+
+// bun
 bun install @tenderize/sdk
+
+// pnpm
 pnpm install @tenderize/sdk
+```
+
+### Step 2: Import the SDK
+
+After installing, import the SDK into your project as follows:
+
+```js filename="Import" copy
+import {
+  TenderizeProvider,
+  Web3Provider,
+  ThemeProvider,
+  IframeProvider,
+  createTenderizeConfig,
+  type TenderizeChains,
+  type TenderizersConfig,
+} from "@tenderize/sdk";
 ```
