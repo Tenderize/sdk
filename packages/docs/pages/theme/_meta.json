@@ -1,5 +1,6 @@
 {
   "themeProvider": "Theme Provider",
   "themeConfig": "Theme Config",
-  "defaultTheme": "Default Theme"
+  "defaultTheme": "Default Theme",
+  "iframeTheme": "Iframe Theme"
 }
