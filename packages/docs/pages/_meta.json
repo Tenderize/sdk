@@ -1,5 +1,7 @@
 {
   "index": "Home",
   "installingSDK": "Installing the SDK",
-  "configration": "SDK Configuration"
+  "configration": "SDK Configuration",
+  "Integration": "Integration",
+  "theme": "Theming"
 }

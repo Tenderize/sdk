@@ -35,9 +35,9 @@ import {
 } from "@tenderize/sdk";
 
 const queryString = generateIframeQueryString({
-  [TokenSlugEnums.MATIC]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-  [TokenSlugEnums.LIVEPEER]: "0x4a3c14d7450c30f712e89659af21f90df56bc9ba",
-  [TokenSlugEnums.GRAPH]: "0x4003e23be46f3bf2b50c3c7f8b13aaecdc71ea72",
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
   disabledTabs: [TabEnum.SWAP],
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
 });
@@ -72,9 +72,9 @@ At least one of these must be provided for the Iframe to function correctly.
 ```js filename="App.tsx"  copy
 function App() {
   const queryString = generateIframeQueryString({
-    [TokenSlugEnums.MATIC]: "0x43ef285f5e27d8ca978a7e577f4ddf52147eb77b",
-    [TokenSlugEnums.LIVEPEER]: "0x4a3c14d7450c30f712e89659af21f90df56bc9ba",
-    [TokenSlugEnums.GRAPH]: "0x4003e23be46f3bf2b50c3c7f8b13aaecdc71ea72",
+    [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
     disabledTabs: [TabEnum.SWAP],
     tokens: [
       TokenSlugEnums.MATIC,
@@ -86,15 +86,11 @@ function App() {
     <iframe
       src={`https://sdk-sdk.vercel.app?${queryString}`}
       height="660px"
-      width="100%"
+      width="100vw"
       style={{
         border: 0,
-        margin: "0 auto",
-        marginBottom: ".5rem",
-        display: "block",
-        borderRadius: "10px",
-        maxWidth: "960px",
-        minWidth: "600px",
+        width: "100%",
+        minWidth: "300px",
       }}
     />
   );
@@ -148,5 +144,13 @@ For more detailed information on configuring tokens, refer to the [Token Detail]
 
 ### `Note`
 
-`Token Addresses`: Ensure that you pass valid addresses for the tokens you include in the `IframeConfigMap`. The addresses must correspond to the tokens you configure.
+`Token Addresses`: Ensure that you pass valid addresses for the tokens you include in the `IframeConfigMap`.
+The addresses must correspond to the tokens you configure.
+
+`src`: Use the `src` attribute to specify the URL of the Iframe.
+The URL should include the generated query string. Please use url which is mentioned in the example.
+
+`Disabled Tabs`: Use the `disabledTabs` property to specify which tabs you want to disable in the Iframe.
+This helps in customizing the user interface by removing unnecessary tabs.
+
 `Component Usage`: Use all components as demonstrated in the examples to avoid errors or issues.

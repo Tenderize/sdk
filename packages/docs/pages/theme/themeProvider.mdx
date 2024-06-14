@@ -1,0 +1,22 @@
+# ThemeProvider Documentation
+
+## Overview
+
+The `ThemeProvider` component is designed to provide theming capabilities to your application. It allows you to customize and apply consistent styles across your app, including color schemes, font families, and other theme-related properties.
+
+## Usage
+
+```tsx
+import { ThemeProvider } from "./path-to-theme-provider";
+import { Theme } from "./your-theme-path";
+
+const App = () => (
+  <ThemeProvider theme={Theme}>
+    <YourAppComponents />
+  </ThemeProvider>
+);
+
+export default App;
+```
+
+`When no theme is provided, the default theme is applied.`
