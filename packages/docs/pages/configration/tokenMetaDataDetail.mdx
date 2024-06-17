@@ -1,11 +1,10 @@
 # Token Metadata Configuration
 
-The `tokenMetadata` configuration in `createTenderizeConfig` allows you to customize the display
-names and avatars for supported tokens within the Tenderize SDK.
+The `tokenMetadata` configuration within the `createTenderizeConfig` function allows for the customization of display names and avatars for supported tokens in the Tenderize SDK. This feature enhances the user interface by providing more intuitive and visually appealing token information.
 
-## tokenMetadata Type
+## `tokenMetadata` Type Definition
 
-```typescript filename="TokenMetadataType"  copy
+```typescript filename="TokenMetadataType" copy
 export type TokenMetadata = {
   name: string;
   avatar?: string;
@@ -14,12 +13,13 @@ export type TokenMetadata = {
 
 ## Default Example Configuration
 
-By default, the Tenderize SDK supports the following tokens with their respective metadata:
+By default, the Tenderize SDK supports a predefined set of tokens, each with standard metadata.
 
-`Default Behavior`
-When no tokenMetadata is provided, the SDK defaults to displaying tokens with standard names `(tMatic, tLpt, tGraph)`.
+### Default Behavior
 
-```typescript filename="DefaultMetadata"  copy
+When no `tokenMetadata` is provided, the SDK defaults to displaying tokens with the following standard names: `tMATIC`, `tLPT`, and `tGRAPH`.
+
+```typescript filename="DefaultMetadata" copy
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
@@ -32,9 +32,11 @@ const config = createTenderizeConfig({
 
 ## Customizing Token Metadata
 
-You can customize the `name` and `avatar` for individual tokens by providing `tokenMetadata`:
+You can customize the `name` and `avatar` for individual tokens by providing the `tokenMetadata` parameter in the `createTenderizeConfig` function.
 
-```typescript filename="CustomMetadata"  copy
+### Example
+
+```typescript filename="CustomMetadata" copy
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
@@ -57,20 +59,24 @@ const config = createTenderizeConfig({
 
 ## Avatar Handling
 
-1.`Valid Avatar URL`: If a valid URL is provided for avatar, the SDK displays the custom avatar image.
+### 1. Valid Avatar URL
 
-2.`Fallback Mechanism`: If the SDK fails to validate the avatar URL:
+If a valid URL is provided for the avatar, the SDK will display the custom avatar image.
 
-- It attempts to fetch the ENS Avatar for the profile.
+### 2. Fallback Mechanism
+
+If the SDK fails to validate the avatar URL:
+
+- It attempts to fetch the ENS avatar for the profile.
 - If no ENS avatar is found, it defaults to a predefined default avatar.
 
 ## Example Use Cases
 
-### Default Configuration:
+### Default Configuration
 
-If no `tokenMetadata` is provided, the SDK defaults to displaying tokens with standard names `(tMatic, tLpt, tGraph)`.
+If no `tokenMetadata` is provided, the SDK defaults to displaying tokens with standard names `(tMATIC, tLPT, tGRAPH)`.
 
-```typescript filename="DefaultMetadata"  copy
+```typescript filename="DefaultMetadata" copy
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
@@ -81,13 +87,13 @@ const config = createTenderizeConfig({
 });
 ```
 
-`Result: SDK displays tokens with default names and avatars. names:(tMatic, tLpt, tGraph)`
+**Result**: The SDK displays tokens with default names and avatars. Names: (`tMATIC`, `tLPT`, `tGRAPH`).
 
-### Custom Metadata with name and Avatar:
+### Custom Metadata with Name and Avatar
 
-You can customize the display names and avatars for individual tokens by providing `tokenMetadata`:
+You can customize the display names and avatars for individual tokens by providing the `tokenMetadata` parameter:
 
-```typescript filename="CustomMetadata"  copy
+```typescript filename="CustomMetadata" copy
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
@@ -108,13 +114,13 @@ const config = createTenderizeConfig({
 });
 ```
 
-`Result: SDK displays tokens with custom names and avatars.`
+**Result**: The SDK displays tokens with custom names and avatars.
 
-### Custom Metadata with name only:
+### Custom Metadata with Name Only
 
-You can customize the display names for individual tokens by providing `tokenMetadata`:
+You can customize the display names for individual tokens by providing the `tokenMetadata` parameter:
 
-```typescript filename="CustomMetadataName"  copy
+```typescript filename="CustomMetadataName" copy
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
@@ -133,13 +139,14 @@ const config = createTenderizeConfig({
 });
 ```
 
-`Result: SDK displays tokens with custom names and default avatars.`
+**Result**: The SDK displays tokens with custom names and default avatars.
 
 ## Summary
 
-The `tokenMetadata` configuration in `createTenderizeConfig` allows you
-to customize the display names and avatars for supported tokens within the Tenderize SDK.
-Customize `tokenMetadata` to enhance user experience with personalized token representations.
-Ensure avatar URLs are valid to display custom avatars; otherwise,
-the SDK uses fallback mechanisms to ensure consistent token representation.
-Adjust configurations based on your application's requirements and token preferences.
+The `tokenMetadata` configuration in `createTenderizeConfig` allows you to customize the display names and avatars for supported tokens within the Tenderize SDK. By leveraging `tokenMetadata`, you can enhance the user experience with personalized token representations.
+
+### Key Points
+
+- **Customization**: Tailor the `name` and `avatar` for each token to provide a more intuitive and visually appealing interface.
+- **Validity**: Ensure that avatar URLs are valid to display custom avatars. If the provided URL is invalid, the SDK will utilize fallback mechanisms, such as fetching the ENS avatar or defaulting to a predefined avatar, to ensure consistent token representation.
+- **Flexibility**: Adjust configurations based on your application's requirements and token preferences, enabling you to provide a user-friendly and customized experience.

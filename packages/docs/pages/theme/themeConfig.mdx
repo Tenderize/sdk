@@ -1,16 +1,16 @@
 # Theme Configuration
 
-### BrandPalette Interface
+## Overview
 
-The `BrandPalette` interface defines the structure of the theme object used to
-customize the appearance of your application.
-It includes definitions for spacing, fonts, and color schemes for both light and dark modes.
+The `ThemeProvider` component allows you to customize the appearance of your application by defining a theme object. This object includes settings for spacing, fonts, and color schemes for both light and dark modes, ensuring a consistent and visually appealing user interface.
 
 ## Structure
 
-### BrandPalette
+### BrandPalette Interface
 
-```tsx
+The `BrandPalette` interface defines the structure of the theme object used to customize your application's appearance.
+
+```tsx filename="BrandPalette" copy
 export interface BrandPalette {
   spacing: string;
   fonts: {
@@ -24,21 +24,23 @@ export interface BrandPalette {
 }
 ```
 
-`spacing`: A string defining the spacing used throughout the theme.
+`spacing`: Defines the spacing used throughout the theme.
 
-`fonts`: An object specifying the font details.
+`fonts`: Specifies the font details.
 
 `name`: The name of the font.
 
 `familyUrl`: The URL to the font family.
 
-`colors`: An object containing color schemes for both light and dark modes.
+`colors`: Contains color schemes for both light and dark modes.
 
-`lightMode`: An object defining the colors for light mode.
+`lightMode`: Defines the colors for light mode
 
-`darkMode`: An object defining the colors for dark mode.
+`darkMode`: Defines the colors for dark mode..
 
 ### LightModeColors
+
+The LightModeColors interface defines the colors used in light mode.
 
 ```tsx filename="LightModeColors"
 interface LightModeColors {
@@ -64,23 +66,25 @@ interface LightModeColors {
 
 `white`: The white color used in the theme.
 
-`primary`: A ColorSet object defining primary colors.
+`primary`: A `ColorSet` object defining primary colors.
 
-`secondary`: A ColorSet object defining secondary colors.
+`secondary`: A `ColorSet` object defining secondary colors.
 
-`success`: A ColorSet object defining success colors.
+`success`: A `ColorSet` object defining success colors.
 
 `card`: An object defining the default card color.
 
 `DEFAULT`: The default color for cards.
 
-`disabled`: A CommonColorSet object defining colors for disabled elements.
+`disabled`: A `CommonColorSet` object defining colors for disabled elements.
 
-`panel`: A CommonColorSet object defining colors for panels.
+`panel`: A `CommonColorSet` object defining colors for panels.
 
-`badge`: A Badge object defining colors for badges.
+`badge`: A `Badge` object defining colors for badges.
 
 ## ColorSet and CommonColorSet
+
+The `ColorSet` and `CommonColorSet` interfaces define color configurations for various UI elements.
 
 ### ColorSet
 
@@ -108,6 +112,8 @@ interface CommonColorSet {
 `foreground`: The foreground color.
 
 ## Badge
+
+The Badge interface defines the colors used for badges.
 
 ```tsx filename="Badge" copy
 interface Badge {
@@ -237,3 +243,5 @@ const customTheme: BrandPalette = {
 ```
 
 `Note: The above example is just an example and may not be suitable for your application.`
+
+By defining a custom theme, you can ensure that your application has a consistent and professional appearance that aligns with your brand identity.

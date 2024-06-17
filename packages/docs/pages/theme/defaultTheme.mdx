@@ -13,6 +13,8 @@ The `defaultTheme` object defines the color palette for both light and dark mode
 
 ## Colors
 
+The default theme includes a comprehensive color palette designed to provide a cohesive and visually appealing user interface. Below are the key color categories used in the theme:
+
 ### Light Mode
 
 | Element    | Property                | Color Value | Color Preview                                                                                                                      |
@@ -38,7 +40,11 @@ The `defaultTheme` object defines the color palette for both light and dark mode
 |            | `badge.info`            | `#fed7aa`   | <span style={{ backgroundColor: '#fed7aa', display: 'inline-block', width: '120px', height: '20px', border: '1px solid #000' }} /> |
 |            | `badge.infoForeground`  | `#ea580c`   | <span style={{ backgroundColor: '#ea580c', display: 'inline-block', width: '120px', height: '20px', border: '1px solid #000' }} /> |
 
-### Dark Mode
+## Dark Mode
+
+### Note:
+
+For now, the default theme's dark mode colors are similar to the light mode colors. We will update them later, so feel free to adjust the colors according to your preference.
 
 | Element    | Property                | Color Value | Color Preview                                                                                                                      |
 | ---------- | ----------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -80,60 +86,10 @@ The `defaultTheme` object defines the color palette for both light and dark mode
 | ----- | ---------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | 500   | #404040    | #404040   | <span style={{ backgroundColor: '#404040', display: 'inline-block', width: '120px', height: '20px', border: '1px solid #000' }} /> |
 
-## Note
+# Default Theme Implementation Overview
 
-Dark mode colors for now are similar to light mode colors but adjusted for better visibility and aesthetics in a dark-themed environment.
+The SDK ensures the application of the default theme, providing a cohesive and visually appealing user experience. You can compare the colors and see where they are utilized within the components.
 
-### For example:
-
-```tsx
-const darkModeColors = {
-  border: "#eee",
-  background: "#ffffff",
-  midnight: "#303030",
-  primary: {
-    DEFAULT: "#fd3f0f",
-    accent: "#ffffff",
-    foreground: "#3d3d3d",
-    "500": "#97316",
-    "400": "#fb923c",
-    "300": "#fdba74",
-    "200": "#fed7aa",
-    "100": "#ffedd5",
-  },
-  secondary: {
-    DEFAULT: "#d1d5db",
-    foreground: "#9ca3af",
-    accent: "#ffffff",
-    "500": "#404040",
-  },
-  success: {
-    DEFAULT: "#f0fdf4",
-    foreground: "#166534",
-  },
-  card: {
-    DEFAULT: "#f4f4f5",
-  },
-  disabled: {
-    DEFAULT: "#f3f4f6",
-    foreground: "#9ca3af",
-  },
-  panel: {
-    DEFAULT: "#fff7ed",
-    foreground: "#FED7CB",
-  },
-  badge: {
-    error: "#ffe4e6",
-    errorForeground: "#f87171",
-    info: "#fed7aa",
-    infoForeground: "#ea580c",
-  },
-};
-```
-
-# Applied Theme Overview
-
-The SDK looks after applying the default theme. You can compare colors and see where they are used.
-Also find the hosted example of the Tenderize [SDK](https://sdk-sdk.vercel.app).
+For a hands-on experience, explore the hosted example of the Tenderize [SDK](https://sdk-sdk.vercel.app).
 
 ![SDK](/sdk.png)

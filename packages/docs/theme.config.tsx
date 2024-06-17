@@ -4,7 +4,7 @@ import { DocsThemeConfig } from "nextra-theme-docs";
 const config: DocsThemeConfig = {
   logo: <Image src="/logo.svg" alt="Logo" width={150} height={50} />,
   project: {
-    link: "https://app.tenderize.me/",
+    link: "https://github.com/Tenderize/sdk",
   },
   chat: {
     link: "https://discord.com",

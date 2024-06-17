@@ -14,11 +14,46 @@ const queryString = generateIframeQueryString({
 });
 ```
 
-In this example, you can pass a brandName for your theme configuration.
+# Example Use Case
 
-Example Theme Object
-You need to provide us a theme object that defines the appearance of your SDK theme.
-Below is an example theme object:
+Here is a professional example of how to integrate the Tenderize SDK iframe into your application. This demonstrates generating a query string for the iframe and embedding it within a React component, including how to add a theme to your iframe.
+
+```js filename="App.tsx"  copy
+function App() {
+  const queryString = generateIframeQueryString({
+    name: "brandName",
+    [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    disabledTabs: [TabEnum.SWAP],
+    tokens: [
+      TokenSlugEnums.MATIC,
+      TokenSlugEnums.LIVEPEER,
+      TokenSlugEnums.GRAPH,
+    ],
+  });
+  return (
+    <iframe
+      src={`https://sdk-sdk.vercel.app?${queryString}`}
+      height="660px"
+      width="100vw"
+      style={{
+        border: 0,
+        width: "100%",
+        minWidth: "300px",
+      }}
+    />
+  );
+}
+```
+
+## Providing Your Theme Object
+
+Once you pass `brandName`, provide us with your theme object, and we will store it in our database.
+
+## Example Theme Object
+
+To customize the appearance of your SDK theme, provide a theme object that defines the styles. Below is an example theme object:
 
 ```tsx filename="Theme" copy
 export const brandName = {
@@ -119,4 +154,8 @@ export const brandName = {
 };
 ```
 
-Follow the theme page config to check theming [config](/theme/themeConfig) in more detail.
+For more detailed information on theming, refer to the [config](/theme/themeConfig) page in the documentation.
+
+### Note:
+
+The example provided is for illustration purposes and may need to be adjusted to fit your specific application requirements.
