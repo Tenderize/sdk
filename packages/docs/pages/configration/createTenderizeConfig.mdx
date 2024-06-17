@@ -21,7 +21,9 @@ const TENDERIZERS: TenderizersConfig = {
 In this example, we import the TenderizersConfig type from the @tenderize/sdk package and define the TENDERIZERS configuration object. This object maps token slugs (such as MATIC, LIVEPEER, and GRAPH) to their respective contract addresses.
 
 `TokenSlugEnums.MATIC`: Represents the token slug for `MATIC`.
+
 `TokenSlugEnums.LIVEPEER`: Represents the token slug for `Livepeer`.
+
 `TokenSlugEnums.GRAPH`: Represents the token slug for The `Graph`.
 
 `Additional Notes`
@@ -56,7 +58,9 @@ const CHAINS: TenderizeChains = {
 In this example, we import the arbitrum and mainnet chains from the wagmi/chains package, which is recommended for use with the Tenderize SDK due to its internal compatibility with wagmi. We then define chain configurations and map token slugs to their respective chains.
 
 `TokenSlugEnums.MATIC`: Configured to use the mainnet chain for `MATIC`.
+
 `TokenSlugEnums.LIVEPEER`: Configured to use the arbitrum chain for `Livepeer`.
+
 `TokenSlugEnums.GRAPH`: Configured to use the arbitrum chain for `The Graph`.
 
 ## Create a Tenderize Config
