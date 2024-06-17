@@ -1,0 +1,212 @@
+# Create a Tenderize Config
+
+The Tenderize SDK facilitates interaction with blockchain networks using Alchemy as the provider. Below is a comprehensive guide on configuring the SDK using TypeScript definitions and essential setup instructions.
+
+## Configuration Example
+
+To configure the Tenderize SDK, follow the example below:
+
+```typescript filename="TENDERIZERS" copy
+import { type TenderizersConfig } from "@tenderize/sdk";
+
+const TENDERIZERS: TenderizersConfig = {
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+};
+```
+
+### Explanation
+
+In this example, we import the TenderizersConfig type from the @tenderize/sdk package and define the TENDERIZERS configuration object. This object maps token slugs (such as MATIC, LIVEPEER, and GRAPH) to their respective contract addresses.
+
+`TokenSlugEnums.MATIC`: Represents the token slug for `MATIC`.
+
+`TokenSlugEnums.LIVEPEER`: Represents the token slug for `Livepeer`.
+
+`TokenSlugEnums.GRAPH`: Represents the token slug for The `Graph`.
+
+`Additional Notes`
+
+Ensure you have the correct contract addresses and token slugs corresponding to the tokens you intend to configure. This setup is crucial for the proper functioning of the Tenderize SDK within your blockchain application.
+
+## Chain Configuration Example
+
+The following example demonstrates how to configure chain providers for the Tenderize SDK. In this instance, we use `wagmi` for chain configuration, although you may use any other chain provider.
+
+```typescript filename="Chains" copy
+import { arbitrum, mainnet } from "wagmi/chains";
+// Note: While you can use any chain provider, we recommend using `wagmi` as it is internally integrated with the Tenderize SDK.
+
+import { type TenderizeChains } from "@tenderize/sdk";
+
+const mainnetChain = {
+  ...mainnet,
+};
+const arbitrumChain = {
+  ...arbitrum,
+};
+const CHAINS: TenderizeChains = {
+  [TokenSlugEnums.MATIC]: mainnetChain, // Matic on mainnet
+  [TokenSlugEnums.LIVEPEER]: arbitrumChain, // Livepeer on arbitrum
+  [TokenSlugEnums.GRAPH]: arbitrumChain, // Graph on arbitrum
+};
+```
+
+### Explanation
+
+In this example, we import the arbitrum and mainnet chains from the wagmi/chains package, which is recommended for use with the Tenderize SDK due to its internal compatibility with wagmi. We then define chain configurations and map token slugs to their respective chains.
+
+`TokenSlugEnums.MATIC`: Configured to use the mainnet chain for `MATIC`.
+
+`TokenSlugEnums.LIVEPEER`: Configured to use the arbitrum chain for `Livepeer`.
+
+`TokenSlugEnums.GRAPH`: Configured to use the arbitrum chain for `The Graph`.
+
+## Create a Tenderize Config
+
+The following example demonstrates how to create a configuration for the Tenderize SDK using TypeScript. This configuration includes tenderizers, chain mappings, token specifications, token metadata, and an Alchemy API key.
+
+```typescript filename="CreateConfig" copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokenMetadata: {
+    [TokenSlugEnums.MATIC]: {
+      name: "tMATIC Stake Capital",
+    },
+    [TokenSlugEnums.LIVEPEER]: {
+      name: "tLPT Stake Capital",
+    },
+  },
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+### Explanation
+
+In this example, we import the `TokenSlugEnums` and `createTenderizeConfig` functions from the `@tenderize/sdk` package. We then define a configuration object using these functions.
+
+`tenderizers`: Specifies the tenderizers configuration object defined earlier.
+`chains`: Specifies the chain mappings for the tokens.
+`tokens`: Lists the tokens to be included in the configuration (e.g., MATIC and LIVEPEER).
+`tokenMetadata`: Provides metadata for each token, such as the token name.
+`apiKey`: Your Alchemy API key as a string.
+
+## createTenderizeConfig Params
+
+The following TypeScript definitions outline the parameters for the `createTenderizeConfig` function. These parameters include configurations for tenderizers, chains, tokens, and token metadata.
+
+```typescript filename="Params" copy
+export type TenderizeConfigOptions = {
+  tenderizers: TenderizersConfig;
+  chains: TenderizeChains;
+  tokens?: TokenSlugEnums[];
+  tokenMetadata?: {
+    [key in TokenSlugEnums]?: TokenMetadata;
+  };
+};
+
+export type TokenMetadata = {
+  name: string;
+  avatar?: string;
+};
+```
+
+## TenderizeConfigOptions
+
+This type defines the structure for the configuration options used in the `createTenderizeConfig` function.
+
+### Properties
+
+- **tenderizers**: An object containing the tenderizer configurations.
+- **chains**: An object mapping tokens to their respective chain configurations.
+- **tokens** (optional): An array of token slugs to be included in the configuration.
+- **tokenMetadata** (optional): An object providing metadata for each token, indexed by token slugs.
+
+## TokenMetadata
+
+This type defines the structure for token metadata.
+
+### Properties
+
+- **name**: The name of the token.
+- **avatar** (optional): A URL or path to the token's avatar image.
+- **apiKey**: Alchemy API key for Ethereum blockchain interaction.
+
+### Alchemy API Key Setup
+
+To configure the Tenderize SDK with Alchemy, follow these steps to set up your Alchemy API key:
+
+1. **Create an Alchemy Account**: Visit [Supernode](https://www.alchemy.com/supernode) and sign up for an account.
+
+2. **Create an App**:
+
+   - Navigate to your Alchemy dashboard.
+   - Create a new app.
+   - Select your desired Ethereum network (e.g., Mainnet, Rinkeby).
+
+3. **Obtain API Key**:
+   - Locate your newly created app in the dashboard.
+   - Find the "View Key" section and copy your API key.
+
+Ensure you securely store this API key, as it will be required for configuring the Tenderize SDK to interact with blockchain networks via Alchemy.
+
+For further assistance and detailed instructions, refer to Alchemy's official documentation.
+
+## Accessing the API Key Securely
+
+### Environment Variable Setup
+
+To securely access your Alchemy API key within your application, follow these guidelines based on your build tool or environment:
+
+- **Using Vite**: Access the API key using `import.meta.env.ALCHEMY_API_KEY`. Refer to the [Vite documentation](https://vitejs.dev/guide/env-and-mode.html#env-files) for more details on environment variables in Vite.
+- **Using Node.js or npm**: Access the API key using `process.env.ALCHEMY_API_KEY`.
+
+### Example
+
+You might have a `.env` file as follows:
+
+```plaintext
+# .env
+ALCHEMY_API_KEY=your-alchemy-api-key
+```
+
+### Security Best Practices
+
+- **Do Not Hardcode API Keys**: Avoid exposing your API keys directly in your source code or version control repositories.
+- **Use Environment Variables**: Store sensitive information like API keys in environment variables to maintain the security of your application.
+- **Environment Variable Management**: Utilize tools and practices for managing environment variables securely across different development, staging, and production environments.
+
+## Return Type
+
+After invoking `createTenderizeConfig`, the function returns a `TenderizeConfig` object:
+
+```typescript filename="Return" copy
+export type TenderizeConfig = {
+  tenderizers: TenderizersConfig;
+  chains: TenderizeChains;
+  web3: Config;
+  tokens?: TokenSlugEnums[];
+  tokenMetadata?: {
+    [key in TokenSlugEnums]?: TokenMetadata;
+  };
+};
+```
+
+## TenderizeConfig
+
+The `TenderizeConfig` type defines the structure of the configuration object returned by the `createTenderizeConfig` function. It includes the following properties:
+
+- **tenderizers**: An object containing the tenderizer configurations.
+- **chains**: An object mapping tokens to their respective chain configurations.
+- **web3**: The web3 configuration object.
+- **tokens** (optional): An array of token slugs included in the configuration.
+- **tokenMetadata** (optional): An object providing metadata for each token, indexed by token slugs.
+
+## Additional Notes
+
+Ensure that all required configurations are properly defined to allow the Tenderize SDK to interact seamlessly with blockchain networks. This returned configuration object will be used to initialize and operate the SDK within your application.

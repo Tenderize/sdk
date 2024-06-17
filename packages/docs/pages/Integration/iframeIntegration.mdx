@@ -1,0 +1,162 @@
+# Integration Guide for Using Tenderize SDK's Iframe
+
+To seamlessly integrate the Tenderize SDK's Iframe functionality into your web application, follow these detailed steps:
+
+## Setup and Configuration
+
+### 1. Install SDK Components
+
+To get started, install the necessary SDK components using your preferred package manager:
+
+```bash filename="Install" copy
+npm install @tenderize/sdk
+yarn add @tenderize/sdk
+bun install @tenderize/sdk
+pnpm install @tenderize/sdk
+```
+
+### 2 . Import the SDK
+
+Next, import the required functions and enums from the SDK:
+
+```js filename="Import"  copy
+import {
+  generateIframeQueryString,
+  TabEnum,
+  TokenSlugEnums,
+} from "@tenderize/sdk";
+```
+
+### 3. Generating the Iframe Query String
+
+To integrate the Tenderize SDK's Iframe functionality effectively, you need to generate a query string that reflects your token configurations and any specific UI customizations, such as disabling certain tabs. This is achieved using the `generateIframeQueryString` function.
+
+#### Example Usage
+
+The following code snippet demonstrates how to generate the Iframe query string:
+
+```typescript filename="Generate" copy
+import {
+  generateIframeQueryString,
+  TabEnum,
+  TokenSlugEnums,
+} from "@tenderize/sdk";
+
+const queryString = generateIframeQueryString({
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  disabledTabs: [TabEnum.SWAP],
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
+});
+```
+
+## Explanation
+
+- **generateIframeQueryString**: This function generates a query string based on the provided token configurations and UI customizations.
+- **Token Configurations**: Map each token (e.g., MATIC, LIVEPEER, GRAPH) to its respective contract address.
+- **disabledTabs**: Specify which tabs should be disabled in the Iframe UI. In this example, the "SWAP" tab is disabled.
+- **tokens**: List the tokens that should be included in the configuration.
+
+## IframeConfigMap Parameters Type Definition
+
+To effectively configure the Iframe functionality within the Tenderize SDK,
+you need to understand the type definitions for the parameters used.
+Below are the type definitions for `IframeConfigMap`, which includes configurations for tokens and UI tabs.
+
+### Type Definitions
+
+```typescript filename="Types" copy
+export type TabConfig = {
+  disabledTabs?: TabEnum[];
+};
+
+export type IframeTokenConfigMap = {
+  [Key in TokenSlugEnums]?: Address;
+};
+
+type IframeConfigMap = IframeTokenConfigMap &
+  TabConfig & {
+    tokens?: TokenSlugEnums[];
+  };
+```
+
+# Example Use Case
+
+```js filename="App.tsx"  copy
+function App() {
+  const queryString = generateIframeQueryString({
+    [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    disabledTabs: [TabEnum.SWAP],
+    tokens: [
+      TokenSlugEnums.MATIC,
+      TokenSlugEnums.LIVEPEER,
+      TokenSlugEnums.GRAPH,
+    ],
+  });
+  return (
+    <iframe
+      src={`https://sdk-sdk.vercel.app?${queryString}`}
+      height="660px"
+      width="100vw"
+      style={{
+        border: 0,
+        width: "100%",
+        minWidth: "300px",
+      }}
+    />
+  );
+}
+```
+
+# Configuration Explanation
+
+### Token Addresses
+
+Ensure that you pass valid addresses for the tokens included in the `IframeConfigMap`.
+The addresses must correspond to the tokens you configure.
+
+```typescript filename="TokenAddresses" copy
+import { TokenSlugEnums } from "@tenderize/sdk";
+
+{
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48"
+}
+
+```
+
+### Disabled Tabs:
+
+Use the disabledTabs property to specify which tabs you want to disable in the Iframe. This customization helps
+streamline the user interface by removing unnecessary tabs.
+
+```js filename="DisabledTabs"  copy
+import { TabEnum } from "@tenderize/sdk";
+
+disabledTabs: [TabEnum.SWAP];
+```
+
+### Tokens:
+
+Use the tokens property to configure which tokens should be included in the Iframe. This array can include any combination of
+TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, and TokenSlugEnums.GRAPH.
+
+```js filename="Tokens"  copy
+import { TokenSlugEnums } from "@tenderize/sdk";
+
+tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH];
+```
+
+`If no tokens are provided, the SDK will display the default tokens.`
+For more detailed information on configuring tokens, refer to the [Token Detail](/configration/tokenConfigDetail) Page in the documentation.
+
+## Important Notes
+
+- **Token Addresses**: Ensure that you pass valid addresses for the tokens you include in the `IframeConfigMap`. These addresses must correspond to the tokens you configure.
+- **Iframe Source (src)**: Use the `src` attribute to specify the URL of the Iframe. The URL should include the generated query string. Refer to the example for the correct URL format.
+- **Disabled Tabs**: Use the `disabledTabs` property to specify which tabs you want to disable in the Iframe. This helps in customizing the user interface by removing unnecessary tabs.
+- **Component Usage**: Follow the demonstrated usage of all components to avoid errors or issues. Proper nesting and configuration of components are crucial for the correct functioning of the Tenderize SDK within your application.

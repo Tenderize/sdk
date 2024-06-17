@@ -1,0 +1,247 @@
+# Theme Configuration
+
+## Overview
+
+The `ThemeProvider` component allows you to customize the appearance of your application by defining a theme object. This object includes settings for spacing, fonts, and color schemes for both light and dark modes, ensuring a consistent and visually appealing user interface.
+
+## Structure
+
+### BrandPalette Interface
+
+The `BrandPalette` interface defines the structure of the theme object used to customize your application's appearance.
+
+```tsx filename="BrandPalette" copy
+export interface BrandPalette {
+  spacing: string;
+  fonts: {
+    name: string;
+    familyUrl: string;
+  };
+  colors: {
+    lightMode: LightModeColors;
+    darkMode: LightModeColors;
+  };
+}
+```
+
+`spacing`: Defines the spacing used throughout the theme.
+
+`fonts`: Specifies the font details.
+
+`name`: The name of the font.
+
+`familyUrl`: The URL to the font family.
+
+`colors`: Contains color schemes for both light and dark modes.
+
+`lightMode`: Defines the colors for light mode
+
+`darkMode`: Defines the colors for dark mode..
+
+### LightModeColors
+
+The LightModeColors interface defines the colors used in light mode.
+
+```tsx filename="LightModeColors"
+interface LightModeColors {
+  border: string;
+  background: string;
+  midnight: string;
+  white: string;
+  primary: ColorSet;
+  secondary: ColorSet;
+  success: ColorSet;
+  card: {
+    DEFAULT: string;
+  };
+  disabled: CommonColorSet;
+  panel: CommonColorSet;
+  badge: Badge;
+}
+```
+
+`background`: The background color.
+
+`midnight`: A specific color used within the theme.
+
+`white`: The white color used in the theme.
+
+`primary`: A `ColorSet` object defining primary colors.
+
+`secondary`: A `ColorSet` object defining secondary colors.
+
+`success`: A `ColorSet` object defining success colors.
+
+`card`: An object defining the default card color.
+
+`DEFAULT`: The default color for cards.
+
+`disabled`: A `CommonColorSet` object defining colors for disabled elements.
+
+`panel`: A `CommonColorSet` object defining colors for panels.
+
+`badge`: A `Badge` object defining colors for badges.
+
+## ColorSet and CommonColorSet
+
+The `ColorSet` and `CommonColorSet` interfaces define color configurations for various UI elements.
+
+### ColorSet
+
+```tsx filename="ColorSet" copy
+interface ColorSet extends CommonColorSet {
+  accent: string;
+}
+```
+
+`accent`: The accent color.
+
+Inherits all properties from CommonColorSet.
+
+### CommonColorSet
+
+```tsx filename="CommonColorSet" copy
+interface CommonColorSet {
+  DEFAULT: string;
+  foreground: string;
+}
+```
+
+`DEFAULT`: The default color.
+
+`foreground`: The foreground color.
+
+## Badge
+
+The Badge interface defines the colors used for badges.
+
+```tsx filename="Badge" copy
+interface Badge {
+  error: string;
+  errorForeground: string;
+  info: string;
+  infoForeground: string;
+}
+```
+
+`error`: The color for error badges.
+
+`errorForeground`: The foreground color for error badges.
+
+`info`: The color for info badges.
+
+`infoForeground`: The foreground color for info badges.
+
+## DarkModeColors
+
+Dark mode colors are defined similarly to light mode colors.
+Typically, the properties remain the same, but the color values are adjusted for a dark theme.
+
+## Example Usage
+
+Below is an example of how you might define a custom theme using the BrandPalette interface.
+
+```tsx filename="ThemeExample" copy
+const customTheme: BrandPalette = {
+  spacing: "1rem",
+  fonts: {
+    name: "CustomFont",
+    familyUrl:
+      "https://fonts.googleapis.com/css2?family=CustomFont:wght@400;700&display=swap",
+  },
+  colors: {
+    lightMode: {
+      border: "#e0e0e0",
+      background: "#ffffff",
+      midnight: "#121212",
+      white: "#ffffff",
+      primary: {
+        DEFAULT: "#6200ea",
+        foreground: "#ffffff",
+        accent: "#bb86fc",
+        "500": "#fb923c",
+        "400": "#fb923c",
+        "300": "#fdba74",
+        "200": "#fed7aa",
+        "100": "#ffedd5",
+      },
+      secondary: {
+        DEFAULT: "#03dac6",
+        foreground: "#000000",
+        accent: "#018786",
+        "500": "#404040",
+      },
+      success: {
+        DEFAULT: "#00c853",
+        foreground: "#ffffff",
+        accent: "#69f0ae",
+      },
+      card: {
+        DEFAULT: "#f5f5f5",
+      },
+      disabled: {
+        DEFAULT: "#bdbdbd",
+        foreground: "#757575",
+      },
+      panel: {
+        DEFAULT: "#ffffff",
+        foreground: "#000000",
+      },
+      badge: {
+        error: "#b00020",
+        errorForeground: "#ffffff",
+        info: "#2196f3",
+        infoForeground: "#ffffff",
+      },
+    },
+    darkMode: {
+      border: "#303030",
+      background: "#121212",
+      midnight: "#000000",
+      white: "#ffffff",
+      primary: {
+        DEFAULT: "#bb86fc",
+        foreground: "#000000",
+        accent: "#6200ea",
+        "500": "#fb923c",
+        "400": "#fb923c",
+        "300": "#fdba74",
+        "200": "#fed7aa",
+        "100": "#ffedd5",
+      },
+      secondary: {
+        DEFAULT: "#018786",
+        foreground: "#ffffff",
+        accent: "#03dac6",
+        "500": "#404040",
+      },
+      success: {
+        DEFAULT: "#69f0ae",
+        foreground: "#000000",
+        accent: "#00c853",
+      },
+      card: {
+        DEFAULT: "#424242",
+      },
+      disabled: {
+        DEFAULT: "#757575",
+        foreground: "#bdbdbd",
+      },
+      panel: {
+        DEFAULT: "#121212",
+        foreground: "#ffffff",
+      },
+      badge: {
+        error: "#cf6679",
+        errorForeground: "#000000",
+        info: "#90caf9",
+        infoForeground: "#000000",
+      },
+    },
+  },
+};
+```
+
+`Note: The above example is just an example and may not be suitable for your application.`
+
+By defining a custom theme, you can ensure that your application has a consistent and professional appearance that aligns with your brand identity.

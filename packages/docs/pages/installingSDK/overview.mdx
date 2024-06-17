@@ -1,0 +1,62 @@
+# SDK Overview: React SDK
+
+## Introduction
+
+Welcome to the documentation for our React SDK. This guide offers comprehensive information about our React SDK, designed to streamline the integration of our Tenderizers APP into React applications.
+
+## Key Features
+
+The React SDK provides:
+
+- A set of pre-built components and their equivalent Higher-Order Components (HOCs).
+- Helper functions based on the React Hooks API.
+
+These features enable seamless interaction with the underlying SDK, facilitating a variety of use cases.
+
+## Repository
+
+For access to the source code and further implementation details, please visit our [React SDK GitHub repository](https://github.com/Tenderize/sdk).
+
+## Language Support
+
+The SDK requires **React 17.0.0** or later, as it employs the React Context API.
+
+Several features utilize the React Hooks API, which also necessitates **React 17.0.0** or higher. It is crucial to follow the [rules of React Hooks](https://reactjs.org/docs/hooks-rules.html) when implementing these features. Regarding browser compatibility, the SDK bundle supports all major browsers.
+
+## Initialization
+
+Setting up the SDK in your codebase involves two primary steps.
+
+### Step 1: Install the SDK
+
+Install the SDK using one of the following package managers:
+
+```js filename="Install" copy
+// npm
+npm i @tenderize/sdk
+
+// yarn
+yarn add @tenderize/sdk
+
+// bun
+bun install @tenderize/sdk
+
+// pnpm
+pnpm install @tenderize/sdk
+```
+
+### Step 2: Import the SDK
+
+After installing, import the SDK into your project as follows:
+
+```js filename="Import" copy
+import {
+  TenderizeProvider,
+  Web3Provider,
+  ThemeProvider,
+  IframeProvider,
+  createTenderizeConfig,
+  type TenderizeChains,
+  type TenderizersConfig,
+} from "@tenderize/sdk";
+```

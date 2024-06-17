@@ -1,0 +1,27 @@
+# ThemeProvider Documentation
+
+## Overview
+
+The `ThemeProvider` component is designed to provide robust theming capabilities to your application. It allows you to customize and apply consistent styles across your app, including color schemes, font families, and other theme-related properties.
+
+## Usage
+
+To use the `ThemeProvider`, import it from the `@tenderize/sdk` package and wrap it around your application's components. You can specify a custom theme to override the default styles.
+
+```tsx
+import { ThemeProvider } from "@tenderize/sdk";
+import { Theme } from "./your-theme-path";
+
+const App = () => (
+  <ThemeProvider theme={Theme}>
+    <YourAppComponents />
+  </ThemeProvider>
+);
+
+export default App;
+```
+
+## Default Theme
+
+If no custom theme is provided, the ThemeProvider applies a default theme.
+This ensures that your application maintains a consistent look and feel even without custom theming.

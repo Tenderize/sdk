@@ -1,0 +1,152 @@
+# Token Metadata Configuration
+
+The `tokenMetadata` configuration within the `createTenderizeConfig` function allows for the customization of display names and avatars for supported tokens in the Tenderize SDK. This feature enhances the user interface by providing more intuitive and visually appealing token information.
+
+## `tokenMetadata` Type Definition
+
+```typescript filename="TokenMetadataType" copy
+export type TokenMetadata = {
+  name: string;
+  avatar?: string;
+};
+```
+
+## Default Example Configuration
+
+By default, the Tenderize SDK supports a predefined set of tokens, each with standard metadata.
+
+### Default Behavior
+
+When no `tokenMetadata` is provided, the SDK defaults to displaying tokens with the following standard names: `tMATIC`, `tLPT`, and `tGRAPH`.
+
+```typescript filename="DefaultMetadata" copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+## Customizing Token Metadata
+
+You can customize the `name` and `avatar` for individual tokens by providing the `tokenMetadata` parameter in the `createTenderizeConfig` function.
+
+### Example
+
+```typescript filename="CustomMetadata" copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokenMetadata: {
+    [TokenSlugEnums.MATIC]: {
+      name: "tMATIC Stake Capital",
+      avatar: "https://example.com/avatar.png", // Valid URL for custom avatar
+    },
+    [TokenSlugEnums.LIVEPEER]: {
+      name: "tLPT Stake Capital",
+      avatar: "https://example.com/lpt-avatar.png", // Valid URL for custom avatar
+    },
+  },
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+## Avatar Handling
+
+### 1. Valid Avatar URL
+
+If a valid URL is provided for the avatar, the SDK will display the custom avatar image.
+
+### 2. Fallback Mechanism
+
+If the SDK fails to validate the avatar URL:
+
+- It attempts to fetch the ENS avatar for the profile.
+- If no ENS avatar is found, it defaults to a predefined default avatar.
+
+## Example Use Cases
+
+### Default Configuration
+
+If no `tokenMetadata` is provided, the SDK defaults to displaying tokens with standard names `(tMATIC, tLPT, tGRAPH)`.
+
+```typescript filename="DefaultMetadata" copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+**Result**: The SDK displays tokens with default names and avatars. Names: (`tMATIC`, `tLPT`, `tGRAPH`).
+
+### Custom Metadata with Name and Avatar
+
+You can customize the display names and avatars for individual tokens by providing the `tokenMetadata` parameter:
+
+```typescript filename="CustomMetadata" copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokenMetadata: {
+    [TokenSlugEnums.MATIC]: {
+      name: "tMATIC Stake Capital",
+      avatar: "https://example.com/avatar.png",
+    },
+    [TokenSlugEnums.LIVEPEER]: {
+      name: "tLPT Stake Capital",
+      avatar: "https://example.com/lpt-avatar.png",
+    },
+  },
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+**Result**: The SDK displays tokens with custom names and avatars.
+
+### Custom Metadata with Name Only
+
+You can customize the display names for individual tokens by providing the `tokenMetadata` parameter:
+
+```typescript filename="CustomMetadataName" copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokenMetadata: {
+    [TokenSlugEnums.MATIC]: {
+      name: "tMATIC Stake Capital",
+    },
+    [TokenSlugEnums.LIVEPEER]: {
+      name: "tLPT Stake Capital",
+    },
+  },
+  apiKey: ALCHEMY_API_KEY as string,
+});
+```
+
+**Result**: The SDK displays tokens with custom names and default avatars.
+
+## Summary
+
+The `tokenMetadata` configuration in `createTenderizeConfig` allows you to customize the display names and avatars for supported tokens within the Tenderize SDK. By leveraging `tokenMetadata`, you can enhance the user experience with personalized token representations.
+
+### Key Points
+
+- **Customization**: Tailor the `name` and `avatar` for each token to provide a more intuitive and visually appealing interface.
+- **Validity**: Ensure that avatar URLs are valid to display custom avatars. If the provided URL is invalid, the SDK will utilize fallback mechanisms, such as fetching the ENS avatar or defaulting to a predefined avatar, to ensure consistent token representation.
+- **Flexibility**: Adjust configurations based on your application's requirements and token preferences, enabling you to provide a user-friendly and customized experience.
