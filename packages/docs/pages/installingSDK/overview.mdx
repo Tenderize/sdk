@@ -1,62 +1,206 @@
-# SDK Overview: React SDK
+import { Callout } from "nextra/components";
+
+# Quick Start Guide
 
 ## Introduction
 
-Welcome to the documentation for our React SDK. This guide offers comprehensive information about our React SDK, designed to streamline the integration of our Tenderizers APP into React applications.
+Welcome to the Tenderizers SDK Quick Start Guide.
+This guide will help you get up and running quickly with the Tenderizers SDK
+by providing a complete example of how to set up and use the SDK in your application.
 
-## Key Features
+## Installation
 
-The React SDK provides:
+First, install the Tenderizers SDK using your preferred package manager:
 
-- A set of pre-built components and their equivalent Higher-Order Components (HOCs).
-- Helper functions based on the React Hooks API.
-
-These features enable seamless interaction with the underlying SDK, facilitating a variety of use cases.
-
-## Repository
-
-For access to the source code and further implementation details, please visit our [React SDK GitHub repository](https://github.com/Tenderize/sdk).
-
-## Language Support
-
-The SDK requires **React 17.0.0** or later, as it employs the React Context API.
-
-Several features utilize the React Hooks API, which also necessitates **React 17.0.0** or higher. It is crucial to follow the [rules of React Hooks](https://reactjs.org/docs/hooks-rules.html) when implementing these features. Regarding browser compatibility, the SDK bundle supports all major browsers.
-
-## Initialization
-
-Setting up the SDK in your codebase involves two primary steps.
-
-### Step 1: Install the SDK
-
-Install the SDK using one of the following package managers:
-
-```js filename="Install" copy
-// npm
+```sh npm2yarn copy
 npm i @tenderize/sdk
-
-// yarn
-yarn add @tenderize/sdk
-
-// bun
-bun install @tenderize/sdk
-
-// pnpm
-pnpm install @tenderize/sdk
 ```
 
-### Step 2: Import the SDK
+## Tenderizer Configuration
 
-After installing, import the SDK into your project as follows:
+The Tenderize SDK supports Matic, Livepeer, and Graph tokens.
+For each token, provide the address of the corresponding tenderizer
+to enable staking, withdrawing, and swapping within the SDK.
 
-```js filename="Import" copy
+```js filename="TENDERIZERS" copy
+import { TokenSlugEnums, TenderizersConfig } from "@tenderize/sdk";
+
+const TENDERIZERS: TenderizersConfig = {
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+};
+```
+
+### Chain Configuration
+
+To ensure smooth operation, set up the mainnet and Arbitrum chain configurations. The SDK supports both the mainnet and Arbitrum chains. The mainnet chain is used for Matic tokens, while the Arbitrum chain supports Livepeer and Graph tokens.
+
+First, install the recommended package to manage the chains:
+
+```sh npm2yarn copy
+npm i wagmi
+```
+
+<Callout type="info" emoji="ℹ️">
+  While any chain provider can be used, we recommend wagmi for its seamless
+  integration with our SDK.
+</Callout>
+
+```typescript filename="Chains"  copy
+import { arbitrum, mainnet } from "wagmi/chains";
+// Note: While any chain provider can be used, we recommend wagmi for its seamless integration with our SDK.
+
+import { TokenSlugEnums } from "@tenderize/sdk";
+
+const mainnetChain = {
+  ...mainnet,
+};
+
+const arbitrumChain = {
+  ...arbitrum,
+};
+
+const CHAINS: TenderizeChains = {
+  [TokenSlugEnums.MATIC]: mainnetChain, // Matic on mainnet
+  [TokenSlugEnums.LIVEPEER]: arbitrumChain, // Livepeer on arbitrum
+  [TokenSlugEnums.GRAPH]: arbitrumChain, // Graph on arbitrum
+};
+```
+
+## Example Usage
+
+Here is a complete example of how to set up the Tenderizers SDK in your application:
+
+```js filename="Example" copy
 import {
+  createTenderizeConfig,
   TenderizeProvider,
   Web3Provider,
   ThemeProvider,
-  IframeProvider,
-  createTenderizeConfig,
-  type TenderizeChains,
-  type TenderizersConfig,
+  TokenSlugEnums,
 } from "@tenderize/sdk";
+
+// Configuration setup using createTenderizeConfig
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  apiKey: ALCHEMY_API_KEY as string,
+});
+
+// Application structure using TenderizeProvider, Web3Provider, and ThemeProvider
+<TenderizeProvider config={config}>
+  {/* Default web3 configuration */}
+  <Web3Provider config={config.web3}>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </Web3Provider>
+</TenderizeProvider>;
 ```
+
+## Explanation
+
+### Configuration Setup
+
+- Utilize `createTenderizeConfig` to establish the configuration for the Tenderizers SDK.
+- The configuration encompasses tenderizers, chains, tokens, and an API key.
+
+### Application Structure
+
+- Enclose the application within `TenderizeProvider`, `Web3Provider`, and `ThemeProvider` to supply the necessary context and configuration to the application components.
+
+## Quick Start Guide for Tenderize SDK's Iframe Integration
+
+This guide provides a concise walkthrough on integrating the Tenderize SDK's Iframe functionality into your application. By following these steps, you will be able to generate a query string that reflects your token configurations and any specific UI customizations, such as disabling certain tabs.
+
+## Prerequisites
+
+Before you begin, ensure you have the following:
+
+- An application where you can integrate the Tenderize SDK Iframe.
+
+## Installation
+
+First, install the Tenderize SDK via npm:
+
+```sh npm2yarn copy
+npm i @tenderize/sdk
+```
+
+## Generating the Iframe Query String
+
+The generateIframeQueryString function is used to create a query string based on your token configurations and UI customizations.
+Below is an example demonstrating how to generate this query string:
+
+```typescript filename="Generate" copy
+import {
+  generateIframeQueryString,
+  TabEnum,
+  TokenSlugEnums,
+} from "@tenderize/sdk";
+
+const queryString = generateIframeQueryString({
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  disabledTabs: [TabEnum.SWAP],
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
+});
+```
+
+## Integrating the Iframe in Your Application
+
+The following example demonstrates how to integrate
+the generated query string into an Iframe within a React application:
+
+```js filename="App.tsx"  copy
+import React from "react";
+import {
+  generateIframeQueryString,
+  TabEnum,
+  TokenSlugEnums,
+} from "@tenderize/sdk";
+
+function App() {
+  const queryString = generateIframeQueryString({
+    [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    disabledTabs: [TabEnum.SWAP],
+    tokens: [
+      TokenSlugEnums.MATIC,
+      TokenSlugEnums.LIVEPEER,
+      TokenSlugEnums.GRAPH,
+    ],
+  });
+
+  return (
+    <iframe
+      src={`https://sdk-sdk.vercel.app?${queryString}`}
+      height="660px"
+      width="100vw"
+      style={{
+        border: 0,
+        width: "100%",
+        minWidth: "300px",
+      }}
+    />
+  );
+}
+
+export default App;
+```
+
+## Conclusion
+
+By following these steps, you can quickly and effectively integrate the Tenderize SDK's Iframe functionality into your application.
+This allows you to customize the UI and manage token configurations with ease.
+
+## Next Steps
+
+Having gained a foundational understanding of how to set up and utilize the Tenderizers SDK,
+you are now prepared to explore more advanced features and configurations. For comprehensive information, please refer to the complete documentation provided in this guide.
+
+By following this Quick Start Guide, you will be able to seamlessly integrate the Tenderizers SDK into your application and begin leveraging its features immediately.

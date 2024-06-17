@@ -1,3 +1,5 @@
+import { Callout } from "nextra/components";
+
 ## Importing Modules
 
 To start, import the essential modules and components from the SDK:
@@ -47,12 +49,14 @@ To ensure smooth operation, set up the mainnet and Arbitrum chain configurations
 
 First, install the recommended package to manage the chains:
 
-```bash filename="Recommended" copy
+```sh npm2yarn copy
 npm i wagmi
-yarn add wagmi
-bun install wagmi
-pnpm install wagmi
 ```
+
+<Callout type="info" emoji="ℹ️">
+  While any chain provider can be used, we recommend wagmi for its seamless
+  integration with our SDK.
+</Callout>
 
 ```typescript filename="Chains"  copy
 import { arbitrum, mainnet } from "wagmi/chains";

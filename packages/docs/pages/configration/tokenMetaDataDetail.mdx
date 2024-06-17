@@ -1,3 +1,5 @@
+import { Callout } from "nextra/components";
+
 # Token Metadata Configuration
 
 The `tokenMetadata` configuration within the `createTenderizeConfig` function allows for the customization of display names and avatars for supported tokens in the Tenderize SDK. This feature enhances the user interface by providing more intuitive and visually appealing token information.
@@ -87,7 +89,11 @@ const config = createTenderizeConfig({
 });
 ```
 
+<Callout  emoji="ℹ️">
+
 **Result**: The SDK displays tokens with default names and avatars. Names: (`tMATIC`, `tLPT`, `tGRAPH`).
+
+</Callout>
 
 ### Custom Metadata with Name and Avatar
 
@@ -114,7 +120,11 @@ const config = createTenderizeConfig({
 });
 ```
 
+<Callout  emoji="ℹ️">
+
 **Result**: The SDK displays tokens with custom names and avatars.
+
+</Callout>
 
 ### Custom Metadata with Name Only
 
@@ -139,7 +149,11 @@ const config = createTenderizeConfig({
 });
 ```
 
+<Callout  emoji="ℹ️">
+
 **Result**: The SDK displays tokens with custom names and default avatars.
+
+</Callout>
 
 ## Summary
 
