@@ -1,3 +1,5 @@
+import { Callout } from "nextra/components";
+
 # Tenderize SDK Configuration and Usage
 
 The Tenderize SDK enables seamless integration with blockchain networks using customizable configurations. Below is a detailed guide on setting up and utilizing the SDK with different web3 configurations.
@@ -47,7 +49,7 @@ import { Web3Provider } from "@tenderize/sdk";
 </Web3Provider>;
 ```
 
-## Internal Structure of Web3Provider
+## Web3Provider Internal Structure
 
 The `Web3Provider` component internally utilizes several key components to manage web3 state and interactions effectively:
 
@@ -115,7 +117,11 @@ If you have a custom Web3 provider, you can integrate it seamlessly into your ap
 
 ### Important Note
 
+<Callout  emoji="ℹ️">
+
 Ensure that the `CustomWeb3Provider` is configured correctly to avoid any errors within the SDK. The following example illustrates how to pass your custom provider to the `Web3Provider` component.
+
+</Callout>
 
 ### Example Usage
 
@@ -193,4 +199,10 @@ Apply consistent theming across your application using the `ThemeProvider` compo
 
 ## Note: Ensure Proper Component Usage
 
-To maintain optimal functionality and avoid potential issues, ensure the correct usage of all components (`TenderizeProvider`, `Web3Provider`, `ThemeProvider`, `App`) as demonstrated in the examples. Proper nesting and configuration of these components are essential for the Tenderize SDK to operate effectively within your application.
+<Callout type="warning" emoji="⚠️">
+  To maintain optimal functionality and avoid potential issues, ensure the
+  correct usage of all components (`TenderizeProvider`, `Web3Provider`,
+  `ThemeProvider`, `App`) as demonstrated in the examples. Proper nesting and
+  configuration of these components are essential for the Tenderize SDK to
+  operate effectively within your application.
+</Callout>

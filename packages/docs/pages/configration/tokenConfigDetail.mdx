@@ -1,3 +1,5 @@
+import { Callout } from "nextra/components";
+
 # Tokens Parameter Details
 
 The `tokens` parameter allows you to specify which tokens should be supported by the Tenderize SDK. Here’s how it works:
@@ -43,7 +45,11 @@ In this example, since no tokens array is provided, the SDK will default to supp
     });
     ```
 
+<Callout  emoji="ℹ️">
+
 **Result**: The SDK is configured to support only MATIC and LIVEPEER tokens.
+
+</Callout>
 
 ## 3. Support Single Token:
 
@@ -58,4 +64,8 @@ In this example, since no tokens array is provided, the SDK will default to supp
     });
     ```
 
+<Callout  emoji="ℹ️">
+
 **Result**: The SDK is configured to support only MATIC tokens.
+
+</Callout>
