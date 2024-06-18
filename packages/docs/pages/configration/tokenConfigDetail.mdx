@@ -27,6 +27,7 @@ const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -42,6 +43,7 @@ In this example, since no tokens array is provided, the SDK will default to supp
       chains: CHAINS,
       tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
       apiKey: ALCHEMY_API_KEY as string,
+      walletKey: WALLETCONNECT_PROJECT_ID as string,
     });
     ```
 
@@ -61,6 +63,7 @@ In this example, since no tokens array is provided, the SDK will default to supp
       chains: CHAINS,
       tokens: [TokenSlugEnums.MATIC],
       apiKey: ALCHEMY_API_KEY as string,
+      walletKey: WALLETCONNECT_PROJECT_ID as string,
     });
     ```
 

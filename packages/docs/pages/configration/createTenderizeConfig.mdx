@@ -26,6 +26,7 @@ const config = createTenderizeConfig({
     },
   },
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -42,6 +43,8 @@ In this example, we import the `TokenSlugEnums` and `createTenderizeConfig` func
 `tokenMetadata`: Provides metadata for each token, such as the token name.
 
 `apiKey`: Your Alchemy API key as a string.
+
+`walletKey`: Your Wallet connect project id as a string.
 
 ## Return Type
 
