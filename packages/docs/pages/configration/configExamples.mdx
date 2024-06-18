@@ -1,0 +1,103 @@
+# Tenderize SDK Configuration Examples
+
+The `createTenderizeConfig` function is central to setting up the Tenderize SDK. It returns a `TenderizeConfig` object, which is then used to initialize both the `Web3Provider` and the `TenderizeProvider`. This ensures your application is correctly configured to interact with the blockchain network.
+
+## Default Configuration
+
+The default configuration uses standard token settings and the Alchemy API key.
+
+### Example
+
+```typescript filename="DefaultConfig.ts" copy
+import {
+  createTenderizeConfig,
+  TenderizeProvider,
+  Web3Provider,
+  TokenSlugEnums,
+} from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: {
+    [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  },
+  chains: {
+    [TokenSlugEnums.MATIC]: mainnetChain,
+    [TokenSlugEnums.LIVEPEER]: arbitrumChain,
+    [TokenSlugEnums.GRAPH]: arbitrumChain,
+  },
+  apiKey: process.env.ALCHEMY_API_KEY as string,
+});
+```
+
+## Configuration with Custom Tokens
+
+Customize the tokens supported by the Tenderize SDK by specifying them in the tokens array.
+
+### Example
+
+```typescript filename="CustomTokens.ts" copy
+import {
+  createTenderizeConfig,
+  TenderizeProvider,
+  Web3Provider,
+  TokenSlugEnums,
+} from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: {
+    [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  },
+  chains: {
+    [TokenSlugEnums.MATIC]: mainnetChain,
+    [TokenSlugEnums.LIVEPEER]: arbitrumChain,
+  },
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  apiKey: process.env.ALCHEMY_API_KEY as string,
+});
+```
+
+Configuration with Custom Metadata
+You can further customize your configuration by adding custom metadata for the tokens, such as display names and avatars.
+
+Example
+
+```typescript filename="CustomMetadata.ts" copy
+import {
+  createTenderizeConfig,
+  TenderizeProvider,
+  Web3Provider,
+  TokenSlugEnums,
+} from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  tenderizers: {
+    [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+    [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  },
+  chains: {
+    [TokenSlugEnums.MATIC]: mainnetChain,
+    [TokenSlugEnums.LIVEPEER]: arbitrumChain,
+  },
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokenMetadata: {
+    [TokenSlugEnums.MATIC]: {
+      name: "tMATIC Stake Capital",
+      avatar: "https://example.com/avatar.png",
+    },
+    [TokenSlugEnums.LIVEPEER]: {
+      name: "tLPT Stake Capital",
+      avatar: "https://example.com/lpt-avatar.png",
+    },
+  },
+  apiKey: process.env.ALCHEMY_API_KEY as string,
+});
+```
+
+## Summary
+
+By using the createTenderizeConfig function, you can easily configure the Tenderize SDK to fit your application's needs.
+Whether you're using the default configuration, customizing the supported tokens, or adding detailed metadata,
+these examples provide a solid foundation for integrating the SDK into your project.

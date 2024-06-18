@@ -1,6 +1,7 @@
 {
   "configInfo": "Configuration Modules",
-  "createTenderizeConfig": "Creating a Tenderize Configuration",
-  "tokenConfigDetail": "Token Configuration Details",
-  "tokenMetaDataDetail": "Token Metadata Configuration"
+  "createTenderizeConfig": "Creating a Configuration",
+  "configExamples": "Configuration Examples",
+  "tokenConfigDetail": "Tokens Details",
+  "tokenMetaDataDetail": "Token Metadata Details"
 }

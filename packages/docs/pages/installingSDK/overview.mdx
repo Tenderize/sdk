@@ -18,7 +18,7 @@ npm i @tenderize/sdk
 
 ## Tenderizer Configuration
 
-The Tenderize SDK supports Matic, Livepeer, and Graph tokens.
+The Tenderize SDK supports `Matic`, `Livepeer`, and Graph tokens.
 For each token, provide the address of the corresponding tenderizer
 to enable staking, withdrawing, and swapping within the SDK.
 
@@ -34,7 +34,10 @@ const TENDERIZERS: TenderizersConfig = {
 
 ### Chain Configuration
 
-To ensure smooth operation, set up the mainnet and Arbitrum chain configurations. The SDK supports both the mainnet and Arbitrum chains. The mainnet chain is used for Matic tokens, while the Arbitrum chain supports Livepeer and Graph tokens.
+To ensure smooth operation, set up the `mainnet` and `Arbitrum` chain configurations.
+The SDK supports both the `mainnet` and `Arbitrum` chains.
+The `mainnet` chain is used for `Matic` tokens, while the `Arbitrum` chain supports `Livepeer`
+and `Graph` tokens.
 
 First, install the recommended package to manage the chains:
 
@@ -68,11 +71,11 @@ const CHAINS: TenderizeChains = {
 };
 ```
 
-## Example Usage
+## Set up config
 
-Here is a complete example of how to set up the Tenderizers SDK in your application:
+Here is an example of how to set up the config for Tenderizers SDK in your application:
 
-```js filename="Example" copy
+```js filename="Set up config" copy
 import {
   createTenderizeConfig,
   TenderizeProvider,
@@ -88,7 +91,30 @@ const config = createTenderizeConfig({
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
 });
+```
 
+## Comprehensive Integration Example with Default web3 Configuration
+
+Here’s how you can integrate everything together in your application using the
+`TenderizeProvider`, `Web3Provider`, and `ThemeProvider` components. In this example,
+we use the default web3 configuration from `config.web3`.
+
+### Example Usage
+
+```tsx filename="CompleteExample"  copy
+import {
+  createTenderizeConfig,
+  TenderizeProvider,
+  Web3Provider,
+  ThemeProvider,
+} from "@tenderize/sdk";
+// Configuration setup using createTenderizeConfig
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  apiKey: ALCHEMY_API_KEY as string,
+});
 // Application structure using TenderizeProvider, Web3Provider, and ThemeProvider
 <TenderizeProvider config={config}>
   {/* Default web3 configuration */}
@@ -109,7 +135,86 @@ const config = createTenderizeConfig({
 
 ### Application Structure
 
-- Enclose the application within `TenderizeProvider`, `Web3Provider`, and `ThemeProvider` to supply the necessary context and configuration to the application components.
+- Enclose the application within `TenderizeProvider`, `Web3Provider`, and `ThemeProvider`
+  to supply the necessary context and configuration to the application components.
+
+## Integrating a Custom Web3 Provider
+
+If you have a custom Web3 provider,
+you can integrate it seamlessly into your application by passing it to the `Web3Provider` component.
+This approach demonstrates the flexibility of using a custom Web3 provider with the Tenderize SDK.
+
+### Important Note
+
+<Callout emoji="ℹ️">
+  Ensure that the `CustomWeb3Provider` is configured correctly to avoid any
+  errors within the SDK. The following example illustrates how to pass your
+  custom provider to the `Web3Provider` component.
+</Callout>
+
+### Example Usage
+
+```tsx filename="CustomWeb3Provider" copy
+import { YourWeb3Provider } from "@your-provider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
+function CustomWeb3Provider({ children }: { children: React.ReactNode }) {
+  return (
+    <YourWeb3Provider config={config.web3}>
+      <QueryClientProvider client={queryClient}>
+        <WalletConnectProvider>{children}</WalletConnectProvider>
+      </QueryClientProvider>
+    </YourWeb3Provider>
+  );
+}
+
+export default CustomWeb3Provider;
+```
+
+<Callout type="info" emoji="ℹ️">
+  Note: The Tenderize SDK uses `ConnectKitProvider` for wallet connection.
+  Ensure that you configure your `WalletConnectProvider` inside your
+  `CustomWeb3Provider`.
+</Callout>
+
+## Complete Example with Custom Web3 Configuration
+
+Below is a comprehensive example of how to integrate the Tenderize SDK using a custom web3 configuration. This demonstrates the flexibility and customization options available for integrating your own web3 provider.
+
+### Example Usage
+
+```tsx filename="CompleteExampleWithCustomWeb3" copy
+import {
+  createTenderizeConfig,
+  TenderizeProvider,
+  ThemeProvider,
+} from "@tenderize/sdk";
+import { CustomWeb3Provider } from "@your-provider";
+
+// Configuration setup using createTenderizeConfig
+const config = createTenderizeConfig({
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  apiKey: ALCHEMY_API_KEY as string,
+});
+
+// Application structure using TenderizeProvider, CustomWeb3Provider, and ThemeProvider
+const App = () => (
+  <TenderizeProvider config={config}>
+    {/* Custom web3 configuration */}
+    <CustomWeb3Provider config={config.web3}>
+      <ThemeProvider>
+        <YourAppComponents />
+      </ThemeProvider>
+    </CustomWeb3Provider>
+  </TenderizeProvider>
+);
+
+export default App;
+```
 
 ## Quick Start Guide for Tenderize SDK's Iframe Integration
 
