@@ -34,7 +34,7 @@ export const createTenderizeConfig: CreateTenderizeConfig = (config) => {
   const wagmiChains: [Chain, ...Chain[]] = toChainArray(config.chains);
 
   const connector = walletConnect({
-    projectId: "eb8c224a8d2bd6c563d27ab354aef935",
+    projectId: config.walletKey,
   });
 
   return {
