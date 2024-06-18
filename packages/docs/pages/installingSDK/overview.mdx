@@ -88,8 +88,9 @@ import {
 const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
-  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -112,8 +113,9 @@ import {
 const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
-  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 // Application structure using TenderizeProvider, Web3Provider, and ThemeProvider
 <TenderizeProvider config={config}>
@@ -130,8 +132,12 @@ const config = createTenderizeConfig({
 
 ### Configuration Setup
 
-- Utilize `createTenderizeConfig` to establish the configuration for the Tenderizers SDK.
-- The configuration encompasses tenderizers, chains, tokens, and an API key.
+- Utilize [`createTenderizeConfig`](/configration/createTenderizeConfig) to establish the configuration for the Tenderizers SDK.
+- The configuration encompasses [`tenderizers`](/configration/configInfo#tenderizers-configuration),
+  [`chains`](/configration/configInfo#chain-configuration),
+  [`tokens`](/configration/configInfo#tokens-configuration),
+  [`API key`](configration/configInfo#steps-to-set-up-your-alchemy-api-key)
+  and a [`Wallet key`](/configration/configInfo#wallet-connect).
 
 ### Application Structure
 
@@ -197,8 +203,9 @@ import { CustomWeb3Provider } from "@your-provider";
 const config = createTenderizeConfig({
   tenderizers: TENDERIZERS,
   chains: CHAINS,
-  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 
 // Application structure using TenderizeProvider, CustomWeb3Provider, and ThemeProvider

@@ -16,6 +16,7 @@ const config = createTenderizeConfig({
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -99,6 +100,7 @@ const config = createTenderizeConfig({
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 // Application structure using TenderizeProvider, Web3Provider, and ThemeProvider
 <TenderizeProvider config={config}>
@@ -162,6 +164,7 @@ const config = createTenderizeConfig({
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 
 // Application structure using TenderizeProvider, CustomWeb3Provider, and ThemeProvider

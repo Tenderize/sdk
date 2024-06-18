@@ -28,6 +28,7 @@ const config = createTenderizeConfig({
     [TokenSlugEnums.GRAPH]: arbitrumChain,
   },
   apiKey: process.env.ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -56,6 +57,7 @@ const config = createTenderizeConfig({
   },
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: process.env.ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -93,6 +95,7 @@ const config = createTenderizeConfig({
     },
   },
   apiKey: process.env.ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 

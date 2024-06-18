@@ -27,15 +27,15 @@ The `tokens:` parameter allows you to specify which tokens should be supported b
 Here’s how it works:
 
 ```typescript filename="TokenConfigDetail" copy
-import {TokenSlugEnums,createTenderizeConfig } from "@tenderize/sdk";
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
-  {/*tenderizers: TENDERIZERS,*/}
-  {/*chains: CHAINS,*/}
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
-  {/*apiKey: ALCHEMY_API_KEY as string,*/}
-})
-
+  apiKey: ALCHEMY_API_KEY as string,
+  walletKey: WALLETCONNECT_PROJECT_ID as string,
+});
 ```
 
 ### Default Tokens
@@ -171,16 +171,47 @@ export type TokenMetadata = {
 };
 ```
 
-## Validator Profile
+## Wallet Connect
 
-The Tenderize SDK is designed to fetch validator profiles internally and provide details of validators that are associated with a specific tenderizer contract.
-Validators play a critical role in maintaining the security and efficiency of the network by validating transactions and staking tokens. This functionality is essential for ensuring the integrity and reliability of the blockchain network.
+WalletConnect is a protocol that allows you to connect your mobile wallet to decentralized applications (dApps).
+It supports a wide range of wallets and provides a secure and convenient way to interact with dApps. The Tenderize SDK can be configured to use WalletConnect, enhancing the user experience by enabling easy and secure wallet connections.
 
-### Detailed Explanation
+<Callout type="info" emoji="ℹ️">
+  Note: The Tenderize SDK uses `ConnectKitProvider` for wallet connection.
+  Ensure that you configure your WalletConnectProvider inside your
+  `CustomWeb3Provider`.
+</Callout>
 
-- **Internal Fetching**: The SDK automatically retrieves validator profiles, reducing the need for manual data handling and ensuring that the most current information is always available.
-- **Association with Tenderizer Contracts**: Each validator profile is linked to a specific tenderizer contract. This linkage allows for precise tracking and management of validators within the network.
-- **Security and Efficiency**: By validating transactions and staking tokens, validators help secure the network. Their role is crucial in preventing fraudulent activities and maintaining the overall health of the blockchain ecosystem.
+### Why Use WalletConnect
+
+- **Wide Compatibility**: Supports numerous wallets, including popular ones like MetaMask, Trust Wallet, and Rainbow.
+- **Secure Connections**: Uses end-to-end encryption to ensure secure connections between your application and the user's wallet.
+- **User Convenience**: Allows users to connect their mobile wallets to your dApp by scanning a QR code or using a deep link, providing a seamless experience.
+
+### Generating a WalletConnect Project ID Key
+
+Follow these steps to create a WalletConnect project ID key:
+
+1. **Visit WalletConnect Cloud**
+
+   - Navigate to the [WalletConnect Cloud](https://cloud.walletconnect.com/).
+
+2. **Create an Account**
+
+   - Sign up for a new account or sign in if you already have one.
+
+3. **Access Project Settings**
+
+   - Go to the dashboard and find the "Project Settings" section.
+
+4. **Generate Project ID**
+
+   - Look for the option to generate a new project ID key and follow the prompts.
+
+5. **Save Your Key**
+   - Ensure you securely store your new project ID key for future use.
+
+For detailed guidance, refer to the official [WalletConnect Documentation](https://docs.walletconnect.com/).
 
 ## RPC Provider
 
@@ -214,14 +245,14 @@ Tenderize SDK utilizes Alchemy as its RPC provider. Alchemy provides robust and 
 
 Ensure you securely store this API key, as it will be required for configuring the Tenderize SDK to interact with blockchain networks via Alchemy.
 
-## Accessing the API Key Securely
+## Accessing the Keys Securely
 
 ### Environment Variable Setup
 
-To securely access your Alchemy API key within your application, follow these guidelines based on your build tool or environment:
+To securely access your Alchemy API key and WalletConnect project ID within your application, follow these guidelines based on your build tool or environment:
 
-- **Using Vite**: Access the API key using `import.meta.env.ALCHEMY_API_KEY`. Refer to the [Vite documentation](https://vitejs.dev/guide/env-and-mode.html#env-files) for more details on environment variables in Vite.
-- **Using Node.js or npm**: Access the API key using `process.env.ALCHEMY_API_KEY`.
+- **Using Vite**: Access the keys using `import.meta.env.ALCHEMY_API_KEY` and `import.meta.env.WALLETCONNECT_PROJECT_ID`. Refer to the [Vite documentation](https://vitejs.dev/guide/env-and-mode.html#env-files) for more details on environment variables in Vite.
+- **Using Node.js or npm**: Access the keys using `process.env.ALCHEMY_API_KEY` and `process.env.WALLETCONNECT_PROJECT_ID`.
 
 ### Example
 
@@ -230,6 +261,7 @@ You might have a `.env` file as follows:
 ```plaintext
 # .env
 ALCHEMY_API_KEY=your-alchemy-api-key
+WALLETCONNECT_PROJECT_ID=your-walletconnect-project-id
 ```
 
 ### Security Best Practices
@@ -238,19 +270,13 @@ ALCHEMY_API_KEY=your-alchemy-api-key
 - **Use Environment Variables**: Store sensitive information like API keys in environment variables to maintain the security of your application.
 - **Environment Variable Management**: Utilize tools and practices for managing environment variables securely across different development, staging, and production environments.
 
-## Wallet Connect
+## Validator Profile
 
-WalletConnect is a protocol that allows you to connect your mobile wallet to decentralized applications (dApps).
-It supports a wide range of wallets and provides a secure and convenient way to interact with dApps. The Tenderize SDK can be configured to use WalletConnect, enhancing the user experience by enabling easy and secure wallet connections.
+The Tenderize SDK is designed to fetch validator profiles internally and provide details of validators that are associated with a specific tenderizer contract.
+Validators play a critical role in maintaining the security and efficiency of the network by validating transactions and staking tokens. This functionality is essential for ensuring the integrity and reliability of the blockchain network.
 
-<Callout type="info" emoji="ℹ️">
-  Note: The Tenderize SDK uses `ConnectKitProvider` for wallet connection.
-  Ensure that you configure your WalletConnectProvider inside your
-  `CustomWeb3Provider`.
-</Callout>
+### Detailed Explanation
 
-### Why Use WalletConnect
-
-- **Wide Compatibility**: Supports numerous wallets, including popular ones like MetaMask, Trust Wallet, and Rainbow.
-- **Secure Connections**: Uses end-to-end encryption to ensure secure connections between your application and the user's wallet.
-- **User Convenience**: Allows users to connect their mobile wallets to your dApp by scanning a QR code or using a deep link, providing a seamless experience.
+- **Internal Fetching**: The SDK automatically retrieves validator profiles, reducing the need for manual data handling and ensuring that the most current information is always available.
+- **Association with Tenderizer Contracts**: Each validator profile is linked to a specific tenderizer contract. This linkage allows for precise tracking and management of validators within the network.
+- **Security and Efficiency**: By validating transactions and staking tokens, validators help secure the network. Their role is crucial in preventing fraudulent activities and maintaining the overall health of the blockchain ecosystem.
