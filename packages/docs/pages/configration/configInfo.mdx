@@ -1,51 +1,75 @@
 import { Callout } from "nextra/components";
 
-## Importing Modules
+# Configuration Options
 
-To start, import the essential modules and components from the SDK:
+The following TypeScript definitions outline the parameters for the `createTenderizeConfig` function.
+These parameters include configurations for tenderizers, chains, tokens, and token metadata.
 
-```js filename="import" copy
-import {
-  TokenSlugEnums,
-  createTenderizeConfig,
-  type TenderizeChains,
-  type TenderizersConfig,
-} from "@tenderize/sdk";
+```typescript filename="Params" copy
+export type TenderizeConfigOptions = {
+  tenderizers: TenderizersConfig;
+  chains: TenderizeChains;
+  tokens?: TokenSlugEnums[];
+  tokenMetadata?: {
+    [key in TokenSlugEnums]?: TokenMetadata;
+  };
+};
+
+export type TokenMetadata = {
+  name: string;
+  avatar?: string;
+};
 ```
 
-## Type Definitions
+## Tokens Configuration
 
-The following type definitions are crucial for configuring the SDK:
+The `tokens:` parameter allows you to specify which tokens should be supported by the Tenderize SDK.
+Here’s how it works:
 
-```js filename="Types" copy
-export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
-export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };
+```typescript filename="TokenConfigDetail" copy
+import {TokenSlugEnums,createTenderizeConfig } from "@tenderize/sdk";
 
+const config = createTenderizeConfig({
+  {/*tenderizers: TENDERIZERS,*/}
+  {/*chains: CHAINS,*/}
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
+  {/*apiKey: ALCHEMY_API_KEY as string,*/}
+})
+
+```
+
+### Default Tokens
+
+If no `tokens` array is provided, the SDK will default to supporting the following tokens: `TokenSlugEnums.MATIC`, `TokenSlugEnums.LIVEPEER`, and `TokenSlugEnums.GRAPH`.
+
+### Custom Tokens
+
+You can customize the tokens by providing an array of `TokenSlugEnums` values. For example, `[TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER]` specifies that only MATIC and LIVEPEER tokens should be supported.
+
+### Single Token
+
+You can also specify a single token, e.g., `[TokenSlugEnums.MATIC]`, to support only MATIC tokens.
+
+### Token Type `TokenSlugEnums`
+
+The `TokenSlugEnums` enumeration defines the supported tokens within the Tenderize SDK.
+Each token is associated with a unique string identifier,
+making it easy to reference and manage tokens in your application.
+
+```typescript filename="TokenSlugEnums" copy
 export enum TokenSlugEnums {
   LIVEPEER = "livepeer",
   MATIC = "matic",
   GRAPH = "graph",
 }
-
 ```
 
-## Tenderizer Configuration
+## Chain Configuration
 
-The Tenderize SDK supports Matic, Livepeer, and Graph tokens.
-For each token, provide the address of the corresponding tenderizer
-to enable staking, withdrawing, and swapping within the SDK.
-
-```js filename="TENDERIZERS" copy
-const TENDERIZERS: TenderizersConfig = {
-  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
-  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
-  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
-};
-```
-
-### Chain Configuration
-
-To ensure smooth operation, set up the mainnet and Arbitrum chain configurations. The SDK supports both the mainnet and Arbitrum chains. The mainnet chain is used for Matic tokens, while the Arbitrum chain supports Livepeer and Graph tokens.
+To ensure smooth operation, set up the `mainnet` and `Arbitrum` chain configurations.
+The SDK supports both the `mainnet` and `Arbitrum` chains.
+The `mainnet` chain is used for `Matic` tokens, while the `Arbitrum` chain supports
+`Livepeer` and `Graph` tokens.
 
 First, install the recommended package to manage the chains:
 
@@ -76,3 +100,157 @@ const CHAINS: TenderizeChains = {
   [TokenSlugEnums.GRAPH]: arbitrumChain, // Graph on arbitrum
 };
 ```
+
+### Type Definition
+
+The following type definitions are crucial for configuring the SDK CHAINS:
+
+```js filename="Types" copy
+export type TenderizeChains = { [token in TokenSlugEnums]?: Chain };
+```
+
+### Explanation
+
+In this example, we import the arbitrum and mainnet chains from the wagmi/chains package, which is recommended for use with the Tenderize SDK due to its internal compatibility with wagmi. We then define chain configurations and map token slugs to their respective chains.
+
+`TokenSlugEnums.MATIC`: Configured to use the mainnet chain for `MATIC`.
+
+`TokenSlugEnums.LIVEPEER`: Configured to use the arbitrum chain for `Livepeer`.
+
+`TokenSlugEnums.GRAPH`: Configured to use the arbitrum chain for `The Graph`.
+
+## Tenderizers Configuration
+
+The Tenderize SDK supports `Matic`, `Livepeer`, and `Graph` tokens.
+For each token, provide the address of the corresponding tenderizer
+to enable staking, withdrawing, and swapping within the SDK.
+
+```js filename="TENDERIZERS" copy
+const TENDERIZERS: TenderizersConfig = {
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+};
+```
+
+### Type Definition
+
+The following type definitions are crucial for configuring the SDK TENDERIZERS:
+
+```js filename="Types" copy
+export type TenderizersConfig = { [token in TokenSlugEnums]?: Address };
+```
+
+### Explanation
+
+In this example, we import the TenderizersConfig type from the @tenderize/sdk package and define the TENDERIZERS configuration object. This object maps token slugs (such as MATIC, LIVEPEER, and GRAPH) to their respective contract addresses.
+
+`TokenSlugEnums.MATIC`: Represents the token slug for `MATIC`.
+
+`TokenSlugEnums.LIVEPEER`: Represents the token slug for `Livepeer`.
+
+`TokenSlugEnums.GRAPH`: Represents the token slug for The `Graph`.
+
+<Callout type="info" emoji="ℹ️">
+  `Additional Notes`: Ensure you have the correct contract addresses and token
+  slugs corresponding to the tokens you intend to configure. This setup is
+  crucial for the proper functioning of the Tenderize SDK within your blockchain
+  application.
+</Callout>
+
+## Token Metadata Configuration
+
+The `tokenMetadata` configuration within the `createTenderizeConfig` function allows for the customization of display names and avatars for supported tokens in the Tenderize SDK. This feature enhances the user interface by providing more intuitive and visually appealing token information.
+
+## `tokenMetadata` Type Definition
+
+```typescript filename="TokenMetadataType" copy
+export type TokenMetadata = {
+  name: string;
+  avatar?: string;
+};
+```
+
+## Validator Profile
+
+The Tenderize SDK is designed to fetch validator profiles internally and provide details of validators that are associated with a specific tenderizer contract.
+Validators play a critical role in maintaining the security and efficiency of the network by validating transactions and staking tokens. This functionality is essential for ensuring the integrity and reliability of the blockchain network.
+
+### Detailed Explanation
+
+- **Internal Fetching**: The SDK automatically retrieves validator profiles, reducing the need for manual data handling and ensuring that the most current information is always available.
+- **Association with Tenderizer Contracts**: Each validator profile is linked to a specific tenderizer contract. This linkage allows for precise tracking and management of validators within the network.
+- **Security and Efficiency**: By validating transactions and staking tokens, validators help secure the network. Their role is crucial in preventing fraudulent activities and maintaining the overall health of the blockchain ecosystem.
+
+## RPC Provider
+
+The Remote Procedure Call (RPC) provider is a critical component for interacting with blockchain networks. It allows your application to send requests to the blockchain and receive responses. In the context of the Tenderize SDK, the RPC provider facilitates seamless communication with the Ethereum network, enabling operations such as reading data from smart contracts, sending transactions, and interacting with decentralized applications (dApps).
+
+### Why We Need an RPC Provider
+
+An RPC provider is essential for the following reasons:
+
+- **Blockchain Interaction**: It enables your application to interact with the blockchain, including querying data, sending transactions, and subscribing to events.
+- **Network Communication**: Provides a bridge between your application and the blockchain network, ensuring smooth and efficient communication.
+- **Decentralized Operations**: Supports decentralized operations by allowing your application to execute functions on the blockchain without relying on centralized servers.
+
+### Using Alchemy as the RPC Provider
+
+Tenderize SDK utilizes Alchemy as its RPC provider. Alchemy provides robust and scalable infrastructure for blockchain applications, offering high availability and performance. Here's how to configure the Tenderize SDK with Alchemy:
+
+#### Steps to Set Up Your Alchemy API Key
+
+1. **Create an Alchemy Account**: Visit [Supernode](https://www.alchemy.com/supernode) and sign up for an account.
+
+2. **Create an App**:
+
+   - Navigate to your Alchemy dashboard.
+   - Create a new app.
+   - Select your desired Ethereum network (e.g., Mainnet, Rinkeby).
+
+3. **Obtain API Key**:
+   - Locate your newly created app in the dashboard.
+   - Find the "View Key" section and copy your API key.
+
+Ensure you securely store this API key, as it will be required for configuring the Tenderize SDK to interact with blockchain networks via Alchemy.
+
+## Accessing the API Key Securely
+
+### Environment Variable Setup
+
+To securely access your Alchemy API key within your application, follow these guidelines based on your build tool or environment:
+
+- **Using Vite**: Access the API key using `import.meta.env.ALCHEMY_API_KEY`. Refer to the [Vite documentation](https://vitejs.dev/guide/env-and-mode.html#env-files) for more details on environment variables in Vite.
+- **Using Node.js or npm**: Access the API key using `process.env.ALCHEMY_API_KEY`.
+
+### Example
+
+You might have a `.env` file as follows:
+
+```plaintext
+# .env
+ALCHEMY_API_KEY=your-alchemy-api-key
+```
+
+### Security Best Practices
+
+- **Do Not Hardcode API Keys**: Avoid exposing your API keys directly in your source code or version control repositories.
+- **Use Environment Variables**: Store sensitive information like API keys in environment variables to maintain the security of your application.
+- **Environment Variable Management**: Utilize tools and practices for managing environment variables securely across different development, staging, and production environments.
+
+## Wallet Connect
+
+WalletConnect is a protocol that allows you to connect your mobile wallet to decentralized applications (dApps).
+It supports a wide range of wallets and provides a secure and convenient way to interact with dApps. The Tenderize SDK can be configured to use WalletConnect, enhancing the user experience by enabling easy and secure wallet connections.
+
+<Callout type="info" emoji="ℹ️">
+  Note: The Tenderize SDK uses `ConnectKitProvider` for wallet connection.
+  Ensure that you configure your WalletConnectProvider inside your
+  `CustomWeb3Provider`.
+</Callout>
+
+### Why Use WalletConnect
+
+- **Wide Compatibility**: Supports numerous wallets, including popular ones like MetaMask, Trust Wallet, and Rainbow.
+- **Secure Connections**: Uses end-to-end encryption to ensure secure connections between your application and the user's wallet.
+- **User Convenience**: Allows users to connect their mobile wallets to your dApp by scanning a QR code or using a deep link, providing a seamless experience.
