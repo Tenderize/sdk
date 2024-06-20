@@ -36,6 +36,7 @@ const CHAINS: TenderizeChains = {
 };
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
