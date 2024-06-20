@@ -39,7 +39,7 @@ export type TokenMetadata = {
 
 // Define the conditional ConfigOptions type
 export type Web3ConfigOptions = {
-  appName?: string;
+  appName: string;
   appDescription?: string;
   appUrl?: string;
   appIcon?: string;
@@ -49,6 +49,7 @@ export type TenderizeConfigOptions = {
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
   tokens?: TokenSlugEnums[];
+  walletConnectProjectId: string;
   tokenMetadata?: {
     [key in TokenSlugEnums]?: TokenMetadata;
   };
