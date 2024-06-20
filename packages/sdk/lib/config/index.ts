@@ -3,10 +3,11 @@ import type {
   TenderizeConfig,
   TenderizeConfigOptions,
 } from "@lib/types";
+import { getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { getDefaultConfig } from "connectkit";
 import { createConfig, http } from "wagmi";
 import { arbitrum, mainnet, type Chain } from "wagmi/chains";
-import { safe, walletConnect } from "wagmi/connectors";
+import { safe } from "wagmi/connectors";
 
 interface CreateTenderizeConfig {
   (options: TenderizeConfigOptions): TenderizeConfig;
@@ -33,14 +34,15 @@ export const createTenderizeConfig: CreateTenderizeConfig = (config) => {
   const defaultChains = [mainnet, arbitrum];
   const wagmiChains: [Chain, ...Chain[]] = toChainArray(config.chains);
 
-  const connector = walletConnect({
+  const { connectors } = getDefaultWallets({
+    appName: "Tenderize App",
     projectId: config.walletKey,
   });
 
   return {
     tenderizers: config.tenderizers,
     chains: config.chains,
-    connectors: [connector, safe()],
+    connectors: [...connectors, safe()],
     web3: createConfig(
       getDefaultConfig({
         // Your dApps chains

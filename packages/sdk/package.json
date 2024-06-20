@@ -49,7 +49,8 @@
     "viem": "^2.7.19",
     "wagmi": "^2.5.7",
     "zustand": "^4.5.2",
-    "react-router-dom": "^6.22.3"
+    "react-router-dom": "^6.22.3",
+    "@rainbow-me/rainbowkit": "^2.1.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.17",
