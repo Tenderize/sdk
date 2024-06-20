@@ -36,7 +36,7 @@ export const createTenderizeConfig: CreateTenderizeConfig = (config) => {
 
   const { connectors } = getDefaultWallets({
     appName: config.appName,
-    projectId: config.walletKey,
+    projectId: config.walletConnectProjectId,
   });
 
   return {

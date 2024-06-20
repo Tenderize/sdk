@@ -41,7 +41,8 @@ const config = createTenderizeConfig({
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
   apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string,
-  walletKey: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: import.meta.env
+    .VITE_WALLETCONNECT_PROJECT_ID as string,
 });
 
 const iframeConfig = getIframeConfig(window.location.search);

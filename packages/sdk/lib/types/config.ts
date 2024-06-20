@@ -49,7 +49,7 @@ export type TenderizeConfigOptions = {
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
   tokens?: TokenSlugEnums[];
-  walletKey: string;
+  walletConnectProjectId: string;
   tokenMetadata?: {
     [key in TokenSlugEnums]?: TokenMetadata;
   };
