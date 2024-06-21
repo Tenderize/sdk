@@ -17,6 +17,7 @@ import {
 } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: {
     [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
     [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
@@ -28,7 +29,7 @@ const config = createTenderizeConfig({
     [TokenSlugEnums.GRAPH]: arbitrumChain,
   },
   apiKey: process.env.ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -47,6 +48,7 @@ import {
 } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: {
     [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
     [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
@@ -57,7 +59,7 @@ const config = createTenderizeConfig({
   },
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: process.env.ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -75,6 +77,7 @@ import {
 } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: {
     [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
     [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
@@ -95,7 +98,7 @@ const config = createTenderizeConfig({
     },
   },
   apiKey: process.env.ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
