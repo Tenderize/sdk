@@ -24,10 +24,11 @@ You can also specify a single token, e.g., `[TokenSlugEnums.MATIC]`, to support 
 import { createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -39,11 +40,12 @@ In this example, since no tokens array is provided, the SDK will default to supp
     import {TokenSlugEnums,createTenderizeConfig } from "@tenderize/sdk";
 
     const config = createTenderizeConfig({
+      appName: "Tenderize App",
       tenderizers: TENDERIZERS,
       chains: CHAINS,
       tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
       apiKey: ALCHEMY_API_KEY as string,
-      walletKey: WALLETCONNECT_PROJECT_ID as string,
+       walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
     });
     ```
 
@@ -59,11 +61,12 @@ In this example, since no tokens array is provided, the SDK will default to supp
      import {TokenSlugEnums,createTenderizeConfig } from "@tenderize/sdk";
 
     const config = createTenderizeConfig({
+      appName: "Tenderize App",
       tenderizers: TENDERIZERS,
       chains: CHAINS,
       tokens: [TokenSlugEnums.MATIC],
       apiKey: ALCHEMY_API_KEY as string,
-      walletKey: WALLETCONNECT_PROJECT_ID as string,
+       walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
     });
     ```
 

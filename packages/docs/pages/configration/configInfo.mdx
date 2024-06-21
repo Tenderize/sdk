@@ -7,6 +7,7 @@ These parameters include configurations for tenderizers, chains, tokens, and tok
 
 ```typescript filename="Params" copy
 export type TenderizeConfigOptions = {
+  appName: string;
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
   tokens?: TokenSlugEnums[];
@@ -21,6 +22,12 @@ export type TokenMetadata = {
 };
 ```
 
+## App Name
+
+When initializing your application configuration, you need to provide a value for the `appName`.
+This value should be a string that represents the name of your application.
+It is recommended to choose a unique and descriptive name to avoid confusion with other applications.
+
 ## Tokens Configuration
 
 The `tokens:` parameter allows you to specify which tokens should be supported by the Tenderize SDK.
@@ -30,11 +37,12 @@ Here’s how it works:
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 

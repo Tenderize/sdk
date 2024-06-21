@@ -12,11 +12,12 @@ Begin by creating a configuration using the `createTenderizeConfig` function. Th
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -96,11 +97,12 @@ import {
 } from "@tenderize/sdk";
 // Configuration setup using createTenderizeConfig
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 // Application structure using TenderizeProvider, Web3Provider, and ThemeProvider
 <TenderizeProvider config={config}>
@@ -160,11 +162,12 @@ import { CustomWeb3Provider } from "@your-provider";
 
 // Configuration setup using createTenderizeConfig
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 
 // Application structure using TenderizeProvider, CustomWeb3Provider, and ThemeProvider

@@ -25,11 +25,12 @@ When no `tokenMetadata` is provided, the SDK defaults to displaying tokens with 
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -43,6 +44,7 @@ You can customize the `name` and `avatar` for individual tokens by providing the
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
@@ -57,7 +59,7 @@ const config = createTenderizeConfig({
     },
   },
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -84,11 +86,12 @@ If no `tokenMetadata` is provided, the SDK defaults to displaying tokens with st
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -106,6 +109,7 @@ You can customize the display names and avatars for individual tokens by providi
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
@@ -120,7 +124,7 @@ const config = createTenderizeConfig({
     },
   },
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -138,6 +142,7 @@ You can customize the display names for individual tokens by providing the `toke
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
@@ -150,7 +155,7 @@ const config = createTenderizeConfig({
     },
   },
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 

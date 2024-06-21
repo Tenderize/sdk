@@ -12,6 +12,7 @@ The following example demonstrates how to create a configuration for the Tenderi
 import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
 
 const config = createTenderizeConfig({
+  appName: "Tenderize App",
   tenderizers: TENDERIZERS,
   chains: CHAINS,
   tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER],
@@ -26,7 +27,7 @@ const config = createTenderizeConfig({
     },
   },
   apiKey: ALCHEMY_API_KEY as string,
-  walletKey: WALLETCONNECT_PROJECT_ID as string,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
 });
 ```
 
@@ -44,7 +45,7 @@ In this example, we import the `TokenSlugEnums` and `createTenderizeConfig` func
 
 `apiKey`: Your Alchemy API key as a string.
 
-`walletKey`: Your Wallet connect project id as a string.
+`walletConnectProjectId`: Your Wallet connect project id as a string.
 
 ## Return Type
 
