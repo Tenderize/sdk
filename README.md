@@ -1,9 +1,3 @@
----
-title: Tenderizers SDK
-description: Comprehensive SDK for integrating tender operations into applications seamlessly.
-sidebar_position: 1
----
-
 # Tenderizers SDK
 
 ### Overview
