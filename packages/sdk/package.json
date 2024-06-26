@@ -1,6 +1,6 @@
 {
   "name": "@tenderize/sdk",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "type": "module",
   "private": false,
   "main": "./dist/main.js",
