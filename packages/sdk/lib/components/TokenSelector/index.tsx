@@ -12,6 +12,7 @@ import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import { Button, DropdownMenu as DropdownMenuRadix } from "@radix-ui/themes";
 
 import { useTenderizerData } from "@lib/hooks";
+import { getDefaultToken } from "@lib/utils";
 import React, { useEffect, type FC } from "react";
 import { TokenAvatar } from "../TokenAvatar";
 
@@ -28,7 +29,7 @@ interface TokenSelectorProps extends DropdownMenuRadixProps {
 }
 
 export const TokenSelector: FC<TokenSelectorProps> = (props) => {
-  const { action = ActionEnums.STAKE, defaultValue } = props;
+  const { action = ActionEnums.STAKE } = props;
   const { setSelectedToken } = useSelectedTokenStore();
   const selectedToken = useSelectedToken();
   const { tokens } = useTenderizeConfigStore();
@@ -36,14 +37,15 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const tenderizer = useTenderizer(selectedToken.slug);
   const chainId = useChainId(selectedToken.slug);
   const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
+  const defaultToken = getDefaultToken(tokens);
 
   const isWrappedToken = (action: ActionEnums) => {
     return action !== ActionEnums.STAKE;
   };
 
   useEffect(() => {
-    if (defaultValue) setSelectedToken(defaultValue);
-  }, [defaultValue, setSelectedToken]);
+    if (defaultToken) setSelectedToken(defaultToken);
+  }, [defaultToken, setSelectedToken]);
 
   const Icon: FC<{
     action: ActionEnums;
