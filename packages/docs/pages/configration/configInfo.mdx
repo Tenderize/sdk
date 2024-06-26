@@ -10,6 +10,8 @@ export type TenderizeConfigOptions = {
   appName: string;
   tenderizers: TenderizersConfig;
   chains: TenderizeChains;
+  apiKey?: string | undefined;
+  transports?: Record<number, Transport> | undefined;
   tokens?: TokenSlugEnums[];
   tokenMetadata?: {
     [key in TokenSlugEnums]?: TokenMetadata;
@@ -272,11 +274,55 @@ ALCHEMY_API_KEY=your-alchemy-api-key
 WALLETCONNECT_PROJECT_ID=your-walletconnect-project-id
 ```
 
-### Security Best Practices
-
+<Callout type="info" emoji="ℹ️">
+`Security Best Practices`
 - **Do Not Hardcode API Keys**: Avoid exposing your API keys directly in your source code or version control repositories.
 - **Use Environment Variables**: Store sensitive information like API keys in environment variables to maintain the security of your application.
-- **Environment Variable Management**: Utilize tools and practices for managing environment variables securely across different development, staging, and production environments.
+- **Environment Variable Management**: Utilize tools and practices for managing environment variables securely across different development,
+  staging, and production environments.
+
+</Callout>
+
+## Configuring Custom RPC Providers in Tenderize SDK
+
+To ensure your decentralized application (dApp) interacts seamlessly with blockchain networks,
+it's crucial to configure the RPC (Remote Procedure Call) providers appropriately.
+While the Tenderize SDK defaults to using Alchemy's APIs,
+you may need to integrate custom RPC providers based on your project's specific requirements.
+
+### Here is a list of various RPC providers that you can use to customize your blockchain interactions:
+
+- [Infura](https://infura.io/) - Offers a suite of blockchain developer tools including access to Ethereum and IPFS networks.
+- [Alchemy](https://www.alchemy.com/) - Provides a powerful platform for blockchain and Web3 development.
+- [QuickNode](https://www.quicknode.com/) - Provides high-speed infrastructure for building and operating dApps.
+- [Chainstack](https://chainstack.com/) - Offers easy deployment and management of blockchain nodes.
+- [Ankr](https://www.ankr.com/) - Provides decentralized web services and RPC infrastructure.
+
+### Configure `transports`
+
+```typescript filename="Transports" copy
+import { http } from "some-http-lib"; // Replace with your HTTP client import
+
+const yourCustomTransports = {
+  1: http("https://<your-rpc-url-for-mainnet>"), // Example for Ethereum Mainnet
+  2: http("https://<your-rpc-url-for-arbitrum>"), // Example for Arbitrum Mainnet
+};
+```
+
+#### Example usage
+
+```typescript filename="TokenConfigDetail" copy
+import { TokenSlugEnums, createTenderizeConfig } from "@tenderize/sdk";
+
+const config = createTenderizeConfig({
+  appName: "Tenderize App",
+  tenderizers: TENDERIZERS,
+  chains: CHAINS,
+  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
+  transports: yourCustomTransports,
+  walletConnectProjectId: WALLETCONNECT_PROJECT_ID as string,
+});
+```
 
 ## Validator Profile
 
