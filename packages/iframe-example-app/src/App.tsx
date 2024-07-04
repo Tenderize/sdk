@@ -11,11 +11,6 @@ function App() {
     [TokenSlugEnums.LIVEPEER]: "0x4a3c14d7450c30f712e89659af21f90df56bc9ba",
     [TokenSlugEnums.GRAPH]: "0x4003e23be46f3bf2b50c3c7f8b13aaecdc71ea72",
     disabledTabs: [TabEnum.SWAP],
-    tokens: [
-      TokenSlugEnums.MATIC,
-      TokenSlugEnums.LIVEPEER,
-      TokenSlugEnums.GRAPH,
-    ],
   });
   return (
     <iframe

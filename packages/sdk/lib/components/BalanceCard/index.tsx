@@ -41,7 +41,10 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
-  const { name, avatar: metaDataAvatar } = useTokenMetadataByToken(token);
+  const { name, avatar: metaDataAvatar } = useTokenMetadataByToken(
+    token,
+    tenderizerData.validator
+  );
   return (
     <Card
       variant="classic"

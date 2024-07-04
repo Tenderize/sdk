@@ -44,7 +44,6 @@ const queryString = generateIframeQueryString({
   [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
   [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
   disabledTabs: [TabEnum.SWAP],
-  tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH],
 });
 ```
 
@@ -53,7 +52,6 @@ const queryString = generateIframeQueryString({
 - **generateIframeQueryString**: This function generates a query string based on the provided token configurations and UI customizations.
 - **Token Configurations**: Map each token (e.g., MATIC, LIVEPEER, GRAPH) to its respective contract address.
 - **disabledTabs**: Specify which tabs should be disabled in the Iframe UI. In this example, the "SWAP" tab is disabled.
-- **tokens**: List the tokens that should be included in the configuration.
 
 ## IframeConfigMap Parameters Type Definition
 
@@ -72,10 +70,7 @@ export type IframeTokenConfigMap = {
   [Key in TokenSlugEnums]?: Address;
 };
 
-type IframeConfigMap = IframeTokenConfigMap &
-  TabConfig & {
-    tokens?: TokenSlugEnums[];
-  };
+type IframeConfigMap = IframeTokenConfigMap & TabConfig;
 ```
 
 # Example Use Case
@@ -87,11 +82,6 @@ function App() {
     [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
     [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
     disabledTabs: [TabEnum.SWAP],
-    tokens: [
-      TokenSlugEnums.MATIC,
-      TokenSlugEnums.LIVEPEER,
-      TokenSlugEnums.GRAPH,
-    ],
   });
   return (
     <iframe
@@ -110,9 +100,9 @@ function App() {
 
 # Configuration Explanation
 
-### Token Addresses
+### Tendrizer Addresses
 
-Ensure that you pass valid addresses for the tokens included in the `IframeConfigMap`.
+Ensure that you pass valid `Tendrizer` addresses for the tokens included in the `IframeConfigMap`.
 The addresses must correspond to the tokens you configure.
 
 ```typescript filename="TokenAddresses" copy
@@ -137,19 +127,46 @@ import { TabEnum } from "@tenderize/sdk";
 disabledTabs: [TabEnum.SWAP];
 ```
 
-### Tokens:
+### Tokens Configuration:
 
-Use the tokens property to configure which tokens should be included in the Iframe. This array can include any combination of
-TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, and TokenSlugEnums.GRAPH.
+To configure which tokens should be included in the Iframe,
+use the tokens property. you now configure tokens through
+their corresponding addresses. The following example demonstrates how to set up the tokens:
+
+### Example 1: Three Tokens Setup
 
 ```js filename="Tokens"  copy
 import { TokenSlugEnums } from "@tenderize/sdk";
 
-tokens: [TokenSlugEnums.MATIC, TokenSlugEnums.LIVEPEER, TokenSlugEnums.GRAPH];
+import { TokenSlugEnums } from "@tenderize/sdk";
+
+{
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.GRAPH]: "0x4557B18E779944BFE9d78A672452331C186a9f48"
+}
 ```
 
-`If no tokens are provided, the SDK will display the default tokens.`
-For more detailed information on configuring tokens, refer to the [Token Detail](/configration/tokenConfigDetail) Page in the documentation.
+### Example 2: Two Tokens Setup
+
+```js filename="Tokens"  copy
+import { TokenSlugEnums } from "@tenderize/sdk";
+
+{
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48",
+  [TokenSlugEnums.LIVEPEER]: "0x4557B18E779944BFE9d78A672452331C186a9f48"
+}
+```
+
+### Example 3: Single Token Setup
+
+```js filename="Tokens"  copy
+import { TokenSlugEnums } from "@tenderize/sdk";
+
+{
+  [TokenSlugEnums.MATIC]: "0x4557B18E779944BFE9d78A672452331C186a9f48"
+}
+```
 
 ## Important Notes
 

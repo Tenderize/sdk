@@ -33,8 +33,8 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
   const { setSelectedToken } = useSelectedTokenStore();
   const selectedToken = useSelectedToken();
   const { tokens } = useTenderizeConfigStore();
-  const tokenMetaData = useTokenMetadata();
   const tenderizer = useTenderizer(selectedToken.slug);
+  const tokenMetaData = useTokenMetadata();
   const chainId = useChainId(selectedToken.slug);
   const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
   const defaultToken = getDefaultToken(tokens);

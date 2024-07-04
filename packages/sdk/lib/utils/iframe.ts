@@ -58,7 +58,7 @@ export const getIframeConfig = (
   const configObject: {
     disabledTabs: TabEnum[];
     tenderizers: IframeTokenConfigMap;
-    tokens: TokenSlugEnums[] | [];
+    tokens: TokenSlugEnums[];
   } = {
     disabledTabs: [],
     tenderizers: {},
@@ -67,18 +67,10 @@ export const getIframeConfig = (
 
   params.forEach((value, key) => {
     if (key === "disabledTabs") {
-      configObject[key] = value
+      configObject[key as "disabledTabs"] = value
         .split(",")
         .map(
           (tab: string) => TabEnum[tab.toUpperCase() as keyof typeof TabEnum]
-        );
-    }
-    if (key === "tokens") {
-      configObject[key] = value
-        .split(",")
-        .map(
-          (token: string) =>
-            TokenSlugEnums[token.toUpperCase() as keyof typeof TokenSlugEnums]
         );
     }
 
@@ -86,8 +78,9 @@ export const getIframeConfig = (
       key.toUpperCase() as keyof typeof TokenSlugEnums;
     if (TokenSlugEnums[keyInTokenSlugEnums]) {
       // Check if key exists in TokenSlugEnums
-      configObject.tenderizers[TokenSlugEnums[keyInTokenSlugEnums]] =
-        value as Address;
+      const tokenSlug = TokenSlugEnums[keyInTokenSlugEnums];
+      configObject.tenderizers[tokenSlug] = value as Address;
+      configObject.tokens.push(tokenSlug);
     }
   });
 

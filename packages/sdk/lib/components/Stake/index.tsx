@@ -31,9 +31,13 @@ import { useAccount, useChainId as useCurrentChainId } from "wagmi";
 export const Stake: FC = () => {
   const [amount, setAmount] = useState<string>("");
   const token = useSelectedToken();
-  const { name } = useTokenMetadataByToken(token);
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
+  const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
+  const { name, avatar: metaDataAvatar } = useTokenMetadataByToken(
+    token,
+    tenderizerData.validator
+  );
   const { address: user, isConnected } = useAccount();
   const currentChainId = useCurrentChainId();
 
@@ -42,12 +46,8 @@ export const Stake: FC = () => {
     parseEther(amount),
     chainId
   );
-  const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
   const { address: userAddress } = useAccount();
-  const { avatar: metaDataAvatar } = useTokenMetadataByToken(token);
-
   const { balance } = useERC20Balance(token.address, userAddress, chainId);
-
   const { allowance } = useERC20Allowance(
     token.address,
     user ?? ("" as Address),

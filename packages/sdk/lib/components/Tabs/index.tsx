@@ -21,7 +21,12 @@ export const Tabs: FC<Props> = (props) => {
       ?.value || "stake";
   return (
     <TabsRadix.Root {...rest} defaultValue={activeTab}>
-      <TabsRadix.List style={{ justifyContent: "space-around" }}>
+      <TabsRadix.List
+        style={{
+          display: "flex",
+          justifyContent: tabsData.length === 1 ? "start" : "center",
+        }}
+      >
         {tabsData.map((tab) => (
           <TabsRadix.Trigger
             className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-5 text-xl

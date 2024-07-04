@@ -1,4 +1,5 @@
 import { TOKENS, type TokenSlugEnums } from "@lib/constants";
+import { useValidatorProfile } from "@lib/hooks/useValidatorProfile";
 import type {
   TenderizeChains,
   TenderizeConfig,
@@ -64,12 +65,21 @@ export const useAvailableTokens = () => {
   return useTenderizeConfigStore(() => Object.keys(TOKENS));
 };
 
-export const useTokenMetadataByToken = (token: Token) => {
+export const useTokenMetadataByToken = (token: Token, validator: Address) => {
+  const { profile } = useValidatorProfile(validator);
   return useTenderizeConfigStore((state) => {
     const { name, avatar } = state?.tokenMetadata?.[token.slug] ?? {};
     return {
-      name: name || `t${token.currency}`,
-      avatar: avatar || token.img.tToken,
+      name: name
+        ? name
+        : profile?.name
+        ? `t${token.currency}-${profile.name}`
+        : `t${token.currency}`,
+      avatar: avatar
+        ? avatar
+        : profile?.avatar
+        ? profile.avatar
+        : token.img.tToken,
     };
   });
 };
