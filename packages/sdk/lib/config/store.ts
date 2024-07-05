@@ -1,5 +1,4 @@
 import { TOKENS, type TokenSlugEnums } from "@lib/constants";
-import { useValidatorProfile } from "@lib/hooks/useValidatorProfile";
 import type {
   TenderizeChains,
   TenderizeConfig,
@@ -26,6 +25,9 @@ type Store = {
   setBranding?: (
     brandings: Partial<Record<TokenSlugEnums, TokenMetadata>>
   ) => void;
+  updateBranding?: (
+    brandings: Partial<Record<TokenSlugEnums, TokenMetadata>>
+  ) => void;
 };
 
 export const useTenderizeConfigStore = create<Store>((set) => ({
@@ -41,6 +43,17 @@ export const useTenderizeConfigStore = create<Store>((set) => ({
   setBranding: (
     tokenMetadata?: Partial<Record<TokenSlugEnums, TokenMetadata>>
   ) => set({ tokenMetadata }),
+  updateBranding: (
+    tokenMetadata?: Partial<Record<TokenSlugEnums, TokenMetadata>>
+  ) =>
+    set((state) => {
+      return {
+        tokenMetadata: {
+          ...state.tokenMetadata,
+          ...tokenMetadata,
+        },
+      };
+    }),
 }));
 
 export const useTenderizers = (): TenderizersConfig => {
@@ -65,22 +78,10 @@ export const useAvailableTokens = () => {
   return useTenderizeConfigStore(() => Object.keys(TOKENS));
 };
 
-export const useTokenMetadataByToken = (token: Token, validator: Address) => {
-  const { profile } = useValidatorProfile(validator);
+export const useTokenMetadataByToken = (token: Token) => {
   return useTenderizeConfigStore((state) => {
     const { name, avatar } = state?.tokenMetadata?.[token.slug] ?? {};
-    return {
-      name: name
-        ? name
-        : profile?.name
-        ? `t${token.currency}-${profile.name}`
-        : `t${token.currency}`,
-      avatar: avatar
-        ? avatar
-        : profile?.avatar
-        ? profile.avatar
-        : token.img.tToken,
-    };
+    return { name, avatar };
   });
 };
 export const useTokenMetadata = () => {
