@@ -1,5 +1,6 @@
 import { Tenderize } from "@lib/components";
 import { Header } from "@lib/components/Header";
+import "./App.css";
 
 function App() {
   return (

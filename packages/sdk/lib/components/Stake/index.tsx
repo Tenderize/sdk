@@ -34,10 +34,7 @@ export const Stake: FC = () => {
   const tenderizer = useTenderizer(token.slug);
   const chainId = useChainId(token.slug);
   const { data: tenderizerData } = useTenderizerData(tenderizer, chainId);
-  const { name, avatar: metaDataAvatar } = useTokenMetadataByToken(
-    token,
-    tenderizerData.validator
-  );
+  const { name, avatar: metaDataAvatar } = useTokenMetadataByToken(token);
   const { address: user, isConnected } = useAccount();
   const currentChainId = useCurrentChainId();
 
