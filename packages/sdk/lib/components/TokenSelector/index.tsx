@@ -169,13 +169,19 @@ const ItemComponent: React.FC<ItemProps> = ({ item, selectedToken }) => {
 
   useEffect(() => {
     if (profile && updateBranding) {
-      updateBranding({
-        ...(tokenMetadata || {}),
+      const updatedData = {
         [item.slug]: {
-          name: `${profile.name}-t${TOKENS[item.slug].currency}`,
-          avatar: profile.avatar,
+          name:
+            tokenMetadata?.[item.slug]?.name ||
+            `${profile.name}-t${TOKENS[item.slug].currency}` ||
+            `t${TOKENS[item.slug].currency}`,
+          avatar:
+            tokenMetadata?.[item.slug]?.avatar ||
+            profile.avatar ||
+            TOKENS[item.slug].img.token,
         },
-      });
+      };
+      updateBranding(updatedData);
     }
   }, [item.slug, profile !== null]);
 
