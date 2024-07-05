@@ -54,7 +54,7 @@ export const TokenSelector: FC<TokenSelectorProps> = (props) => {
     if (open) {
       setTimeout(() => {
         setOpen(undefined);
-      }, 500);
+      }, 2000);
     }
   }, [open]);
 
@@ -173,11 +173,11 @@ const ItemComponent: React.FC<ItemProps> = ({ item, selectedToken }) => {
         [item.slug]: {
           name:
             tokenMetadata?.[item.slug]?.name ||
-            `${profile.name}-t${TOKENS[item.slug].currency}` ||
+            `${profile?.name}-t${TOKENS[item.slug].currency}` ||
             `t${TOKENS[item.slug].currency}`,
           avatar:
             tokenMetadata?.[item.slug]?.avatar ||
-            profile.avatar ||
+            profile?.avatar ||
             TOKENS[item.slug].img.token,
         },
       };
