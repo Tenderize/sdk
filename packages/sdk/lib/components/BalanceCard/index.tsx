@@ -3,6 +3,7 @@ import {
   useTenderizer,
   useTokenMetadataByToken,
 } from "@lib/config/store";
+import { TOKENS } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import { useERC20Balance, useTenderizerData } from "@lib/hooks";
 import { useCoinPrice } from "@lib/hooks/prices";
@@ -54,7 +55,7 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
               key={token.slug}
               defaultUrl={token.img?.tToken}
               size={50}
-              imgUrl={metaDataAvatar}
+              imgUrl={metaDataAvatar || TOKENS[token.slug].img.token}
               address={tenderizerData.validator}
             />
             <div className="flex flex-col">
@@ -62,7 +63,7 @@ export const BalanceCardView: FC<BalanceCardViewProps> = (props) => {
                 {token.name}
               </span>
               <span className="text-secondary-foreground text-sm font-semibold">
-                {name}
+                {name || `t${TOKENS[token.slug].currency}`}
               </span>
             </div>
           </div>

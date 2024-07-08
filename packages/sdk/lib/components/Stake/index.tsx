@@ -13,6 +13,7 @@ import {
   useTenderizer,
   useTokenMetadataByToken,
 } from "@lib/config/store";
+import { TOKENS } from "@lib/constants";
 import { useSelectedToken } from "@lib/contexts";
 import {
   useDeposit,
@@ -108,10 +109,12 @@ export const Stake: FC = () => {
                     key={token.slug}
                     defaultUrl={token.img?.tToken}
                     size={25}
-                    imgUrl={metaDataAvatar}
+                    imgUrl={metaDataAvatar || token.img?.token}
                     address={tenderizerData.validator}
                   />
-                  <span className="text-sm">{name}</span>
+                  <span className="text-sm">
+                    {name || `t${TOKENS[token.slug].currency}`}
+                  </span>
                 </div>
               }
             />
